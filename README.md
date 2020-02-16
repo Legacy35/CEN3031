@@ -29,14 +29,14 @@ Not yet started!
 
 ## Technologies Used
 
-## Planned
+### Planned
 
 * MongoDB
 * ExpressJS
 * ReactJS
 * NodeJS
 
-## Current Considerations
+### Current Considerations
 
 * PHP (for CRUD operations)
 * Apache web server (for use with PHP)
