@@ -29,17 +29,47 @@ Not yet started!
 
 ## Technologies Used
 
-### Planned
+### MERN Stack
 
-* MongoDB
+* MongoDB 
+  * Used for more complex data that cannot easily be stored in an SQL table
+
 * ExpressJS
+  * Request routing
+
 * ReactJS
+  * Used for the web client
+
 * NodeJS
+  * Used as a proxy between client and Apache
 
-### Current Considerations
+### LAMP Stack
 
-* PHP (for CRUD operations)
-* Apache web server (for use with PHP)
+* Linux
+  * Used to host project VPS
+
+* Apache web server
+  * Used as an environment to run PHP
+
+* MySQL
+  * Used where convenient due to its simplistic integration with PHP
+
+* PHP
+  * used for CRUD operations due to its simplicity and lack of boilerplate
+
+### Libraries
+
+* jQuery (JavaScript)
+  * Used almost exclusively as a wrapper for vanilla JS AJAX calls.
+
+* Bootstrap 4 (CSS)
+  * If you use pure vanilla CSS and no Bootstrap you're insane
+
+### Current considerations
+
+* [Matplotlib](https://matplotlib.org/ "Matplotlib Python library") graphing library (Python)
+
+* [DJango](https://www.djangoproject.com/ "DJango Python Library") (Python). Required to use Matplotlib on the back-end. 
 
 ## Important links
 
