@@ -2,30 +2,49 @@
 
 ## Project Status
 
-Not yet started!
+Planning phase
 
 ## Team Members
 
-* Joshua Gerstenfeld
-  * Product Manager
+**Joshua Gerstenfeld**
 
-* Joshua Zimmerman
-  * SCRUM Master
+Product Manager
 
-* Julia Mckay
-  * Developer
 
-* Cameron Self
-  * Developer
 
-* Garrick Sewsankar
-  * Developer
+**Joshua Zimmerman**
 
-* Aaron Gonzalez
-  * Developer
+SCRUM Master
 
-* Cameron White
-  * Developer
+
+
+**Julia Mckay**
+
+Developer
+
+
+
+**Cameron Self**
+
+Developer
+
+
+
+**Garrick Sewsankar**
+
+Developer
+
+
+
+**Aaron Gonzalez**
+
+Developer
+
+
+
+**Cameron White**
+
+Developer
 
 ## Technologies Used
 
@@ -55,7 +74,7 @@ Not yet started!
   * Used where convenient due to its simplistic integration with PHP
 
 * PHP
-  * used for CRUD operations due to its simplicity and lack of boilerplate
+  * Used for CRUD operations due to its simplicity and relative lack of boilerplate compared to MongoDB
 
 ### Libraries
 
@@ -71,6 +90,28 @@ Not yet started!
 
 * [DJango](https://www.djangoproject.com/ "DJango Python Library") (Python). Required to use Matplotlib on the back-end. 
 
+## Project Architecture
+
+* Client
+
+  * Web server
+
+    * NodeJS (Express)
+
+      * Django
+
+      * Apache
+
+        * PHP
+
+          * MySQL
+
+          * User authentication
+
+      * MongoDB
+
+      * Filesystem
+
 ## Important links
 
 [Project Discord](https://discord.gg/9q7qJ8T "Discord")
@@ -80,3 +121,4 @@ Not yet started!
 [ReactJS Crash Course](https://www.youtube.com/watch?v=sBws8MSXN7A)
 
 [NodeJS Crash Course](https://www.youtube.com/watch?v=fBNz5xF-Kx4)
+
