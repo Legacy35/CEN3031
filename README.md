@@ -4,50 +4,6 @@
 
 Planning phase
 
-## Team Members
-
-**Joshua Gerstenfeld**
-
-Product Manager
-
-
-
-**Joshua Zimmerman**
-
-SCRUM Master
-
-
-
-**Julia Mckay**
-
-Developer
-
-
-
-**Cameron Self**
-
-Developer
-
-
-
-**Garrick Sewsankar**
-
-Developer
-
-
-
-**Aaron Gonzalez**
-
-Developer
-
-
-
-**Cameron White**
-
-Developer
-
-## Technologies Used
-
 ### MERN Stack
 
 * MongoDB 
@@ -78,9 +34,6 @@ Developer
 
 ### Libraries
 
-* jQuery (JavaScript)
-  * Used almost exclusively as a wrapper for vanilla JS AJAX calls.
-
 * Bootstrap 4 (CSS)
   * If you use pure vanilla CSS and no Bootstrap you're insane
 
@@ -90,7 +43,7 @@ Developer
 
 * [DJango](https://www.djangoproject.com/ "DJango Python Library") (Python). Required to use Matplotlib on the back-end. 
 
-## Project Architecture
+## (Theoretical) Project Architecture
 
 * Client
 
@@ -121,4 +74,28 @@ Developer
 [ReactJS Crash Course](https://www.youtube.com/watch?v=sBws8MSXN7A)
 
 [NodeJS Crash Course](https://www.youtube.com/watch?v=fBNz5xF-Kx4)
+
+## Code Snippets & Configuation Master List
+
+###  Configuring non-standard directories in Apache:
+
+**000-default.conf**
+
+*Make sure to replace the /var/www directory configuration with the modified one as described below*
+
+DocumentRoot /home/cameron/Desktop/CEN3031/server/www
+
+<Directory /home/cameron/Desktop/CEN3031/server/www>
+
+	Require all granted
+
+</Directory>
+
+### Securely configure MySQL Server
+
+**sudo mysql_secure_installation**
+
+followed by
+
+***sudo*** mysql -u root -p #Sudo is required to connect after setting up the secure installation. The setup script disables remote login for root.
 
