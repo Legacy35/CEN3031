@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS authentication;
+DROP USER IF EXISTS 'authentication'@'localhost';
+
 CREATE USER IF NOT EXISTS 'authentication'@'localhost' IDENTIFIED BY 'password';
 CREATE DATABASE IF NOT EXISTS authentication;
 USE authentication;
@@ -10,10 +13,12 @@ CREATE TABLE authentication(
 );
 
 CREATE TABLE tokens(
-    id INT NOT  NULL,
-    token VARCHAR(255) NOT NULL,
+    id INT NOT NULL,
+    token VARCHAR(1024) NOT NULL,
     date_granted DATETIME NOT NULL DEFAULT NOW()
 );
 
 GRANT ALL PRIVILEGES ON authentication.authentication TO 'authentication'@'localhost';
 GRANT ALL PRIVILEGES ON authentication.tokens TO 'authentication'@'localhost';
+
+FLUSH PRIVILEGES;
