@@ -35,6 +35,8 @@
         exit(json_encode($rows));
 
 
+    } else {
+        exit(json_encode(array('error' => 'Invalid request.')));
     }
 
 ?>

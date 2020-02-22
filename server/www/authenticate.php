@@ -4,6 +4,10 @@
 
     header('Content-type: application/json');
     
+
+    /**
+     * 
+     */
     function addSession(int $id, string $token){
         $conn = DataManager::getInstance()->getAuthConnection();
         if(!$conn || $conn->connect_error) return false;
@@ -14,14 +18,11 @@
         }
     }
 
-    function createAccount(){
 
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $passwordConfirm = $_POST['passwordConfirm'];
+
+    function createAccount($email, $password, $passwordConfirm){
          
         if($password !== $passwordConfirm) exit(json_encode(array('error' => 'Passwords don\'t match.')));
-
     
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)) exit(json_encode(array('error' => 'Invalid email address.')));
     
@@ -68,11 +69,9 @@
         exit(json_encode(array('token' => $token)));
     }
 
-    function authenticate(){
-    
-        /*Inputs*/
-        $email = $_GET['email'];
-        $password = $_GET['password'];
+
+
+    function getToken($email, $password){
     
         /*DB Setup*/
         $conn = DataManager::getInstance()->getAuthConnection();
@@ -105,10 +104,17 @@
 
     }
 
+
+
     if(isset($_GET['email']) && isset($_GET['password'])){
-        authenticate();
+        $email = $_GET['email'];
+        $password = $_GET['password'];
+        getToken($email, $password);
     } else if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordConfirm'])) {
-        createAccount();
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $passwordConfirm = $_POST['passwordConfirm'];
+        createAccount($email, $password, $passwordConfirm);
     } else {
         exit(json_encode(array('error' => 'Invalid request.')));
     }
