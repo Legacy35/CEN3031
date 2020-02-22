@@ -80,7 +80,7 @@
         }
     
         /*Lookup user with provided email & password*/
-        $statement = $conn->prepare("SELECT password_hash FROM authentication WHERE email = ?");
+        $statement = $conn->prepare("SELECT id, password_hash FROM authentication WHERE email = ?");
         $statement->bind_param("s", $email);
         $statement->execute();
         $resultSet = $statement->get_result();
@@ -90,7 +90,6 @@
         }
     
         $row = $resultSet->fetch_assoc();
-
         if(password_verify($password, $row['password_hash'])){
             $token = bin2hex(openssl_random_pseudo_bytes(128, $strongCrypto));
             if(!addSession($row['id'], $token)){
