@@ -3,14 +3,14 @@
     require_once('./include/DataManager.php');
 
     header('Content-type: application/json');
-
+    
     /*Input validation*/
-    if(!isset($_POST['email']) || !isset($_POST['password'])){
+    if(!isset($_GET['email']) || !isset($_GET['password'])){
         exit(json_encode(array('error' => 'Must provide a username and a password.')));
     }
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = $_GET['email'];
+    $password = $_GET['password'];
 
     $conn = DataManager::getInstance()->getAuthConnection();
     if($conn->connect_error){
