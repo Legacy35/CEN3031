@@ -9,7 +9,7 @@
         }
 
         public function getAuthConnection(){
-            return new mysqli("localhost", "authentication", "password", "authentication");
+            return new mysqli("127.0.0.1", "authentication", "password", "authentication");
         }
 
         public static function getInstance(){
