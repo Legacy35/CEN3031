@@ -1,5 +1,7 @@
 # Authentication Server
 
+* **The Authentication Server's IP address will be hosted externally during development before being brought into the project's cloud during production. No sensitive data should be transmitted to the authenticatino server during development as it will not be encrypted using HTTPS.**
+
 * All requests to the authentication server are HTTP POST and GET requests. PHP Can't understand anything other than POST and GET.
 
 * Session tokens are 1024 bit strings generated using a cryptographically secure pseudorandom number generation algorithm. 
@@ -10,7 +12,7 @@
 
   * To generate a token using a set of account credentials, make a GET request to authenticate.php with the **email** and **password** parameters.
 
-  * To retrieve information about an account, send a GET request to whois.php with the **token** parameter. Looking up a user 
+  * To retrieve information about an account, send a GET request to whois.php with the **token** parameter. Looking up a user returns their id, email, and whether or not they're an administrator
 
 * Response objects can be one of the following:
 
@@ -26,7 +28,7 @@
 
 * When signing up, the response object contains a session token to avoid the need to sign in immediately after signing up.
 
-* A list of all currently valid session tokens is maintained by the authentication server. The authentication server should be contacted prior to every request that requires elevated privileges. Outdated session tokens are removed every whois query.
+*Each account has only one valid session token at a time. This means that logging in on another device will log the user out eveyrwhere else. 
 
 ```js
 //Signing up with the auth server. Assuming no errors, a token object will be sent back.
