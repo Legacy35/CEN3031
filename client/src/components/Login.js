@@ -2,18 +2,20 @@ import React from 'react';
 import axios from 'axios';
 import './css/bootstrap.min.css';
 
-axios.get('./authenticate.php?email=cmw255@gmai.com&password=password').then(
-    (res) => {
-        console.log(res.data); //
-    }
-);
-
 const Login = (props) => {
 
     const login = async () => {
         let form = document.getElementById("formLogin");
         let email = form.email.value;
         let password = form.password.value;
+        axios.get('/authenticate.php?email=' + email + '&password=' + password).then(
+            (res) => {
+               console.log(res.data)
+            }
+        )
+        .catch((e) => {
+            console.log(e.data);
+        });
     }
 
     return (
