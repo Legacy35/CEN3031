@@ -1,0 +1,11 @@
+{
+  "name": "noderouter",
+  "version": "0.0.1",
+  "description": "Single point of entry for CEN3031 Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
