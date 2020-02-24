@@ -2,7 +2,7 @@
 
     require_once('./include/DataManager.php');
 
-    header('Concent-type: application/json');
+    header('Content-type: application/json');
 
     if(isset($_GET['token'])){
 
