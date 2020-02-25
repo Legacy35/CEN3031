@@ -14,7 +14,7 @@ const UserSummary = (props) => {
         );
     } else {
         return (
-            <div class="row">
+            <div className="row">
                 <div className="center">
                     <h2>Sign in to view your profile.</h2>
                 </div>

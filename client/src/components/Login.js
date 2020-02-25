@@ -6,9 +6,7 @@ const Login = (props) => {
 
     const login = async () => {
         let form = document.getElementById("formLogin");
-        let email = form.email.value;
-        let password = form.password.value;
-        axios.get('/apis/authenticate/authenticate.php?email=' + email + '&password=' + password).then(
+        axios.get('/apis/authenticate/authenticate.php?email=' + form.email.value + '&password=' + form.password.value).then(
             (res) => {
                 if(res.data && res.data.token){
                     const cookies = new Cookies();
