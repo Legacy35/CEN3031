@@ -1,6 +1,12 @@
 const axios = require('axios');
 const config = require('./../config.js');
 
+/**
+ * Proxy middleware for forwarding requests to athentication server.
+ * @param {Request} req ExpressJS Request object
+ * @param {Response} res ExpressJS Response object
+ * @type {VoidFunction}
+ */
 const authenticateProxy = (req, res) => {
     let originalUrl = req.originalUrl;
     let splits = originalUrl.split("/");
@@ -9,7 +15,6 @@ const authenticateProxy = (req, res) => {
         destinationUrl += splits[i];
     }
     destinationUrl = config.authServer + destinationUrl;
-    console.log(destinationUrl);
     
     if(req.body){
         axios.post(destinationUrl, req.body).then(
@@ -41,3 +46,4 @@ const authenticateProxy = (req, res) => {
 }
 
 exports.authenticateProxy = authenticateProxy;
+
