@@ -1,0 +1,29 @@
+.form {
+    outline: 1px solid black;
+    margin: 15px auto;
+    padding: 15px;
+}
+input {
+    margin: 5px auto;
+    display: block;
+    width: 100%;
+}
+#root {
+    padding: 0;
+    margin: 0;
+    max-width: 99%;
+}
+.outline {
+    outline: 1px solid black;
+}
+.center {
+    margin: 0 auto;
+    width: auto;
+}
+h1 {
+    text-align: center;
+}
+body, html {
+    padding: 0;
+    margin: 0;
+}

@@ -26,7 +26,6 @@ const authenticateProxy = (req, res) => {
         .catch(
             (err) => {
                 res.send({error: "Error"});
-                console.log(err);
             }
         );
     } else {
@@ -38,7 +37,6 @@ const authenticateProxy = (req, res) => {
         .catch(
             (err) => {
                 res.send({error: "Error"});
-                console.log(err);
             }
         );
     }
