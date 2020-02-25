@@ -17,7 +17,6 @@ const SignUp = (props) => {
             passwordConfirm: passwordConfirm
         }).then(
             (res) => {
-                console.log(res.data);
                 if(res.data && res.data.token){
                     const cookies = new Cookies();
                     cookies.set('token', res.data.token);

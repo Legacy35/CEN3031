@@ -10,7 +10,6 @@ const Login = (props) => {
         let password = form.password.value;
         axios.get('/apis/authenticate/authenticate.php?email=' + email + '&password=' + password).then(
             (res) => {
-                console.log(res);
                 if(res.data && res.data.token){
                     const cookies = new Cookies();
                     cookies.set('token', res.data.token);
