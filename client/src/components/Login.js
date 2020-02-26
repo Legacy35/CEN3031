@@ -33,7 +33,7 @@ const Login = (props) => {
 
     return (
 
-        <div className="row">
+        <div className="container">
             <div className="form col col-xs-4 col-sm-4 col-md-4 col-xl-4 col-xl-4">
                 <h2>Sign in</h2>
                     <form id="formLogin">
