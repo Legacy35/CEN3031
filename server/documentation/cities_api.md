@@ -1,6 +1,8 @@
 
 # Cities & Accidents API
 
+## Introduction
+
 Given that our project is a web project, all client-server communication will be conducted using HTTP requests (no web sockets). HTTP requests can be easily performed using the NodeJS Axios library like so:
 
 ```js
@@ -17,7 +19,7 @@ axios.get('http://website.com').then(
     }
 );
 
-/*HTTP Post request*/
+/*HTTP POST request*/
 axios.post('http://www.website.com/signup.php', { email: "cow@cow.jp", password: "this_is_very_secure"}).then(
     (res) => {
         /*Do whatever the hell you want with the response here.*/
@@ -55,7 +57,23 @@ let params = {
 let urlEncoded = querystring.encode(params); //urlEncoded = is now "email=cow@cow.jp&password=this_is_very_secure"
 ```
 
-**Note:** the querystring library doesn't take into account the ? needed in GET requests, like in ```website.com/signup?email=...```. Make sure to add the ? when making a GET request. For back-end developers, there are ExpressJS middleware functions that perform the decoding process automatically. 
+**Note:** the querystring library doesn't take into account the ? needed in GET requests, like in ```website.com/signup?email=...```. Make sure to add the ? when making a GET request. For back-end developers, there are ExpressJS middleware functions that handle this part of the process automatically. 
+
+## API Standards
+
+For the sake of avoiding repetition, you can assume that the following is true for all of the APIs we make as a team:
+
+**Errors**
+
+If an error occurs during a request, this is what the response will look like:
+
+```js
+{
+    error: "Whoops! Something went wrong. ¯\_(ツ)_/¯"
+}
+```
+
+You should check all responses to ensure the request was valid. Error messages are intended to be displayed to the user. 
 
 ## API Classes & Enums
 
@@ -92,7 +110,7 @@ class AccidentReport {
 ```js
 const Weather = ["Sunny", "Raining", "Foggy"]; /*Weather enum*/
 ```
-[VanillaJS Date Object](https://www.w3schools.com/jsref/jsref_obj_date.asp)
+The AccidentReport class uses the [VanillaJS Date object](https://www.w3schools.com/jsref/jsref_obj_date.asp)
 
 ## Request Specifications
 

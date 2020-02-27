@@ -1,5 +1,6 @@
 const axios = require('axios');
 const config = require('./../config.js');
+const sanitizer = require('sanitizer');
 
 /**
  * Proxy middleware for forwarding requests to athentication server.
@@ -7,6 +8,15 @@ const config = require('./../config.js');
  * @param {Response} res ExpressJS Response object
  * @type {VoidFunction}
  */
+
+const sanitize = (obj) => {
+    let keys = Object.keys(obj);
+    for(let i = 0; i < keys.length; i++){
+        obj[keys[i]] = sanitizer.sanitize(obj[keys[i]]);
+    }
+    return obj;
+}
+
 const authenticateProxy = (req, res) => {
     let originalUrl = req.originalUrl;
     let splits = originalUrl.split("/");
@@ -20,7 +30,7 @@ const authenticateProxy = (req, res) => {
         axios.post(destinationUrl, req.body).then(
             
             (data) => {
-                res.send(data.data);
+                res.send(sanitize(data.data));
             }
         )
         .catch(
@@ -31,7 +41,7 @@ const authenticateProxy = (req, res) => {
     } else {
         axios.get(destinationUrl, req.body).then(
             (data) => {
-                res.send(data.data);
+                res.send(sanitize(data.data));
             }
         )
         .catch(

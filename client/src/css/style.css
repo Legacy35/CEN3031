@@ -1,56 +1,50 @@
-.form {
-    outline: 1px solid black;
-    margin: 15px auto;
+#root {
+    padding: 0;
+    margin: 0;
+    max-width: 99%;
+}
+.center {
+    margin: 0 auto;
+}
+.outline {
+    border: 1px solid black;
+}
+.tile {
+    border: 1px solid black;
+    margin-top: 15px;
+    margin-bottom: 15px;
     padding: 15px;
+    border-radius: 10px;
+}
+.view {
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    position: absolute;
 }
 input {
     margin: 5px auto;
     display: block;
     width: 100%;
 }
-#root {
-    padding: 0;
-    margin: 0;
-    max-width: 99%;
-}
-.outline {
-    outline: 1px solid black;
-}
-.center {
-    margin: 0 auto;
-    width: auto;
-}
 h1 {
     text-align: center;
 }
-body, html {
-    padding: 0;
-    margin: 0;
-}
-.invisible {
-    display: block;
-    transition: all 2s ease-in;
-}
-.visible {
-    display: none;
-    transition: all 2s ease-in;
-}
 
-.zoom-in-enter {
+/* TRANSITIONS */
+.fade-enter {
     opacity: 0;
-    transform: scale(0.9);
-  }
-  .zoom-in-enter-active {
+}
+.fade-enter-active {
     opacity: 1;
-    transform: translateX(0);
-    transition: opacity 300ms, transform 300ms;
-  }
-  .zoom-in-exit {
+    transition: opacity 500ms;
+}
+.fade-exit {
     opacity: 1;
-  }
-  .zoom-in-exit-active {
+}
+.fade-exit-active {
     opacity: 0;
-    transform: scale(0.9);
-    transition: opacity 300ms, transform 300ms;
-  }
+    transition: opacity 2000ms;
+}
   

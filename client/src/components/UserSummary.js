@@ -2,25 +2,21 @@ import React from 'react'
 
 const UserSummary = (props) => {
 
-    if(props.userInfo.id){
-        return (
-            <div className="row">
-                <ul className="center">
-                    <li>User ID: {props.userInfo.id}</li>
-                    <li>User email: {props.userInfo.email}</li>
-                    <li>Admin: {props.userInfo.admin}</li>
-                </ul>
-            </div>
-        );
-    } else {
-        return (
-            <div className="row">
-                <div className="center">
-                    <h2>Sign in to view your profile.</h2>
+        if(props.userData.id) {
+            return (
+                <div className="tile view">
+                    <h2>Welcome, <em>{props.userData.email}</em></h2>
+            <p>Your unique user ID is <b>{props.userData.id}</b></p>
+            <p>You <b>{(props.userData.admin ? "are" : "are not")}</b> an admin.</p>
                 </div>
-            </div>
-        );
-    }
+            );
+        } else {
+            return (
+                <div className="tile view">
+                    <h2>You need to be logged in to view your account profile.</h2>
+                </div>
+            )
+        }
 
 }
 

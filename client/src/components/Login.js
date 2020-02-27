@@ -4,14 +4,26 @@ import Cookies from 'universal-cookie';
 
 const Login = (props) => {
 
-    const login = async () => {
+
+    const hideAll = () => {
+        let keys = Object.keys(props.views);
+        let views = {...props.views};
+        for(let i = 0; i < keys.length; i++){
+          views[keys[i]] = false;
+        }
+        return views;
+      }
+
+    const login = () => {
         let form = document.getElementById("formLogin");
         axios.get('/apis/authenticate/authenticate.php?email=' + form.email.value + '&password=' + form.password.value).then(
             (res) => {
                 if(res.data && res.data.token){
                     const cookies = new Cookies();
                     cookies.set('token', res.data.token);
-                    alert("User session token is: " + cookies.get('token'));
+                    props.setToken(res.data.token); 
+                    props.setViews({...hideAll(), userProfile: true});
+                    console.log(res.data);
                 } else {
                     if(res.data && res.data.error) alert(res.data.error);
                 }
@@ -27,14 +39,13 @@ const Login = (props) => {
     const onKeyPress = (evt) => {
         if(evt.key === 'Enter'){
             login();
-            props.displayUserInfo();
         }
     }
 
     return (
 
-        <div className="container">
-            <div className="form col col-xs-4 col-sm-4 col-md-4 col-xl-4 col-xl-4">
+        <div className="tile view">
+            <div className="form center">
                 <h2>Sign in</h2>
                     <form id="formLogin">
                         <input name = "email" type="text" placeholder="Email address"></input>
