@@ -57,11 +57,11 @@ const App = () => {
   return (
     <div>
       <div className="row nopadding nomargin">
-          <div className="nopadding nomargin col col-12">
+          <div className="col col-12 nopadding">
             <NavBar views={views} setViews={setViews} token={token} setToken={setToken} userData={userData} setUserData={setUserData}/>
           </div>
       </div>
-      <div className="row nopadding">
+      <div className="row nopadding nomargin">
         <div className="col col-4"></div>
         <div className="col col-4">
         <h1>Insurance Driver App Thing™</h1>
