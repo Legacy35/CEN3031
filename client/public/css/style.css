@@ -1,0 +1,34 @@
+/*General*/
+html {
+    padding: 0;
+    margin: 0;
+}
+body {
+    padding: 0;
+    margin: 0;
+}
+#root {
+    padding: 0;
+    margin: 0;
+}
+
+/*Overwrite default CSS values*/
+label {
+    font-size: 16pt;
+}
+
+/*Utility*/
+.nopadding {
+    padding: 0
+}
+.nomargin {
+    margin: 0;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}

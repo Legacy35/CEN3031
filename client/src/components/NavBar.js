@@ -1,5 +1,9 @@
 import React from 'react';
 
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
 const NavBar = (props) => {
 
   const hideAll = () => {
@@ -23,17 +27,40 @@ const NavBar = (props) => {
     props.setViews({...hideAll(), userProfile: true});
   }
 
-    return (
-        <div className="row">
-        <div className="col col-1 col-md-4"></div>
-        <div className="col col-10 col-md-4 center btn-group" role="group" aria-label="Basic example">
-          <button type="button" onClick={signup} className={"btn " + (props.views.signup ? "btn-primary" : "btn-secondary")}>Sign up</button>
-          <button type="button" onClick={signin} className={"btn " + (props.views.login ? "btn-primary" : "btn-secondary")}>Sign in</button>
-          <button type="button" onClick={userSummary} className={"btn " + (props.views.userProfile ? "btn-primary" : "btn-secondary")}>User summary</button>
-        </div>
-        <div className="col col-1 col-md-4"></div>
-      </div>
-    );
+  const onClick = () => {
+    if (cookies.get('token') || props.token) {
+        logout();
+    } else {
+        let keys = Object.keys(props.views);
+        let newViews = { ...props.views };
+        for (let i = 0; i < keys.length; i++) {
+            newViews[keys[i]] = false;
+        }
+        newViews.login = true;
+        props.setViews(newViews);
+    }
+  
+  }
+  
+  const logout = () => {
+    cookies.remove('token');
+    props.setToken(undefined);
+    props.setUserData({});
+}
+
+  return (
+    <div id="navbar" className="outline">
+       <ul className="navbar">
+        <button type="button" className="navbar" onClick={signup}>Sign up</button>
+        <button type="button" className="navbar" onClick={signin}>Sign in</button>
+        <button type="button" className="navbar" onClick={userSummary}>User Profile</button>
+        <button type="button" className="navbar float-right" onClick={onClick}>
+          <i className={(cookies.get('token') ? "fas" : "far") + " fa-user"}></i>
+        </button>
+       </ul>
+    </div>
+  );
+
 
 }
 

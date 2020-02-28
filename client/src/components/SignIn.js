@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-const Login = (props) => {
+const SignIn = (props) => {
 
 
     const hideAll = () => {
@@ -23,7 +23,6 @@ const Login = (props) => {
                     cookies.set('token', res.data.token);
                     props.setToken(res.data.token); 
                     props.setViews({...hideAll(), userProfile: true});
-                    console.log(res.data);
                 } else {
                     if(res.data && res.data.error) alert(res.data.error);
                 }
@@ -43,19 +42,24 @@ const Login = (props) => {
     }
 
     return (
-
-        <div className="tile view">
-            <div className="form center">
-                <h2>Sign in</h2>
-                    <form id="formLogin">
-                        <input name = "email" type="text" placeholder="Email address"></input>
-                        <input name="password" type="password" placeholder="password" onKeyPress={onKeyPress}></input>
-                    </form>
-                    <button className="btn btn-primary" onClick={login}>Sign in</button>
-            </div>
+        <div>
+            <h2>Sign in</h2>
+            <form id="formLogin">
+                <div className="form-group">
+                    <label htmlFor="email">Email address</label>
+                    <input className="form-control" name="email" type="text" placeholder="Email address"></input>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input className="form-control" name="password" type="password" placeholder="password" onKeyPress={onKeyPress}></input>
+                    <small className="form-text text-muted">Forgot your password? Click <a href="#">here.</a></small>
+                </div>
+            </form>
+            <button className="btn btn-primary">Submit</button>
         </div>
+
     );
 
 }
 
-export default Login;
+export default SignIn;
