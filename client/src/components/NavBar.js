@@ -48,12 +48,17 @@ const NavBar = (props) => {
     props.setUserData({});
 }
 
+  const selectedStyle={
+    color: "red",
+    backgroundColor: "black"
+  };
+
   return (
     <div id="navbar" className="outline">
        <ul className="navbar">
-        <button type="button" className="navbar" onClick={signup}>Sign up</button>
-        <button type="button" className="navbar" onClick={signin}>Sign in</button>
-        <button type="button" className="navbar" onClick={userSummary}>User Profile</button>
+        <button type="button" className="navbar" style={props.views.signup ? selectedStyle : {}} onClick={signup}>Sign up</button>
+        <button type="button" className="navbar" style={props.views.login ? selectedStyle : {}} onClick={signin}>Sign in</button>
+        <button type="button" className="navbar" style={props.views.userProfile ? selectedStyle : {}} onClick={userSummary}>User Profile</button>
         <button type="button" className="navbar float-right" onClick={onClick}>
           <i className={(cookies.get('token') ? "fas" : "far") + " fa-user"}></i>
         </button>
