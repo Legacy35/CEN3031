@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import Form from './generic/Form.js';
 
 const SignIn = (props) => {
 
@@ -33,32 +34,24 @@ const SignIn = (props) => {
                 console.log(error);
             }
         );
+        
     }
 
-    const onKeyPress = (evt) => {
-        if(evt.key === 'Enter'){
-            login();
+    let inputs = [
+        {
+            name: "email",
+            label: "Email:",
+            placeholder: "ceo@business.net"
+        },
+        {
+            name: "password",
+            label: "Password:",
+            placeholder: "AllWorkAndNoPlayMakesJohhnyADullBoy",
+            type: "password"
         }
-    }
+    ];
 
-    return (
-        <div>
-            <h2>Sign in</h2>
-            <form id="formLogin">
-                <div className="form-group">
-                    <label htmlFor="email">Email address</label>
-                    <input className="form-control" name="email" type="text" placeholder="Email address"></input>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input className="form-control" name="password" type="password" placeholder="password" onKeyPress={onKeyPress}></input>
-                    <small className="form-text text-muted">Forgot your password? Click <a href="#">here.</a></small>
-                </div>
-            </form>
-            <button className="btn btn-primary">Submit</button>
-        </div>
-
-    );
+    return <Form id={"formLogin"} labelColWidth={3} inputColWidth={9} onSubmit={login} inputs={inputs}/>;
 
 }
 

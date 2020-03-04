@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
      See also https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
     Check out - https://mongoosejs.com/docs/guide.html
   */
-const accidentReportSchema = new mongoose.Schema({
+const AccidentReportSchema = new mongoose.Schema({
   cityName: {type: String, required: true},
   state: {type: String, required: true}, /*Full name of state, not code*/
   date: {type: Date, required: true},  /*VanillaJS Date*/
@@ -14,4 +14,4 @@ const accidentReportSchema = new mongoose.Schema({
 }
 });
 
-export default mongoose.model('accidentReports', accidentReportSchema);
+export default mongoose.model('accidentReports', AccidentReportSchema);

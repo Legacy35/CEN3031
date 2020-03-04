@@ -24,6 +24,32 @@ button.navbar {
     padding-bottom: 5px;
     padding-left: 50px;
     padding-right: 50px;
+    transition: all 500ms;
+}
+.navbar.wrapper.expanded {
+    display: block;
+}
+.navbar.wrapper.not-expanded {
+    display: block;
+}
+.navbar.hamburger {
+    display: none;
+}
+@media all and (max-width: 900px) {
+    button.navbar{
+        display: block;
+        width: 100%;
+        padding-left: 10px;
+    }
+    #loginLogout {
+        display: none;
+    }
+    .navbar.hamburger {
+        display: block;
+    }
+    .navbar.wrapper.not-expanded {
+        display: none;
+    }
 }
 button.navbar:hover {
     color: red;
