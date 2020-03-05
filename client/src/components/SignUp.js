@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
+import Form from './generic/Form';
+
 const SignUp = (props) => {
 
     const signup = (evt) => {
@@ -56,27 +58,27 @@ const SignUp = (props) => {
     }
 
 
-    return (
-        <div>
-            <form id="formSignUp">
-                <h2>Sign up</h2>
-                <div className="form-group">
-                    <label htmlFor="email">Email address</label>
-                    <input type="email" className="form-control" name="email" placeholder="Enter email" />
-                    <small className="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" name="password" className="form-control" placeholder="Enter password" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="passwordConfirm">Confirm password</label>
-                    <input name="passwordConfirm" type="password" onKeyPress={onKeyPress} className="form-control" placeholder="Enter password again" />
-                </div>
-            </form>
-            <button className="btn btn-primary" onClick={signup}>Submit</button>
-        </div>
-    );
+    let inputs = [
+        {
+            name: "email",
+            label: "Email:",
+            placeholder: "ceo@business.net"
+        },
+        {
+            name: "password",
+            label: "Password:",
+            placeholder: "AllWorkAndNoPlayMakesJohhnyADullBoy",
+            type: "password"
+        },
+        {
+            name: "passwordConfirm",
+            label: "Confirm password:",
+            placeholder: "AllWorkAndNoPlayMakesJohhnyADullBoy",
+            type: "password"
+        }
+    ];
+
+    return <Form id={"formSignUp"} labelColWidth={3} inputColWidth={9} onSubmit={signup} inputs={inputs}/>;
 
 }
 
