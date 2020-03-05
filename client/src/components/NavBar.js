@@ -75,8 +75,8 @@ const NavBar = (props) => {
         </button>
 
         <div className={wrapperClass}>
-        <button type="button" className="navbar" style={props.views.signup ? selectedStyle : {}} onClick={signup}>Sign up</button>
-          <button type="button" className="navbar" style={props.views.login ? selectedStyle : {}} onClick={signin}>Sign in</button>
+        {!cookies.get('token') && <button type="button" className="navbar" style={props.views.signup ? selectedStyle : {}} onClick={signup}>Sign up</button>}
+          {!cookies.get('token') && <button type="button" className="navbar" style={props.views.login ? selectedStyle : {}} onClick={signin}>Sign in</button>}
           <button type="button" className="navbar" style={props.views.userProfile ? selectedStyle : {}} onClick={userSummary}>User Profile</button>
           {props.userData.admin == true && <button type="button" className="navbar" style={props.views.submitAccident ? selectedStyle : {}} onClick={submitAccident}>Submit Accident Report</button>}
           <button id="loginLogout" type="button" className="navbar float-right" onClick={loginLogout} style={{ paddingRight: '10px' }}>
