@@ -6,19 +6,20 @@ import React from 'react';
 
 const SearchBar = (props) => {
 
-  const clicked = () => 
-  {
-     alert(props.filterText);
-     };
+    const clicked = () => {
+        alert(props.filterText);
+    };
 
-return (
+    return (
 
-  <form>
-  <input type="text" autoComplete = "off" placeholder="Type to Filter" id = "select_id" onChange =  {props.filterUpdate} />
-  <input type = "button" onClick =  {clicked}/>
-  <p></p>
-</form>
-);
+        <div>
+            <form>
+                <input type="text" autoComplete="off" placeholder="Type to Filter" id="select_id" onChange={props.filterUpdate} />
+                <p></p>
+            </form>
+            <input type="button" onClick={clicked} />
+        </div>
+    );
 
 }
 

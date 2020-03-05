@@ -10,7 +10,7 @@ const Search = (props) => {
   const [filterText, setFilterText] = useState('');
 
   const filterUpdate = (value) => {
-    var d = document.getElementById("select_id").value;
+    let d = document.getElementById("select_id").value;
     setFilterText(d);
   }
 
