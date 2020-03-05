@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const config = require('./config.js');
 const cookieParser = require('cookie-parser');
 
-const {authenticateProxy} = require('./middleware/authentication.js');
+const { authenticateProxy } = require(config.authenticationFile);
 
 
 /*Express boilerplate*/
@@ -18,5 +19,5 @@ app.use(express.static('public'));
 app.all('/apis/authenticate*', authenticateProxy);
 
 app.listen(app.get('port'), () => {
-    console.log("NodeJS router now listening on " + app.get('port') + ". Press CTRL+C to exit.");
-});
+      console.log('NodeJS router now listening on ' + app.get('port') + '. Press CTRL+C to exit.');
+    });
