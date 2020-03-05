@@ -43,6 +43,7 @@ const App = () => {
       axios.get('/apis/authenticate/whois.php?token=' + token).then(
         (res) => {
           if (res.data.id) {
+            res.data.admin = (res.data.admin == 1) ? true : false;
             setUserData(res.data);
           }
         }

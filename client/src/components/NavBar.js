@@ -80,7 +80,7 @@ const NavBar = (props) => {
           <button type="button" className="navbar" style={props.views.userProfile ? selectedStyle : {}} onClick={userSummary}>User Profile</button>
           {props.userData.admin == true && <button type="button" className="navbar" style={props.views.submitAccident ? selectedStyle : {}} onClick={submitAccident}>Submit Accident Report</button>}
           <button id="loginLogout" type="button" className="navbar float-right" onClick={loginLogout} style={{ paddingRight: '10px' }}>
-            <i className={(cookies.get('token') ? "fas" : "far") + " fa-user"}></i>
+            <i className={(cookies.get('token') != undefined ? "fas" : "far") + " fa-user"}></i>
           </button>
 
         </div>

@@ -12,6 +12,8 @@ import React from 'react'
  */
 const Form = (props) => {
 
+    let i = 0;
+
     return (
         <div>
             <form>

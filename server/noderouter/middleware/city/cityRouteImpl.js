@@ -1,6 +1,7 @@
-const axios = require('axios');
 const config = require('./../config.js');
 const CitySchema = require('./../models/city/city.js');
+
+const Sort = ['Ranking', 'Alphabetical', 'Similarity'];
 
 export const createCity = (req, res) => {
   CitySchema.create({
@@ -21,7 +22,6 @@ export const createCity = (req, res) => {
   res.status(200);
 };
 
-const Sort = ['Ranking', 'Alphabetical', 'Similarity'];
 export const citySearch = (req, res) => {
   if (req.sort == Sort.Ranking) {
     CitySchema.collection.find({
