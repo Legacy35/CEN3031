@@ -5,6 +5,6 @@ const graphGet = (req, res) => {
 
 
 
-}
+};
 
-//exports.cityGet = cityGet;
+exports.cityGet = cityGet;

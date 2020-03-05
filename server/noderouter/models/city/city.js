@@ -7,12 +7,12 @@ import mongoose from 'mongoose';
     Check out - https://mongoosejs.com/docs/guide.html
   */
 const citySchema = new mongoose.Schema({
-  name: {type: String, required: true},
-  state: {type: String, required: true}, /*Eg: "Florida", not "FL". Can also be a province or territory.*/
-  country: {type: String, required: true}, /*Eg: "United States", not "US"*/
-  coordinates: {latitude :{type: mongoose.Number}, longitude :{type: mongoose.Number}},
-  rank: {type: mongoose.Number},
-  climate: {type: mongoose.Number}
+  name: { type: String, required: true },
+  state: { type: String, required: true }, /*Eg: "Florida", not "FL". Can also be a province or territory.*/
+  country: { type: String, required: true }, /*Eg: "United States", not "US"*/
+  coordinates: { latitude: { type: mongoose.Number }, longitude: { type: mongoose.Number } },
+  rank: { type: mongoose.Number },
+  climate: { type: mongoose.Number },
 });
 
-export default mongoose.model('citys', citySchema);
+export default mongoose.model('cities', citySchema);

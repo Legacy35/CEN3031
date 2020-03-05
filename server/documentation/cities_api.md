@@ -9,7 +9,7 @@ Given that our project is a web project, all client-server communication will be
 import axios from 'axios';
 
 /*HTTP GET request*/
-axios.get('http://website.com').then( 
+axios.get('http://website.com').then(
     (res) => {
         console.log(res.data);
     }
@@ -57,7 +57,7 @@ let params = {
 let urlEncoded = querystring.encode(params); //urlEncoded = is now "email=cow@cow.jp&password=this_is_very_secure"
 ```
 
-**Note:** the querystring library doesn't take into account the ? needed in GET requests, like in ```website.com/signup?email=...```. Make sure to add the ? when making a GET request. For back-end developers, there are ExpressJS middleware functions that handle this part of the process automatically. 
+**Note:** the querystring library doesn't take into account the ? needed in GET requests, like in ```website.com/signup?email=...```. Make sure to add the ? when making a GET request. For back-end developers, there are ExpressJS middleware functions that handle this part of the process automatically.
 
 ## API Standards
 
@@ -73,7 +73,7 @@ If an error occurs during a request, this is what the response will look like:
 }
 ```
 
-You should check all responses to ensure the request was valid. Error messages are intended to be displayed to the user. 
+You should check all responses to ensure the request was valid. Error messages are intended to be displayed to the user.
 
 ## API Classes & Enums
 
@@ -84,7 +84,7 @@ There are several data types and constants used for the city and accident API:
 ```js
 class City {
     name: <string>,
-    state: <string>, /*Eg: "Florida", not "FL". Can also be a province or territory.*/ 
+    state: <string>, /*Eg: "Florida", not "FL". Can also be a province or territory.*/
     country: <string>, /*Eg: "United States", not "US"*/
     coordinates: {
         latitude: <float>,
@@ -112,11 +112,17 @@ const Weather = ["Sunny", "Raining", "Foggy"]; /*Weather enum*/
 ```
 The AccidentReport class uses the [VanillaJS Date object](https://www.w3schools.com/jsref/jsref_obj_date.asp)
 
+### Sorting Enum
+
+```js
+const Weather = ["Rank", "Alphabetical", "Similarity"]; /*Weather enum*/
+```
+
 ## Request Specifications
 
 ### Searching for a city
 
-Description: Get an array of cities from the back-end that is sorted, filtered, and limited according to input parameters. **Results should be stored in memory** to prevent unnecessary requests. 
+Description: Get an array of cities from the back-end that is sorted, filtered, and limited according to input parameters. **Results should be stored in memory** to prevent unnecessary requests.
 
 Target: ```/apis/cities/city```
 
@@ -135,7 +141,7 @@ Parameters:
 }
 ```
 
-Response object: Array of City objects as defined above. Example: 
+Response object: Array of City objects as defined above. Example:
 
 ```js
 [
@@ -168,7 +174,7 @@ Response object: Array of City objects as defined above. Example:
 
 ### Adding a new accident report to DB
 
-Description: Only administrator accounts can add a new city. Non-administrators will be sent an error if they attempt to add one. 
+Description: Only administrator accounts can add a new city. Non-administrators will be sent an error if they attempt to add one.
 
 Target: ```/apis/accidents/accident```
 
@@ -179,7 +185,7 @@ Params:
 ```js
 {
     cityName: <string>,
-    stateCode: <string>, //EG: "Florida" not the 2-character code 
+    stateCode: <string>, //EG: "Florida" not the 2-character code
     date: <Date>, /*VanillaJS Date. Should be accruate in minutes*/
 }
 ```
@@ -188,7 +194,7 @@ Response: None / Default
 
 ### Getting graphs (WIP)
 
-Description: **In progress**. Response will always be the same information for the time being. The information is meant to be rendered by the client into an interactive graph using the ____ library. 
+Description: **In progress**. Response will always be the same information for the time being. The information is meant to be rendered by the client into an interactive graph using the ____ library.
 
 
 
