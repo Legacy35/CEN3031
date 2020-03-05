@@ -5,6 +5,6 @@ const cityGet = (req, res) => {
 
 
 
-}
+};
 
 //exports.cityGet = cityGet;
