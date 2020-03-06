@@ -6,13 +6,13 @@ import axios from 'axios';
 
 import Cookies from 'universal-cookie';
 
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp'
-import UserSummary from './components/UserSummary';
-import NavBar from './components/NavBar';
-import SubmitAccident from './components/SubmitAccident';
+import SignIn from './components/SignIn.js';
+import SignUp from './components/SignUp.js'
+import UserSummary from './components/UserSummary.js';
+import NavBar from './components/NavBar.js';
+import SubmitAccident from './components/SubmitAccident.js';
 
-import './css/navbar.css';
+import {isLoggedIn, loadProfile, login} from './SessionManager.js';
 
 /*CONSTANTS*/
 const cookies = new Cookies();
@@ -21,6 +21,8 @@ const cookies = new Cookies();
 const App = () => {
 
   /*Hooks*/
+  let [loaded, setLoaded] = useState(false);
+
   let [userData, setUserData] = useState({
     id: undefined,
     admin: undefined,
@@ -31,37 +33,27 @@ const App = () => {
     userProfile: false,
     signup: true,
     login: false,
-    submitAccident: false
+    submitAccident: false,
   });
 
-  let [token, setToken] = useState(cookies.get('token'));
-
   /*FUNCTIONS*/
-  let loadProfileData = async () => {
-    if (token) {
 
-      axios.get('/apis/authenticate/whois.php?token=' + token).then(
-        (res) => {
-          if (res.data.id) {
-            res.data.admin = (res.data.admin == 1) ? true : false;
-            setUserData(res.data);
-          }
-        }
-      ).catch(
-        (err) => {
-          console.log(err);
-        }
-      );
+
+  if (!loaded){
+    if(isLoggedIn()){
+      loadProfile(setUserData, views, setViews);
+    } else {
+
     }
+    setLoaded(true);
+    return(<p>Loading...</p>);
   }
-
-  if (!userData.id) loadProfileData();
 
   return (
     <div>
       <div className="row nopadding nomargin">
         <div className="col col-12 nopadding">
-          <NavBar views={views} setViews={setViews} token={token} setToken={setToken} userData={userData} setUserData={setUserData} />
+          <NavBar views={views} setViews={setViews} userData={userData} setUserData={setUserData} />
         </div>
       </div>
       <div className="row nopadding nomargin">
@@ -70,15 +62,15 @@ const App = () => {
           <h1>Insurance Driver App Thing™</h1>
           <hr style={{ borderTop: '1px solid #8c8b8b' }}></hr>
           <CSSTransition in={views.signup} timeout={0} classNames="fade" unmountOnExit>
-            <SignUp userData={userData} setUserData={setUserData} setViews={setViews} views={views} setToken={setToken} />
+            <SignUp userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>
 
           <CSSTransition in={views.userProfile} timeout={0} classNames="fade" unmountOnExit >
-            <UserSummary userData={userData} setUserData={setUserData} views={views} setViews={setViews} />
+            <UserSummary userData={userData} setUserData={setUserData} views={views} setViews={setViews}/>
           </CSSTransition>
 
           <CSSTransition in={views.login} timeout={0} classNames="fade" unmountOnExit>
-            <SignIn userData={userData} setUserData={setUserData} setViews={setViews} views={views} setToken={setToken} />
+            <SignIn userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>
 
           <CSSTransition in={views.submitAccident} timeout={0} classNames="fade" unmountOnExit>
