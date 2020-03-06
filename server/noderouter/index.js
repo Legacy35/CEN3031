@@ -1,12 +1,11 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const config = require('./config.js');
 const cookieParser = require('cookie-parser');
 const databaseConnections = require('./databaseConnections.js');
 
-const { authenticateProxy } = require(config.authenticationFile);
-const {accidentReportGet, accidentReportPost} = require('./middleware/accidentReports/accidentReportRoute.js');
+const { authenticateProxy } = require('./middleware/users/authentication.js');
+const {accidentReportPost} = require('./middleware/accidentReports/accidentReportRoute.js');
 
 const start = async () => {
 

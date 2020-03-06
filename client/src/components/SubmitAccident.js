@@ -32,7 +32,7 @@ const SubmitAccident = (props) => {
             return;
         }
 
-        if(unixDate.getTime() > unixDate.getTime > new Date()){
+        if(unixDate.getTime() > new Date()){
             alert("You can't submit an accident in the future!");
             return;
         }
