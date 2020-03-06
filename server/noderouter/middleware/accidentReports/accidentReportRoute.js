@@ -27,10 +27,10 @@ const accidentReportPost = (req, res) => {
     doc.save((err, doc) => {
         if(err) {
             console.log(err);
-            res.send('err');
+            res.send({error: 'An error occurred while attempting to record this data entry. :shrugs:'});
             return;
         } else {
-            console.log('Saved');
+            res.status(200).send("OK");
         }
     });
 
