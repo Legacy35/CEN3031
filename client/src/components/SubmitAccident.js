@@ -3,34 +3,45 @@ import Form from './generic/Form';
 
 const SubmitAccident = (props) => {
 
-    const submit = () => {
+    //cityName: <string>,
+  // state: <string>, /*Full name of state, not code*/
+    //date: <int>, /*Unix Epoch int*/
+   // weather: <Weather[]> /*Values of weather must be from Weather enum*/
+    
+    const stringToDate = (intput) => {
+        
+    }
+
+    const onSubmit = () => {
         let form = document.getElementById('formSubmitAccident');
-        let address = form.address.value;
-        let dateTime = form.dateTime.value;
-        let splits = dateTime.split(' ');
-        let date = splits[0];
-        let time = splits[1];
-        if(!splits[0] || !splits[1]) {
-            alert('Dates must use the DD/MM/YYYY HH:MM format');
-            return;
-        }
+
     }
 
     let inputs = [
         {
+            label: "City:",
+            name: "cityName",
+            placeholder: "Sydney"
+        },
+        {
+            label: "State",
+            name: "state",
+            placeholder: "EG: \"FL\", not \"Florida\""
+        },
+        {
+            label: "Date:",
+            name: "date",
+            placeholder: "MM/DD/YYYY HH:MM"  
+        },
+        {
             label: "Address:",
             name: "address",
             placeholder: "P. Sherman 42 Wallaby Way"
-        },
-        {
-            label: "Time:",
-            name: "dateTime",
-            placeholder: "MM/DD/YYYY HH:MM"  
         }
     ];
 
     return (
-        <Form id={"formSubmitAccident"} labelColWidth={3} inputColWidth={9} onSubmit={submit} inputs={inputs} />
+        <Form id={"formSubmitAccident"} labelColWidth={3} inputColWidth={9} onSubmit={onSubmit} inputs={inputs} />
     )
 
 

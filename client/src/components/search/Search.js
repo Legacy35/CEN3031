@@ -15,7 +15,10 @@ const Search = (props) => {
   }
 
   return (
-    <SearchBar filterText={filterText} filterUpdate={filterUpdate} />
+    <div>
+      <SearchBar filterText={filterText} filterUpdate={filterUpdate} />
+      <Form /*Stuff here...*/ ></Form>
+    </div>
   );
 
 }

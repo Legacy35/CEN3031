@@ -19,7 +19,7 @@ const SignUp = (props) => {
                 if(res.data && res.data.token){
                     const cookies = new Cookies();
                     cookies.set('token', res.data.token);
-                    props.setToken(res.data.token);
+                
                     axios.get('/apis/authenticate/whois.php?token=' + cookies.get('token')).then(
                         (res) => {
                             if(res.data && !res.data.error){
@@ -51,18 +51,12 @@ const SignUp = (props) => {
 
     }
 
-    const onKeyPress = (evt) => {
-        if(evt.key === 'Enter'){
-            signup();
-        }
-    }
-
-
     let inputs = [
         {
             name: "email",
             label: "Email:",
-            placeholder: "ceo@business.net"
+            placeholder: "ceo@business.net",
+            type: "email"
         },
         {
             name: "password",

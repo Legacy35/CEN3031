@@ -21,9 +21,11 @@ const Form = (props) => {
     let inputColWidth = props.inputColWidth;
     inputColWidth = inputColWidth.length ? inputColWidth : [inputColWidth, inputColWidth, inputColWidth, inputColWidth, inputColWidth];
 
+    let i = 0;
+
     /*Map inputs to elements*/
     const inputs = props.inputs.map(element => 
-        <div className="row form-group">
+        <div key={i++} className="row form-group">
             <div className={"col col-xs-" + labelColWidth[0] + " col-sm-" + labelColWidth[1] + " col-md-" + labelColWidth[2] + " col-lg-" + labelColWidth[3] + " col-xl-" + labelColWidth[4]}>
                 <label htmlFor={element.name}>{element.label}</label>
             </div>

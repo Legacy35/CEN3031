@@ -1,6 +1,7 @@
 import React , {useState} from 'react';
-
 import Cookies from 'universal-cookie';
+
+import {isLoggedIn} from '../SessionManager';
 
 const cookies = new Cookies();
 
@@ -37,27 +38,7 @@ const NavBar = (props) => {
   const submitAccident = () => {
     props.setViews({...hideAll(), submitAccident: true});
   }
-
-  const loginLogout = () => {
-    if (cookies.get('token') || props.token) {
-        logout();
-    } else {
-        let keys = Object.keys(props.views);
-        let newViews = { ...props.views };
-        for (let i = 0; i < keys.length; i++) {
-            newViews[keys[i]] = false;
-        }
-        newViews.login = true;
-        props.setViews(newViews);
-    }
   
-  }
-  
-  const logout = () => {
-    cookies.remove('token');
-    props.setToken(undefined);
-    props.setUserData({});
-}
 
   const selectedStyle={
     color: "red",
@@ -75,12 +56,12 @@ const NavBar = (props) => {
         </button>
 
         <div className={wrapperClass}>
-        {!cookies.get('token') && <button type="button" className="navbar" style={props.views.signup ? selectedStyle : {}} onClick={signup}>Sign up</button>}
-          {!cookies.get('token') && <button type="button" className="navbar" style={props.views.login ? selectedStyle : {}} onClick={signin}>Sign in</button>}
-          <button type="button" className="navbar" style={props.views.userProfile ? selectedStyle : {}} onClick={userSummary}>User Profile</button>
+        {!isLoggedIn() && <button type="button" className="navbar" style={props.views.signup ? selectedStyle : {}} onClick={signup}>Sign up</button>}
+          {!isLoggedIn() && <button type="button" className="navbar" style={props.views.login ? selectedStyle : {}} onClick={signin}>Sign in</button>}
+          {isLoggedIn() && <button type="button" className="navbar" style={props.views.userProfile ? selectedStyle : {}} onClick={userSummary}>User Profile</button>}
           {props.userData.admin == true && <button type="button" className="navbar" style={props.views.submitAccident ? selectedStyle : {}} onClick={submitAccident}>Submit Accident Report</button>}
-          <button id="loginLogout" type="button" className="navbar float-right" onClick={loginLogout} style={{ paddingRight: '10px' }}>
-            <i className={(cookies.get('token') != undefined ? "fas" : "far") + " fa-user"}></i>
+          <button id="profileIcon" type="button" className="navbar float-right" onClick={cookies.get('token') ? userSummary : signin} style={{ paddingRight: '10px' }}>
+            <i className={(isLoggedIn() ? "fas" : "far") + " fa-user"}></i>
           </button>
 
         </div>

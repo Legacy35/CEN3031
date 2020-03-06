@@ -3,6 +3,8 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import Form from './generic/Form.js';
 
+import {login} from '../SessionManager.js';
+
 const SignIn = (props) => {
 
 
@@ -15,25 +17,9 @@ const SignIn = (props) => {
         return views;
       }
 
-    const login = () => {
+    const onSubmit = () => {
         let form = document.getElementById("formLogin");
-        axios.get('/apis/authenticate/authenticate.php?email=' + form.email.value + '&password=' + form.password.value).then(
-            (res) => {
-                if(res.data && res.data.token){
-                    const cookies = new Cookies();
-                    cookies.set('token', res.data.token);
-                    props.setToken(res.data.token); 
-                    props.setViews({...hideAll(), userProfile: true});
-                } else {
-                    if(res.data && res.data.error) alert(res.data.error);
-                }
-            }
-        )
-        .catch(
-            (error) => {
-                console.log(error);
-            }
-        );
+        login(form.email.value, form.password.value, props.views, props.setViews, props.setUserData);
         
     }
 
@@ -51,7 +37,7 @@ const SignIn = (props) => {
         }
     ];
 
-    return <Form id={"formLogin"} labelColWidth={3} inputColWidth={9} onSubmit={login} inputs={inputs}/>;
+    return <Form id={"formLogin"} labelColWidth={3} inputColWidth={9} onSubmit={onSubmit} inputs={inputs}/>;
 
 }
 

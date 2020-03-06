@@ -103,7 +103,7 @@ const Climate = ["Hot", "Warm", "Cold"]; /*Climate enum*/
 class AccidentReport {
    cityName: <string>,
    state: <string>, /*Full name of state, not code*/
-   date: <Date>, /*VanillaJS Date*/
+   date: <int>, /*Unix Epoch int*/
    weather: <Weather[]> /*Values of weather must be from Weather enum*/
 }
 ```
