@@ -10,12 +10,14 @@ const accidentReportPost = (req, res) => {
                         if(res.data.error){
                               res.status(404);
                               res.send({error: res.data.error + " User may not exist"});
-                              return;
+                              return;}
                         if(!res.data.isAdmin){
                               res.status(401);
                               res.send({error: "Unauthorized"});
                               return;
-                        }.catch(
+                        }
+                      }
+                    ).catch(
                             (err) => {
                                 console.log(err);
                             }

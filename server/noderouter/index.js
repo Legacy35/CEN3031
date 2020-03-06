@@ -17,13 +17,12 @@ const start = async () => {
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(cookieParser());
   app.use(express.static('public'));
-  
+
   /*Create mongoose connections in global scope using the DATABASES object*/
   await databaseConnections.init();
-  
+
   /*Middleware functions*/
   app.all('/apis/authenticate*', authenticateProxy);
-  app.get('/apis/accidents/accident', accidentReportGet);
   app.post('/apis/accidents/accident', accidentReportPost);
 
   app.listen(app.get('port'), () => {
