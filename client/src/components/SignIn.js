@@ -27,7 +27,7 @@ const SignIn = (props) => {
         }
     ];
 
-    return <Form id={"formLogin"} labelColWidth={3} inputColWidth={9} onSubmit={onSubmit} inputs={inputs}/>;
+    return <Form id={"formLogin"} labelColWidth={[12, 3, 3, 3, 3]} inputColWidth={[12, 9, 9, 9, 9]} onSubmit={onSubmit} inputs={inputs}/>;
 
 }
 

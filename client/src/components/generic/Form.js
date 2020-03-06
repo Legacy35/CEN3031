@@ -4,8 +4,8 @@ import React from 'react'
  * 
  * @param {*} props
  * 
- * props.labelColWidth (int || int[5]). Bootstrap column width(s)
- * props.inputColWidth (int || int[5]). Bootstrap column width(s)
+ * props.labelColWidth (int || int[6]). Bootstrap column width(s)
+ * props.inputColWidth (int || int[6]). Bootstrap column width(s)
  * props.onSubmit (function)
  * props.inputs (array of input objects)
  *   - a given input object has three mandatory fields: 'name', 'label', & 'placeholder'
@@ -26,10 +26,10 @@ const Form = (props) => {
     /*Map inputs to elements*/
     const inputs = props.inputs.map(element => 
         <div key={i++} className="row form-group">
-            <div className={"col col-xs-" + labelColWidth[0] + " col-sm-" + labelColWidth[1] + " col-md-" + labelColWidth[2] + " col-lg-" + labelColWidth[3] + " col-xl-" + labelColWidth[4]}>
+            <div className={"col col-" + labelColWidth[0] + " col-sm-" + labelColWidth[1] + " col-md-" + labelColWidth[2] + " col-lg-" + labelColWidth[3] + " col-xl-" + labelColWidth[4]}>
                 <label htmlFor={element.name}>{element.label}</label>
             </div>
-            <div className={"col col-xs-" + inputColWidth[0] + " col-sm-" + inputColWidth[1] + " col-md-" + inputColWidth[2] + " col-lg-" + inputColWidth[3] + " col-xl-" + inputColWidth[4]}>
+            <div className={"col col-" + inputColWidth[0] + " col-sm-" + inputColWidth[1] + " col-md-" + inputColWidth[2] + " col-lg-" + inputColWidth[3] + " col-xl-" + inputColWidth[4]}>
                 <input placeholder={element.placeholder} className="form-control" name={element.name} type={element.type ? element.type : "text"} />
             </div>
         </div>
