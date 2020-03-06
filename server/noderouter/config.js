@@ -4,7 +4,8 @@
  */
 const config = {
     authServer: 'http://142.44.210.106/',
-    authenticationFile: './middleware/users/authentication.js'
+    authenticationFile: './middleware/users/authentication.js',
+    openCageKey: 'f2e278c415b74f7db345af774a40e473'
 }
 
 module.exports = config;

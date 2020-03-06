@@ -7,16 +7,6 @@ import {login} from '../SessionManager.js';
 
 const SignIn = (props) => {
 
-
-    const hideAll = () => {
-        let keys = Object.keys(props.views);
-        let views = {...props.views};
-        for(let i = 0; i < keys.length; i++){
-          views[keys[i]] = false;
-        }
-        return views;
-      }
-
     const onSubmit = () => {
         let form = document.getElementById("formLogin");
         login(form.email.value, form.password.value, props.views, props.setViews, props.setUserData);

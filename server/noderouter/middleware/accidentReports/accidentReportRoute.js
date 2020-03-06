@@ -37,6 +37,7 @@ const accidentReportPost = (req, res) => {
     res.status(400).send({
       error: "Malformed request, State Incorrect",
     });
+
     return;
   }else if(cityName.length>2 && cityName.length<46){
     res.status(400).send({
