@@ -50,15 +50,15 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div style={{marginBottom: '15px'}}>
       <div className="row nopadding nomargin">
         <div className="col col-12 nopadding">
           <NavBar views={views} setViews={setViews} userData={userData} setUserData={setUserData} />
         </div>
       </div>
       <div className="row nopadding nomargin">
-        <div className="col col-3"></div>
-        <div className="col col-6">
+        <div className="col col-12 col-sm-1 col-md-2 col-xl-3"></div>
+        <div className="col col-12 col-sm-10 col-md-8 col-xl-6">
           <h1>Insurance Driver App Thing™</h1>
           <hr style={{ borderTop: '1px solid #8c8b8b' }}></hr>
           <CSSTransition in={views.signup} timeout={0} classNames="fade" unmountOnExit>
@@ -78,7 +78,7 @@ const App = () => {
           </CSSTransition>
 
         </div>
-        <div className="col col-3"></div>
+        <div className="col col-12 col-sm-1 col-md-2 col-xl-3"></div>
       </div>
     </div>
   );

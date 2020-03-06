@@ -72,7 +72,7 @@ const SignUp = (props) => {
         }
     ];
 
-    return <Form id={"formSignUp"} labelColWidth={3} inputColWidth={9} onSubmit={signup} inputs={inputs}/>;
+    return <Form id={"formSignUp"} labelColWidth={[12, 3, 3, 3, 3, 3]} inputColWidth={[12, 9, 9, 9, 9, 9]} onSubmit={signup} inputs={inputs}/>;
 
 }
 

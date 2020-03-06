@@ -70,20 +70,21 @@ const SubmitAccident = (props) => {
 
         <div>
             <h2>Location &amp; Time</h2>
+            <hr></hr>
             <form id="formSubmitAccident">
                 <div className="row form-group">
-                    <div className="col col-3">
+                    <div className="col col-12 col-sm-3">
                         <label htmlFor="cityName">City name:</label>
                     </div>
-                    <div className="col col-9">
+                    <div className="col col-12 col-sm-9">
                         <input name="cityName" className="form-control" placeholder="Syndney"></input>
                     </div>
                 </div>
                 <div className="row form-group">
-                    <div className="col col-3">
+                    <div className="col col-12 col-sm-3">
                         <label htmlFor="state">State:</label>
                     </div>
-                    <div className="col col-9">
+                    <div className="col col-12 col-sm-9">
                         <select name="state" className="form-control" >
                             <option value="Alabama">Alabama</option>
                             <option value="Alaska">Alaska</option>
@@ -145,45 +146,45 @@ const SubmitAccident = (props) => {
                     </div>
                 </div>
                 <div className="row form-group">
-                    <div className="col col-3">
+                    <div className="col col-12 col-sm-3">
                         <label htmlFor="date">Date:</label>
                     </div>
-                    <div className="col col-9">
+                    <div className="col col-12 col-sm-9">
                         <input name="date" type="date" className="form-control" placeholder="MM/DD/YYYY MM:HH"></input>
                     </div>
                 </div>
                 <h2>Weather conditions</h2>
                 <hr></hr>
                 <div className="row form-group">
-                    <div className="col col-3">
+                    <div className="col col-12 col-sm-3 w-100">
                         <input type="radio" id="hail" value="Hail" name="precipitation" />
                         <label htmlFor="hail" >Hail</label>
                     </div>
-                    <div className="col col-3">
+                    <div className="col col-12 col-sm-3 w-100">
                         <input type="radio" value="Snow" id="snow" name="precipitation" />
                         <label htmlFor="snow" >Snow</label>
                     </div>
-                    <div className="col col-3">
+                    <div className="col col-12 col-sm-3 w-100">
                         <input type="radio" value="Rain" id="rain" name="precipitation" />
                         <label htmlFor="rain" >Rain</label>
                     </div>
-                    <div className="col col-3">
+                    <div className="col col-12 col-sm-3 w-100">
                         <input type="radio" value="Clear" id="clear" name="precipitation"/>
                         <label htmlFor="clear">Clear</label>
                     </div>
                 </div>
+                <hr></hr>
                 <div className="row form-group">
-                    <div className="col col-3">
+                    <div className="col col-12 col-sm-6 w-100">
                         <input type="checkbox" name="fog" id="fog"/>
                         <label htmlFor="fog">Fog</label>
                     </div>
-                </div>
-                <div className="row form-group">
-                    <div className="col col-3">
+                    <div className="col col-12 col-sm-6 w-100">
                         <input type="checkbox" name="wind" id="wind"/>
                         <label htmlFor="wind">High Winds</label>
                     </div>
                 </div>
+                <hr></hr>
             </form>
             <button className="btn btn-primary" onClick={onSubmit}>Submit</button>
         </div>

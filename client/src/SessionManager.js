@@ -70,7 +70,7 @@ export const loadProfile = (setUserData, views, setViews) => {
             newViews.userProfile = true;
             setViews(newViews);
           } else if (res.data.error) {
-            alert(res.data.error);
+            logout(views, setViews, setUserData);
           }
         }
       ).catch(
