@@ -134,11 +134,6 @@ const getCoords = async (req, res) => {
                 return;
             }
 
-            /*if (result.components.state.toLowerCase() != req.body.state.toLowerCase() || result.components.city.toLowerCase() != req.body.cityName.toLowerCase()) {
-                output = false;
-                return;
-            }*/
-
             let coords =  {latitude: result.geometry.lat, longitude: result.geometry.lng};
             output = coords;
         }

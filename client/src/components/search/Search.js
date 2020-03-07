@@ -1,23 +1,58 @@
 /**
- * Author: Joshua G
+ * Author: Joshua G, Cameron W
  */
 
-import React, { useState, useEffect } from 'react';
-import SearchBar from './SearchBar';
+import React, { useState } from 'react';
+import SearchForm from './SearchForm.js'
+import SearchResults from './SearchResults';
 
 const Search = (props) => {
 
-  const [filterText, setFilterText] = useState('');
+  const [cities, setCities] = useState(undefined);
 
-  const filterUpdate = (value) => {
-    let d = document.getElementById("select_id").value;
-    setFilterText(d);
+  const initialize = () => {
+    setCities(
+      [
+        {
+          name: "Miami",
+          state: "Florida",
+          coordinates: {
+            latitude: 25.761681,
+            longitude: -80.191788
+          },
+          climate: "Tropical monsoon"
+        },
+        {
+          name: "New York City",
+          state: "New York",
+          coordinates: {
+            latitude: 40.730610,
+            longitude: -73.935242
+          },
+          climate: "Humid continental"
+        },
+        {
+          name: "Los Angeles",
+          state: "California",
+          coordinates: {
+            latitude: 34.052235,
+            longitude: -118.243683
+          },
+          climate: "Mediterranean"
+        },
+      ]
+    );
+  }
+
+  if (cities === undefined) {
+    initialize();
   }
 
   return (
     <div>
-      <SearchBar filterText={filterText} filterUpdate={filterUpdate} />
-      <Form /*Stuff here...*/ ></Form>
+      <SearchForm setCities={setCities}/>
+      <br/>
+      <SearchResults cities={cities}/>
     </div>
   );
 
