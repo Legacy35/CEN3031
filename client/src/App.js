@@ -2,20 +2,14 @@
 import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
-import axios from 'axios';
-
-import Cookies from 'universal-cookie';
-
 import SignIn from './components/SignIn.js';
 import SignUp from './components/SignUp.js'
 import UserSummary from './components/UserSummary.js';
 import NavBar from './components/NavBar.js';
 import SubmitAccident from './components/SubmitAccident.js';
+import Search from './components/search/Search.js';
 
 import {isLoggedIn, loadProfile, login} from './SessionManager.js';
-
-/*CONSTANTS*/
-const cookies = new Cookies();
 
 /*APP - MAIN COMPONENT*/
 const App = () => {
@@ -34,6 +28,7 @@ const App = () => {
     signup: true,
     login: false,
     submitAccident: false,
+    citySearch: false
   });
 
   /*FUNCTIONS*/
@@ -75,6 +70,10 @@ const App = () => {
 
           <CSSTransition in={views.submitAccident} timeout={0} classNames="fade" unmountOnExit>
             <SubmitAccident />
+          </CSSTransition>
+
+          <CSSTransition in={views.citySearch} timeout={0} classNames="fade" unmountOnExit>
+            <Search />
           </CSSTransition>
 
         </div>

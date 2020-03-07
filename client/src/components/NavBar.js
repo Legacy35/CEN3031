@@ -38,6 +38,10 @@ const NavBar = (props) => {
   const submitAccident = () => {
     props.setViews({...hideAll(), submitAccident: true});
   }
+
+  const citySearch = () => {
+    props.setViews({...hideAll(), citySearch: true});
+  }
   
 
   const selectedStyle={
@@ -60,6 +64,7 @@ const NavBar = (props) => {
           {!isLoggedIn() && <button type="button" className="navbar" style={props.views.login ? selectedStyle : {}} onClick={signin}>Sign in</button>}
           {isLoggedIn() && <button type="button" className="navbar" style={props.views.userProfile ? selectedStyle : {}} onClick={userSummary}>User Profile</button>}
           {props.userData.admin == true && <button type="button" className="navbar" style={props.views.submitAccident ? selectedStyle : {}} onClick={submitAccident}>Submit Accident Report</button>}
+          <button type="button" className="navbar" style={props.views.citySearch ? selectedStyle : {}} onClick={citySearch}>City Search</button>
           <button id="profileIcon" type="button" className="navbar float-right" onClick={cookies.get('token') ? userSummary : signin} style={{ paddingRight: '10px' }}>
             <i className={(isLoggedIn() ? "fas" : "far") + " fa-user"}></i>
           </button>

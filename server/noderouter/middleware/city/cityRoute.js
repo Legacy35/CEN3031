@@ -1,45 +1,57 @@
-const config = require('./../config.js');
-const CitySchema = require('./../models/city/city.js');
+const config = require('../../config.js');
+const CitySchema = require('../../models/city/City.js');
 
-const Sort = ['Ranking', 'Alphabetical', 'Similarity'];
+/*const Sort = ['ranking', 'alphabetical', 'similarity'];*/
 
-export const createCity = (req, res) => {
-  CitySchema.create({
-    name: req.body.name,
-    state: req.body.state,
-    country: req.body.country,
-    coordinates: {
-      latitude: req.body.lat,
-      longitude: req.body.lng,
-    },
-    rank: req.body.rank,
-    climate: req.body.climate,
-  }, function (err, CitySchema) {
-    if (err) return handleError(err);
-    res.send(CitySchema);
-  });
+const citySearch = async (req, res) => {
 
-  res.status(200);
-};
+  //filter, limit, sort
 
-export const citySearch = (req, res) => {
-  if (req.sort == Sort.Ranking) {
-    CitySchema.collection.find({
-      name: req.filter,
-    }).sort({
-      rank: asc,
-    }).limit(req.limit);
-  } else if (req.sort == Sort.Alphabetical) {
-    CitySchema.collection.find({
-      name: req.filter,
-    }).sort({
-      name: asc,
-    }).limit(req.limit);
-  } else if (req.sort == Sort.Similarity) { //TODO : Implement this for Sprint 2
-    CitySchema.collection.find({
-      name: req.filter,
-    }).sort({
-      name: asc,
-    }).limit(req.limit);
+  if(!req.query.filter || !req.query.limit || !req.query.sort){
+    res.send({error: 'All fields are required.'});
+    return;
+  }
+
+  if(req.query.limit > 50) req.query.limit = 50;
+
+  const callback = (err, docs) => {
+    if(err){
+      res.send({error: 'An internal error ocurred while performing this query. :('});
+      throw err;
+    } else {
+      let output = [];
+      docs.forEach((element) => {
+        output.push({...element._doc, _id: undefined});
+      });
+      console.log(output);
+      res.send(output);
+    }
+  }
+
+  const db = DATABASES.cities;
+  const cityModel = db.model("City", CitySchema, 'cities');
+
+  if (req.query.sort.toLowerCase() == "ranking") {
+
+    //cityModel.find({ name: req.query.filter}).sort({ name: 'asc'}).limit(req.query.limit).exec(callback);
+
+  } else if (req.query.sort.toLowerCase() == 'alphabetical') {
+
+    cityModel.find({name: req.query.filter }).sort({ name: 'asc'}).limit(parseInt(req.query.limit)).exec(callback);
+ 
+  } else if (req.query.sort.toLowerCase() == 'similarity') {
+    //TODO : Implement this for Sprint 2
+    //See: TODO
   }
 };
+
+module.exports = citySearch;
+
+//TODO:
+/*
+        CitySchema.collection.find({
+      name: req.filter,
+    }).sort({
+      name: asc,
+    }).limit(req.limit);
+ */

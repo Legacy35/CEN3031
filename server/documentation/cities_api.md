@@ -85,12 +85,10 @@ There are several data types and constants used for the city and accident API:
 class City {
     name: <string>,
     state: <string>, /*Eg: "Florida", not "FL". Can also be a province or territory.*/
-    country: <string>, /*Eg: "United States", not "US"*/
     coordinates: {
         latitude: <float>,
         longitude: <float>
     },
-    rank: <int>,
     climate: <Climate>,
 }
 ```
@@ -152,10 +150,8 @@ Response object: Array of City objects as defined above. Example:
           longitude: 0.0
       },
       name: "Null Island",
-      rank: 1,
       climate: "Sunny",
       state: "Florida", //optional
-      country: "US"
   },
   {
       _id: 2,
@@ -164,10 +160,8 @@ Response object: Array of City objects as defined above. Example:
           longitude: 15.5
       },
       name: "Schzen",
-      rank: 2,
       climate: "Temperate",
       state: "Wuhan", //optional
-      country: "CN"
   },
 ]
 ```
