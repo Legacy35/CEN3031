@@ -7,10 +7,15 @@ import SignUp from './components/SignUp.js'
 import UserSummary from './components/UserSummary.js';
 import NavBar from './components/NavBar.js';
 import SubmitAccident from './components/SubmitAccident.js';
+
 import Search from './components/search/Search.js';
+import QuizTab from './components/QuizTab.js';
+import GraphTab from './components/GraphTab.js';
 
 import {isLoggedIn, loadProfile, login} from './SessionManager.js';
 
+/*CONSTANTS*/
+const cookies = new Cookies();
 /*APP - MAIN COMPONENT*/
 const App = () => {
 
@@ -29,6 +34,8 @@ const App = () => {
     login: false,
     submitAccident: false,
     citySearch: false
+    quiz: false,
+    graph: false,
   });
 
   /*FUNCTIONS*/
@@ -54,7 +61,7 @@ const App = () => {
       <div className="row nopadding nomargin">
         <div className="col col-12 col-sm-1 col-md-2 col-xl-3"></div>
         <div className="col col-12 col-sm-10 col-md-8 col-xl-6">
-          <h1>Insurance Driver App Thing™</h1>
+          <h1>Insurance Driver App</h1>
           <hr style={{ borderTop: '1px solid #8c8b8b' }}></hr>
           <CSSTransition in={views.signup} timeout={0} classNames="fade" unmountOnExit>
             <SignUp userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
@@ -66,6 +73,14 @@ const App = () => {
 
           <CSSTransition in={views.login} timeout={0} classNames="fade" unmountOnExit>
             <SignIn userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
+          </CSSTransition>
+
+          <CSSTransition in={views.quiz} timeout={0} classNames="fade" unmountOnExit>
+            <QuizTab userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
+          </CSSTransition>
+
+          <CSSTransition in={views.graph} timeout={0} classNames="fade" unmountOnExit>
+            <GraphTab userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>
 
           <CSSTransition in={views.submitAccident} timeout={0} classNames="fade" unmountOnExit>
