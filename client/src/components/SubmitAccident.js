@@ -13,11 +13,9 @@ const SubmitAccident = (props) => {
      * Converts comma-seperated list into into array of Strings as defined in weather constant
      * @param {*} input 
      */
-    const getWeather = (input) => {
-
-    }
 
     const onSubmit = () => {
+
         let form = document.getElementById('formSubmitAccident');
 
         if(!form.cityName.value || !form.state.value || !form.date.value || !form.precipitation.value || !form.fog.value || !form.wind.value) {
@@ -60,7 +58,7 @@ const SubmitAccident = (props) => {
             }
         ).catch(
             (err) => {
-
+                console.log(err);
             }
         );
 
