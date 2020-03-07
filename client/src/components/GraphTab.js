@@ -7,7 +7,7 @@ const GraphTab = (props) => {
         labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
         datasets:[
             {
-              label:'Population',
+              label:'Number of Crashes',
               data:[
                 617594,
                 181045,
@@ -33,7 +33,6 @@ const GraphTab = (props) => {
         return (
             <div className="graph">
             <Bar data={chartData}/>
-
             </div>
         );
 }
