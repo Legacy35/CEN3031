@@ -1,7 +1,5 @@
 import React from 'react'
-import Cookies from 'universal-cookie';
-
-const cookies = new Cookies();
+import {Bar, Line, Pie} from 'react-chartjs-2';
 
 const GraphTab = (props) => {
 

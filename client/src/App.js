@@ -12,8 +12,10 @@ import UserSummary from './components/UserSummary.js';
 import NavBar from './components/NavBar.js';
 import SubmitAccident from './components/SubmitAccident.js';
 import QuizTab from './components/QuizTab.js';
+import GraphTab from './components/GraphTab.js';
 
 import {isLoggedIn, loadProfile, login} from './SessionManager.js';
+
 
 /*CONSTANTS*/
 const cookies = new Cookies();
@@ -36,6 +38,7 @@ const App = () => {
     login: false,
     submitAccident: false,
     quiz: false,
+    graph: false,
   });
 
   /*FUNCTIONS*/
@@ -77,6 +80,10 @@ const App = () => {
 
           <CSSTransition in={views.quiz} timeout={0} classNames="fade" unmountOnExit>
             <QuizTab userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
+          </CSSTransition>
+
+          <CSSTransition in={views.graph} timeout={0} classNames="fade" unmountOnExit>
+            <GraphTab userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>
 
           <CSSTransition in={views.submitAccident} timeout={0} classNames="fade" unmountOnExit>
