@@ -7,7 +7,6 @@ import SignUp from './components/SignUp.js'
 import UserSummary from './components/UserSummary.js';
 import NavBar from './components/NavBar.js';
 import SubmitAccident from './components/SubmitAccident.js';
-
 import Search from './components/search/Search.js';
 import QuizTab from './components/QuizTab.js';
 import GraphTab from './components/GraphTab.js';
@@ -15,7 +14,6 @@ import GraphTab from './components/GraphTab.js';
 import {isLoggedIn, loadProfile, login} from './SessionManager.js';
 
 /*CONSTANTS*/
-const cookies = new Cookies();
 /*APP - MAIN COMPONENT*/
 const App = () => {
 
@@ -33,7 +31,7 @@ const App = () => {
     signup: true,
     login: false,
     submitAccident: false,
-    citySearch: false
+    citySearch: false,
     quiz: false,
     graph: false,
   });
