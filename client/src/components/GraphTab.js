@@ -32,7 +32,13 @@ const GraphTab = (props) => {
 
         return (
             <div className="graph">
-            <Bar data={chartData}/>
+              <em>
+                Our goal is to recognize and commend the safest cities across the United States. 
+                By comparing the number of accidents in each city, we can determine which cities have the safest drivers. 
+                Cities are ranked based on several factors including population, accidents per day, and climate, among others
+                that can affect safe driving in a city.
+              </em>
+              <Bar data={chartData}/>
             </div>
         );
 }

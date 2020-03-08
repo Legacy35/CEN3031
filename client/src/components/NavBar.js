@@ -68,12 +68,12 @@ const NavBar = (props) => {
         </button>
 
         <div className={wrapperClass}>
-        {!isLoggedIn() && <button type="button" className="navbar" style={props.views.signup ? selectedStyle : {}} onClick={signup}>Sign up</button>}
+          <button type="button" className="navbar" style={props.views.graph ? selectedStyle : {}} onClick={graphShow}>Home</button>
+          {!isLoggedIn() && <button type="button" className="navbar" style={props.views.signup ? selectedStyle : {}} onClick={signup}>Sign up</button>}
           {!isLoggedIn() && <button type="button" className="navbar" style={props.views.login ? selectedStyle : {}} onClick={signin}>Sign in</button>}
           {isLoggedIn() && <button type="button" className="navbar" style={props.views.userProfile ? selectedStyle : {}} onClick={userSummary}>User Profile</button>}
           {props.userData.admin == true && <button type="button" className="navbar" style={props.views.submitAccident ? selectedStyle : {}} onClick={submitAccident}>Submit Accident Report</button>}
           <button type="button" className="navbar" style={props.views.citySearch ? selectedStyle : {}} onClick={citySearch}>City Search</button>
-          <button type="button" className="navbar" style={props.views.graph ? selectedStyle : {}} onClick={graphShow}>Graph</button>
           {isLoggedIn() && <button type="button" className="navbar" style={props.views.quiz ? selectedStyle : {}} onClick={quizShow}>Quizzes</button>}
           <button id="profileIcon" type="button" className="navbar float-right" onClick={cookies.get('token') ? userSummary : signin} style={{ paddingRight: '10px' }}>
             <i className={(isLoggedIn() ? "fas" : "far") + " fa-user"}></i>
