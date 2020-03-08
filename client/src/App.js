@@ -9,13 +9,17 @@ import NavBar from './components/NavBar.js';
 import SubmitAccident from './components/SubmitAccident.js';
 
 import Search from './components/search/Search.js';
+
+
+import Compare from './components/compare/Compare.js';
+
 import QuizTab from './components/QuizTab.js';
-import GraphTab from './components/GraphTab.js';
+import GraphTab from './components/compare/GraphTab.js';
 
 import {isLoggedIn, loadProfile, login} from './SessionManager.js';
 
 /*CONSTANTS*/
-const cookies = new Cookies();
+//const cookies = new Cookies();
 /*APP - MAIN COMPONENT*/
 const App = () => {
 
@@ -33,9 +37,10 @@ const App = () => {
     signup: true,
     login: false,
     submitAccident: false,
-    citySearch: false
+    citySearch: false,
     quiz: false,
     graph: false,
+    compare: false
   });
 
   /*FUNCTIONS*/
@@ -89,6 +94,10 @@ const App = () => {
 
           <CSSTransition in={views.citySearch} timeout={0} classNames="fade" unmountOnExit>
             <Search />
+          </CSSTransition>
+
+          <CSSTransition in={views.compare} timeout={0} classNames="fade" unmountOnExit>
+            <Compare />
           </CSSTransition>
 
         </div>

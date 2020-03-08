@@ -50,6 +50,10 @@ const NavBar = (props) => {
   const citySearch = () => {
     props.setViews({...hideAll(), citySearch: true});
   }
+
+  const compare = () => {
+    props.setViews({...hideAll(), compare: true});
+  }
   
 
   const selectedStyle={
@@ -75,6 +79,7 @@ const NavBar = (props) => {
           {isLoggedIn() && <button type="button" className="navbar" style={props.views.graph ? selectedStyle : {}} onClick={graphShow}>Graph</button>}
           {props.userData.admin == true && <button type="button" className="navbar" style={props.views.submitAccident ? selectedStyle : {}} onClick={submitAccident}>Submit Accident Report</button>}
           <button type="button" className="navbar" style={props.views.citySearch ? selectedStyle : {}} onClick={citySearch}>City Search</button>
+          <button type="button" className="navbar" style={props.views.compare ? selectedStyle : {}} onClick={compare}>Compare</button>
           <button id="profileIcon" type="button" className="navbar float-right" onClick={cookies.get('token') ? userSummary : signin} style={{ paddingRight: '10px' }}>
             <i className={(isLoggedIn() ? "fas" : "far") + " fa-user"}></i>
           </button>
