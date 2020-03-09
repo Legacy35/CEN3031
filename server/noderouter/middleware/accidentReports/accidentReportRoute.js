@@ -65,44 +65,7 @@ const inputValidation = (req, res) => {
     }
 }
 
-/** TODO: Fix Mongoose Promises
- * Returns true if successful, false if fails
- * @param {*} req 
- * @param {*} res 
- */
-const storeAccident = async (req, res) => {
-
-    let coords = await getCoords(req, res);
-
-    if(!coords){
-        output = false;
-    }
-
-    let db = DATABASES.accidentReports;
-    const modelReport = db.model('AccidentReport', AccidentReport, 'accidentReports');
-    const docReport = new modelReport({
-        cityName: req.body.cityName,
-        state: req.body.state,
-        date: req.body.date,
-        weather: req.body.weather
-    });
-
-    docReport.save((err, docReport) => {
-        if (err) {
-            throw err;
-        }
-    });
-
-    return true;
-
-}
-
-/**
- * Returns coordinate object if succeeds, returns false if fails.
- * @param {*} req 
- * @param {*} res 
- */
-const getCoords = async (req, res) => {
+const getOpenCageCity = async (req, res) => {
 
     let output;
 
@@ -112,79 +75,88 @@ const getCoords = async (req, res) => {
     }
 
     await axios.get('https://api.opencagedata.com/geocode/v1/json?' + queryString.stringify(params)).then(
-        (res) => {
-
-            if (res.data.total_results <= 0) {
-                console.log(1)
-                output = false;
-                return;
-            }
-
-            let highestConfidence = 0; //Index of highest confidence result
-            for (let i = 0; i < res.data.results.length; i++) {
-                if (res.data.results[i].confidence > res.data.results[highestConfidence].confidence) {
-                    highestConfidence = i;
+        (resp) => {
+            let results = resp.data.results;
+            let index = 0;
+            for(let i = 0; i < results.length; i++){
+                if(results[i].confidence > results[index].confidence) {
+                    index = i;
                 }
             }
-            let result = res.data.results[highestConfidence];
-
-            if(result.components === undefined || result.components.state === undefined){
-                console.log(result.components);
-                output = false;
-                return;
-            }
-
-            let coords =  {latitude: result.geometry.lat, longitude: result.geometry.lng};
-            output = coords;
+            output = results[index];
         }
-    ).catch((err) => {
-        output =  false;
-        throw err;
-    });
+    ).catch(
+        (err) => {
+            throw err;
+        }
+    );
 
     return output;
 
 }
 
-/**
- * Returns true if the city already exists or was created, returns false if failed.
- * @param {*} req 
- * @param {*} res 
- */
-const generateCity = async (req, res) => {
+const getAccident = async (req, res) => {
+    return {
+        date: parseInt(req.body.date),
+        weather: req.body.weather
+    }
+}
 
-    let alreadyExists = false;
+const storeAccident = async (req, res, openCageCity) => {
 
-    db = DATABASES.cities;
+    let output = true;
 
-    const cityModel = db.model('City', City, 'cities');
+    if(!openCageCity.components.city || !openCageCity.components.state){
+        return false;
+    }
 
-    await cityModel.find({state: req.body.state, name: req.body.cityName}, (err, docs) => {
-        if(err){
-            console.log(err);
-            alreadyExists = true;
-        } else {
-            if(docs.length <= 0) {
-                alreadyExists = false;
-            } else {
-                alreadyExists = true;
-            }
+    const db = DATABASES.cities;
+
+    const modelCity = db.model('City', City, 'cities');
+
+    let cities;
+
+    await modelCity.find({name: new RegExp("^" + openCageCity.components.city, "i"), state: new RegExp("^" + openCageCity.components.state, "i")}, (err, docs) => {
+        if(err) {
+            output = false;
+            throw err;
         }
-    });
+        cities = docs;
+    }).catch((err) => {
+        if(err) {
+            output = false;
+            throw err;
+        }
+    })
 
-    if(alreadyExists) return true;
+    if(cities.length == 0){
 
-    let coords = await getCoords(req, res);
-    if(!coords) return false;
+        let city = await getOpenCageCity(req, res);
+        let coords = {latitude: city.geometry.lat, longitude: city.geometry.lng};
+        let accident = await getAccident(req, res);
+        let someObj = {
+            name: req.body.cityName,
+            state: req.body.state,
+            coordinates: coords,
+            accidents: [accident]
+        };
+        console.log(someObj);
+        await new modelCity(someObj).save().catch((err) => {
+            output = false;
+            if(err) {
+                output = false;
+                throw err;
+            }
+        });
 
-    const modelCity = new cityModel({
-        name: req.body.cityName,
-        state: req.body.state,
-        coordinates: coords
-    });
-    modelCity.save((err, modelCity) => {
-        if(err) console.log(err);
-    });
+    } else if(cities.length == 1) {
+        return false;
+
+    } else if (cities.length > 1){
+        output = false;
+    }
+
+    return output;
 
 }
 
@@ -202,17 +174,16 @@ const accidentReportPost = async (req, res) => {
         return;
     }
 
-    /*Store accident in DB*/
-    if (await storeAccident(req, res)) {
-        res.status(200).send("OK");
-    } else {
-        res.send({ error: "An error occurred while attempting to store the entry. Was the city name and state entered correctly?"});
+    let openCageCity = await getOpenCageCity(req, res);
+
+    if(!storeAccident(req, res, openCageCity)){
+        res.send({error: "An error occurred while performing this query. Either something went wrong on our end, or you aren't be specific enough when specificying a city."})
         return;
     }
 
-    /*Generate city and store in cities db*/
-    generateCity(req, res);
 
+    res.status(200).send("OK");
+    
 
 }
 

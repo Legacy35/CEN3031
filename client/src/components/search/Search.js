@@ -20,7 +20,13 @@ const Search = (props) => {
             latitude: 25.761681,
             longitude: -80.191788
           },
-          climate: "Tropical monsoon"
+          climate: "Tropical monsoon",
+          accidents: [
+            {
+              weather: ['Hail'],
+              date: new Date().getTime()
+            }
+          ]
         },
         {
           name: "New York City",
@@ -29,7 +35,13 @@ const Search = (props) => {
             latitude: 40.730610,
             longitude: -73.935242
           },
-          climate: "Humid continental"
+          climate: "Humid continental",
+          accidents: [
+            {
+              weather: ['Hail'],
+              date: new Date().getTime()
+            }
+          ]
         },
         {
           name: "Los Angeles",
@@ -38,7 +50,13 @@ const Search = (props) => {
             latitude: 34.052235,
             longitude: -118.243683
           },
-          climate: "Mediterranean"
+          climate: "Mediterranean",
+          accidents: [
+            {
+              weather: ['Hail'],
+              date: new Date().getTime()
+            }
+          ]
         },
       ]
     );
@@ -50,9 +68,9 @@ const Search = (props) => {
 
   return (
     <div>
-      <SearchForm setCities={setCities}/>
-      <br/>
-      <SearchResults cities={cities}/>
+      <SearchForm setCities={setCities} />
+      <br />
+      <SearchResults cities={cities} />
     </div>
   );
 

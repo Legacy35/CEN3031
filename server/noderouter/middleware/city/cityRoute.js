@@ -28,6 +28,8 @@ const citySearch = async (req, res) => {
     }
   }
 
+  //SELECT ? FROM ? WHERE ? LIKE ?
+
   const db = DATABASES.cities;
   const cityModel = db.model("City", CitySchema, 'cities');
 
@@ -37,7 +39,7 @@ const citySearch = async (req, res) => {
 
   } else if (req.query.sort.toLowerCase() == 'alphabetical') {
 
-    cityModel.find({name: req.query.filter }).sort({ name: 'asc'}).limit(parseInt(req.query.limit)).exec(callback);
+    cityModel.find({name: new RegExp("^" + req.query.filter.toLowerCase(), "i") }).sort({ name: 'asc'}).limit(parseInt(req.query.limit)).exec(callback);
  
   } else if (req.query.sort.toLowerCase() == 'similarity') {
     //TODO : Implement this for Sprint 2
