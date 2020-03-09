@@ -18,10 +18,7 @@ import GraphTab from './components/compare/GraphTab.js';
 import {isLoggedIn, loadProfile, login} from './SessionManager.js';
 
 /*CONSTANTS*/
-<<<<<<< HEAD
-=======
-//const cookies = new Cookies();
->>>>>>> JoshuaG
+
 /*APP - MAIN COMPONENT*/
 const App = () => {
 
