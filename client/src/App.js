@@ -17,8 +17,6 @@ import GraphTab from './components/compare/GraphTab.js';
 
 import {isLoggedIn, loadProfile, login} from './SessionManager.js';
 
-/*CONSTANTS*/
-
 /*APP - MAIN COMPONENT*/
 const App = () => {
 
@@ -38,7 +36,7 @@ const App = () => {
     submitAccident: false,
     citySearch: false,
     quiz: false,
-    graph: false,
+    home: false,
     compare: false
   });
 
@@ -83,7 +81,7 @@ const App = () => {
             <QuizTab userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>
 
-          <CSSTransition in={views.graph} timeout={0} classNames="fade" unmountOnExit>
+          <CSSTransition in={views.home} timeout={0} classNames="fade" unmountOnExit>
             <GraphTab userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>
 

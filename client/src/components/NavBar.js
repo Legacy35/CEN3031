@@ -39,7 +39,7 @@ const NavBar = (props) => {
     props.setViews({...hideAll(), quiz: true});
   }
 
-  const graphShow = () => {
+  const homeShow = () => {
     props.setViews({...hideAll(), home: true});
   }
 
@@ -72,7 +72,7 @@ const NavBar = (props) => {
         </button>
 
         <div className={wrapperClass}>
-          <button type="button" className="navbar" style={props.views.home ? selectedStyle : {}} onClick={home}>Home</button>
+          <button type="button" className="navbar" style={props.views.home ? selectedStyle : {}} onClick={homeShow}>Home</button>
           {!isLoggedIn() && <button type="button" className="navbar" style={props.views.signup ? selectedStyle : {}} onClick={signup}>Sign up</button>}
           {!isLoggedIn() && <button type="button" className="navbar" style={props.views.login ? selectedStyle : {}} onClick={signin}>Sign in</button>}
           {isLoggedIn() && <button type="button" className="navbar" style={props.views.userProfile ? selectedStyle : {}} onClick={userSummary}>User Profile</button>}
