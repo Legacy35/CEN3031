@@ -90,6 +90,9 @@ class City {
         longitude: <float>
     },
     climate: <Climate>,
+    accidents: [
+        ///Accident array here...
+    ]
 }
 ```
 ```js

@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const databaseConnections = require('./databaseConnections.js');
+const mongoose = require('mongoose');
 
 const { authenticateProxy } = require('./middleware/users/authentication.js');
 const {accidentReportPost} = require('./middleware/accidentReports/accidentReportRoute.js');
@@ -19,6 +20,7 @@ const start = async () => {
   app.use(express.static('public'));
 
   /*Create mongoose connections in global scope using the DATABASES object*/
+  mongoose.Promise = global.Promise;
   await databaseConnections.init();
 
   /*Middleware functions*/

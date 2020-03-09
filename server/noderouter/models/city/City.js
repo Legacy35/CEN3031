@@ -10,6 +10,12 @@ const City = new mongoose.Schema({
   },
   rank: { type: mongoose.Number },
   climate: { type: mongoose.Number },
+  accidents: [
+    {
+      date: Number,
+      weather: [String]
+    }
+  ]
 });
 
 module.exports = City

@@ -9,7 +9,8 @@ const SearchResults = (props) => {
     if (cities.length) {
 
         return (
-            <table className="table table-striped table-dark table-hover">
+            <div className="table-responsive nopadding nomargin">
+            <table className="table table-striped table-dark table-hover table-sm">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -18,41 +19,45 @@ const SearchResults = (props) => {
                         <th scope="col">Latitude</th>
                         <th scope="col">Longitude</th>
                         <th scope="col">Climate</th>
+                        <th scope="col">Number of Accidents</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         cities.map((element => (
-                            <tr>
+                            <tr key={i}>
                                 <th scope="row">{i++}</th>
                                 <td>{element.name}</td>
                                 <td>{element.state}</td>
                                 <td>{element.coordinates.latitude}</td>
                                 <td>{element.coordinates.longitude}</td>
                                 <td>{element.climate ? element.climate : "N/A"}</td>
+                                <td>{element.accidents.length}</td>
                             </tr>
                         )))
                     }
                 </tbody>
             </table>
+            </div>
         );
     } else {
 
         return (
-            <div>
-                            <table className="table table-striped table-dark table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">City</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Latitude</th>
-                        <th scope="col">Longitude</th>
-                        <th scope="col">Climate</th>
-                    </tr>
-                </thead>
-            </table>
-            <p>No results found.</p>
+            <div className="table-responsive nopadding nomargin">
+                <table className="table table-striped table-dark table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">City</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Latitude</th>
+                            <th scope="col">Longitude</th>
+                            <th scope="col">Climate</th>
+                            <th scope="col">Number of Accidents</th>
+                        </tr>
+                    </thead>
+                </table>
+                <p>No results found.</p>
             </div>
         );
 
