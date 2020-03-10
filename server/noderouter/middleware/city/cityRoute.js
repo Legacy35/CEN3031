@@ -5,7 +5,7 @@ const CitySchema = require('../../models/city/City.js');
 
 const citySearch = async (req, res) => {
 
-  if(!req.query.filter || !req.query.limit || !req.query.sort){
+  if(!req.query.limit || !req.query.sort){
     res.send({error: 'All fields are required.'});
     return;
   }
@@ -30,12 +30,14 @@ const citySearch = async (req, res) => {
 
   if (req.query.sort.toLowerCase() == "ranking") {
 
-    //cityModel.find({ name: req.query.filter}).sort({ name: 'asc'}).limit(req.query.limit).exec(callback);
+    cityModel.find({name: new RegExp("^" + req.query.filter.toLowerCase(), "i") }).sort({ name: 'asc'}).limit(parseInt(req.query.limit)).exec(callback);
 
   } else if (req.query.sort.toLowerCase() == 'alphabetical') {
-
+if(req.query.filter!=""){
     cityModel.find({name: new RegExp("^" + req.query.filter.toLowerCase(), "i") }).sort({ name: 'asc'}).limit(parseInt(req.query.limit)).exec(callback);
- 
+}else{
+    cityModel.find({}).sort({ name: 'asc'}).limit(parseInt(req.query.limit)).exec(callback);
+}
   } else if (req.query.sort.toLowerCase() == 'similarity') {
     //TODO : Implement this for Sprint 2
     //See: TODO

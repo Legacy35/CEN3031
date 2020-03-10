@@ -10,62 +10,6 @@ const Search = (props) => {
 
   const [cities, setCities] = useState(undefined);
 
-  const initialize = () => {
-    setCities(
-      [
-        {
-          name: "Miami",
-          state: "Florida",
-          coordinates: {
-            latitude: 25.761681,
-            longitude: -80.191788
-          },
-          climate: "Tropical monsoon",
-          accidents: [
-            {
-              weather: ['Hail'],
-              date: new Date().getTime()
-            }
-          ]
-        },
-        {
-          name: "New York City",
-          state: "New York",
-          coordinates: {
-            latitude: 40.730610,
-            longitude: -73.935242
-          },
-          climate: "Humid continental",
-          accidents: [
-            {
-              weather: ['Hail'],
-              date: new Date().getTime()
-            }
-          ]
-        },
-        {
-          name: "Los Angeles",
-          state: "California",
-          coordinates: {
-            latitude: 34.052235,
-            longitude: -118.243683
-          },
-          climate: "Mediterranean",
-          accidents: [
-            {
-              weather: ['Hail'],
-              date: new Date().getTime()
-            }
-          ]
-        },
-      ]
-    );
-  }
-
-  if (cities === undefined) {
-    initialize();
-  }
-
   return (
     <div>
       <SearchForm setCities={setCities} />
@@ -76,4 +20,4 @@ const Search = (props) => {
 
 }
 
-export default Search; 
+export default Search;
