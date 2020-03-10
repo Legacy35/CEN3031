@@ -77,6 +77,8 @@ const getOpenCageCity = async (req, res) => {
     await axios.get('https://api.opencagedata.com/geocode/v1/json?' + queryString.stringify(params)).then(
         (resp) => {
             let results = resp.data.results;
+            output = results[0];
+
             let index = 0;
             for(let i = 0; i < results.length; i++){
                 if(results[i].confidence > results[index].confidence) {
@@ -90,6 +92,7 @@ const getOpenCageCity = async (req, res) => {
             throw err;
         }
     );
+
 
     return output;
 
@@ -105,9 +108,10 @@ const getAccident = async (req, res) => {
 const storeAccident = async (req, res, openCageCity) => {
 
     let output = true;
+    if(!openCageCity) return "An error occurred while performing this query.";
 
-    if(!openCageCity.components.city || !openCageCity.components.state){
-        return false;
+    if(!openCageCity.components.city && !openCageCity.components.state){
+        return "No cities meeting the specified criteria were found. :(";
     }
 
     const db = DATABASES.cities;
@@ -116,44 +120,60 @@ const storeAccident = async (req, res, openCageCity) => {
 
     let cities;
 
-    await modelCity.find({name: new RegExp("^" + openCageCity.components.city, "i"), state: new RegExp("^" + openCageCity.components.state, "i")}, (err, docs) => {
+    let cityFilter = {
+        name: new RegExp(openCageCity.components.city || (openCageCity.components.town), "gi"),
+        state: new RegExp(openCageCity.components.state, "gi")
+    };
+
+    await modelCity.find(cityFilter, (err, docs) => {
         if(err) {
-            output = false;
+            output = "An error occurred while performing your query. :(";
             throw err;
         }
         cities = docs;
     }).catch((err) => {
         if(err) {
-            output = false;
+            output = "An error occurred while performing your query. :(";
             throw err;
         }
     })
 
+    let city = await getOpenCageCity(req, res);
+    let coords = {latitude: (city.bounds.northeast.lat + city.bounds.southwest.lat) / 2, longitude: (city.bounds.northeast.lng + city.bounds.southwest.lng) / 2};
+    let accident = await getAccident(req, res);
+
+
     if(cities.length == 0){
 
-        let city = await getOpenCageCity(req, res);
-        let coords = {latitude: city.geometry.lat, longitude: city.geometry.lng};
-        let accident = await getAccident(req, res);
-        let someObj = {
+        let city = {
             name: req.body.cityName,
             state: req.body.state,
             coordinates: coords,
             accidents: [accident]
         };
-        console.log(someObj);
-        await new modelCity(someObj).save().catch((err) => {
-            output = false;
+        await new modelCity(city).save().catch((err) => {
             if(err) {
-                output = false;
+                output = "An error occurred while saving your accident report. :(";;
                 throw err;
             }
         });
 
-    } else if(cities.length == 1) {
-        return false;
+    } else if (cities.length == 1) {
 
-    } else if (cities.length > 1){
-        output = false;
+        modelCity.findOneAndUpdate(cityFilter, { "$push": { accidents: accident } }, (err, docs) => {
+            if (err) {
+                output = "We were unable to save your accident report.";
+                throw err;
+            }
+        }).catch(
+            (err) => {
+                output = "We were unable to save your accident report.";
+                throw err;
+            }
+        );
+
+    } else if (cities.length > 1) {
+        return "More than one city met your search criteria. Please narrow your search. ";
     }
 
     return output;
@@ -176,14 +196,13 @@ const accidentReportPost = async (req, res) => {
 
     let openCageCity = await getOpenCageCity(req, res);
 
-    if(!storeAccident(req, res, openCageCity)){
-        res.send({error: "An error occurred while performing this query. Either something went wrong on our end, or you aren't be specific enough when specificying a city."})
+    let result = await storeAccident(req, res, openCageCity);
+    if(result !== true){
+        res.send({error: result});
         return;
     }
 
-
-    res.status(200).send("OK");
-    
+    res.status(200).send("OK");    
 
 }
 

@@ -5,8 +5,6 @@ const CitySchema = require('../../models/city/City.js');
 
 const citySearch = async (req, res) => {
 
-  //filter, limit, sort
-
   if(!req.query.filter || !req.query.limit || !req.query.sort){
     res.send({error: 'All fields are required.'});
     return;
@@ -23,12 +21,9 @@ const citySearch = async (req, res) => {
       docs.forEach((element) => {
         output.push({...element._doc, _id: undefined});
       });
-      console.log(output);
       res.send(output);
     }
   }
-
-  //SELECT ? FROM ? WHERE ? LIKE ?
 
   const db = DATABASES.cities;
   const cityModel = db.model("City", CitySchema, 'cities');

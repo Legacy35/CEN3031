@@ -1,5 +1,4 @@
 import React from 'react';
-import Form from './generic/Form';
 import axios from 'axios';
 
 const SubmitAccident = (props) => {

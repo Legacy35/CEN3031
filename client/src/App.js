@@ -9,13 +9,12 @@ import NavBar from './components/NavBar.js';
 import SubmitAccident from './components/SubmitAccident.js';
 import Search from './components/search/Search.js';
 
-
 import Compare from './components/compare/Compare.js';
 
 import QuizTab from './components/QuizTab.js';
 import GraphTab from './components/compare/GraphTab.js';
 
-import {isLoggedIn, loadProfile, login} from './SessionManager.js';
+import {isLoggedIn, loadProfile} from './SessionManager.js';
 
 /*APP - MAIN COMPONENT*/
 const App = () => {
