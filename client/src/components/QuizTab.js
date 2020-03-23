@@ -1,5 +1,6 @@
 import React from 'react'
 import Cookies from 'universal-cookie';
+import QuizQuestion from './QuizQuestion.js';
 
 const cookies = new Cookies();
 
@@ -7,18 +8,7 @@ const QuizTab = (props) => {
 
         return (
             <div className="tile view form">
-                <h2>Take a Driving Safety Quiz</h2>
-                <p><b>Quiestion 1:</b></p>
-                <p>Who is a speed limit?</p>
-                <p><b>Quiestion 2:</b></p>
-                <p>What is the speed limit?</p>
-                <p><b>Quiestion 3:</b></p>
-                <p>Where is your speed limit?</p>
-                <p><b>Quiestion 4:</b></p>
-                <p>When is our speed limit?</p>
-                <p><b>Quiestion 5:</b></p>
-                <p>Why is my speed limit?</p>
-                
+                <QuizQuestion question={"What is a speed limit?"} a1={"A convincing answer 1"} a2={"A convincing answer 2"} a3={"A convincing answer 3"} a4={"A convincing answer 4"}/>
             </div>
         );
 }
