@@ -1,3 +1,4 @@
+/*External middleware*/
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -5,10 +6,12 @@ const cookieParser = require('cookie-parser');
 const databaseConnections = require('./databaseConnections.js');
 const mongoose = require('mongoose');
 
+/*Internal middleware*/
 const { authenticateProxy } = require('./middleware/users/authentication.js');
-const {accidentReportPost} = require('./middleware/accidentReports/accidentReportRoute.js');
-const {citySearch} = require('./middleware/city/cityGet.js');
-const {accidentReportSearch} = require('./middleware/accidentReports/accidentReportSearch.js');
+const {accidentReportPost} = require('./middleware/accidentReports/accidentReportPost.js');
+const {cityGet} = require('./middleware/city/city.js');
+const {accidentReportGet} = require('./middleware/accidentReports/accidentReportGet.js');
+const {quizGet} = require('./middleware/quiz/quiz.js');
 
 const start = async () => {
 
@@ -20,16 +23,19 @@ const start = async () => {
   app.use(cookieParser());
   app.use(express.static('public'));
 
+
   /*Create mongoose connections in global scope using the DATABASES object*/
   mongoose.Promise = global.Promise;
   await databaseConnections.init();
 
-  /*Middleware functions*/
+  /*Use middleware functions*/
   app.all('/apis/authenticate*', authenticateProxy);
+  app.get('/apis/accidents/accident', accidentReportGet);
   app.post('/apis/accidents/accident', accidentReportPost);
-  app.get('/apis/cities/city', citySearch);
-  app.get('/apis/accidents/accident', accidentReportSearch);
+  app.get('/apis/cities/city', cityGet);
+  app.get('/apis/quizzes/quiz', quizGet)
 
+  /*Start app*/
   app.listen(app.get('port'), () => {
         console.log('NodeJS router now listening on ' + app.get('port') + '. Press CTRL+C to exit.');
   });

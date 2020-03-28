@@ -1,14 +1,14 @@
 import React from 'react';
 import axios from 'axios';
-import Cookies from 'universal-cookie';
-
-import Form from './generic/Form';
+import {login} from '../SessionManager.js';
 
 const SignUp = (props) => {
 
-    const signup = (evt) => {
+    const onSubmit = (evt) => {
 
-        let form = document.getElementById("formSignUp");        
+        evt.preventDefault();
+
+        let form = document.getElementById("formSignUp");
 
         axios.post('/apis/authenticate/authenticate.php', {
             email: form.email.value,
@@ -16,31 +16,11 @@ const SignUp = (props) => {
             passwordConfirm: form.passwordConfirm.value
         }).then(
             (res) => {
-                if(res.data && res.data.token){
-                    const cookies = new Cookies();
-                    cookies.set('token', res.data.token);
-                
-                    axios.get('/apis/authenticate/whois.php?token=' + cookies.get('token')).then(
-                        (res) => {
-                            if(res.data && !res.data.error){
-                                props.setUserData({...props.userData, ...res.data});
-                                
-                                let newViews = {...props.views};
-                                newViews.userProfile = true;
-                                newViews.signup = false;
-                                props.setViews(newViews);
-                            } else if (res.data.error){
-                                alert(res.data.error);
-                            }
-                        }
-                    ).catch(
-                        (err) => {
-                            console.log(err);
-                        }
-                    );
+                if (res.data && res.data.token) {
+                    login(form.email.value, form.password.value, props.views, props.setViews, props.setUserData);
 
                 } else {
-                    if(res.data.error) alert(res.data.error);
+                    if (res.data.error) alert(res.data.error);
                 }
             }
         ).catch(
@@ -51,28 +31,41 @@ const SignUp = (props) => {
 
     }
 
-    let inputs = [
-        {
-            name: "email",
-            label: "Email:",
-            placeholder: "ceo@business.net",
-            type: "email"
-        },
-        {
-            name: "password",
-            label: "Password:",
-            placeholder: "AllWorkAndNoPlayMakesJohhnyADullBoy",
-            type: "password"
-        },
-        {
-            name: "passwordConfirm",
-            label: "Confirm password:",
-            placeholder: "AllWorkAndNoPlayMakesJohhnyADullBoy",
-            type: "password"
-        }
-    ];
+    return (
+        <div>
+            <form id="formSignUp" onSubmit={onSubmit}>
 
-    return <Form id={"formSignUp"} labelColWidth={[12, 3, 3, 3, 3, 3]} inputColWidth={[12, 9, 9, 9, 9, 9]} onSubmit={signup} inputs={inputs}/>;
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="email">Email: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="email" id="email" type="email" />
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="password">Password: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="password" id="password" type="password" />
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="passwordConfirm">Confirm password: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="passwordConfirm" id="passwordConfirm" type="password" />
+                    </div>
+                </div>
+
+                <input type="submit" value="Sign up" className="btn btn-primary"/>
+            </form>
+        </div>
+    );
 
 }
 

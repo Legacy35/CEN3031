@@ -1,7 +1,8 @@
-const mongoose = require('mongoose');
 const City = require('../../models/city/City.js');
 
-const accidentReportSearch = (req, res) => {
+const accidentReportGet = (req, res) => {
+
+    console.log(req.asdf);
 
     if(!req.query.id) {
         res.send({error: "All fields are required."});
@@ -26,4 +27,4 @@ const accidentReportSearch = (req, res) => {
 
 } 
 
-exports.accidentReportSearch = accidentReportSearch;
+exports.accidentReportGet = accidentReportGet;

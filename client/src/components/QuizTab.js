@@ -2,13 +2,27 @@ import React from 'react'
 import Cookies from 'universal-cookie';
 import QuizQuestion from './QuizQuestion.js';
 
+import axios from 'axios';
+
 const cookies = new Cookies();
 
 const QuizTab = (props) => {
 
+    axios.get('/apis/quizzes/quiz')
+    .then(
+        (data) => {
+            
+        }
+    )
+    .catch(
+        (err) => {
+            if(err) throw err;
+        }
+    );
+
         return (
-            <div className="tile view form">
-                <QuizQuestion question={"What is a speed limit?"} a1={"A convincing answer 1"} a2={"A convincing answer 2"} a3={"A convincing answer 3"} a4={"A convincing answer 4"}/>
+            <div>
+                <QuizQuestion id={1} question={"What is a speed limit?"} answers={["Test", "Test", "Test", "Test"]}/>
             </div>
         );
 }

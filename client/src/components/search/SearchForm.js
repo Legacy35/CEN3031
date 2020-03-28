@@ -6,7 +6,9 @@ const SearchForm = (props) => {
 
   let form = document.getElementById('formCitySearch');
 
-  const onSubmit = () => {
+  const onSubmit = (evt) => {
+
+    evt.preventDefault();
 
     const params = {
       limit: form.limit.value,
@@ -31,16 +33,13 @@ const SearchForm = (props) => {
         }
       }
     ).catch((err) => {
-      console.log(err);
-    }).then( (res) => {
-      console.log(res);
-    }
-    )
+      if(err) console.log(err);
+    })
   }
 
   return (
     <div>
-      <form id="formCitySearch">
+      <form id="formCitySearch" onSubmit={onSubmit}>
         <div className="row form-group">
           <div className="col col-12 col-sm-3">
             <label htmlFor="filter">City name:</label>
