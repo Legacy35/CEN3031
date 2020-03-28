@@ -15,8 +15,9 @@ const SearchResults = (props) => {
 
     //Value used for the key property for rendered elements
     let i = 0;
-
     let cities = props.cities;
+    console.log(cities);
+
     if (cities == undefined) {
         return (
             <div className="table-responsive nopadding nomargin">
@@ -71,22 +72,27 @@ const SearchResults = (props) => {
                                     <td>{element.accidents.length}</td>
                                 </tr>
 
-                                <div className={"collapse w-100 row order" + i} style={{padding: '5px'}}>
-                                    <div className="col col-12">
-                                        Rainy Accidents: {getCount(element, "rain")}
-                                    </div>
-                                    <div className="col col-12">
-                                        Snowy Accidents: {getCount(element, "snow")}
-                                    </div>
-                                    <div className="col col-12">
-                                        Foggy Accidents: {getCount(element, "fog")}
-                                    </div>
-                                </div>
+                                {/*Summary*/}
+                                <span className={"collapse w-100 row order" + i} style={{ padding: '15px'}}>
+                                    {
+                                        element.accidents.map((accident) => (
+                                            <div className="col col-12">
+                                                <p>Date: {new Date(accident.date).toString().substr(0, 15)}</p>
+                                        <span>Weather: {accident.weather.toString().replace(',', ', ')}</span>
+                                                <hr style={{border: '1px solid white'}}/>
+                                            </div>
+
+                                        ))
+                                    }
+                                </span>
+
 
                             </tbody>
                         )))
 
                     }
+
+                    
                 </table>
             </div>
         );
