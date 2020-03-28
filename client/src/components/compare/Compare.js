@@ -2,17 +2,19 @@
  * Author: Joshua G, Cameron W
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import SearchForm from '../../components/search/SearchForm.js';
 import GraphTab from './GraphTab.js';
 
 const Compare = (props) => {
   
+  let [cities, setCities] = useState([]);
+
   return (
       <div>
     <p>asdfasdf</p>
-    <SearchForm/>
-    <GraphTab/>
+    <SearchForm setCities={setCities}/>
+    <GraphTab cities={cities}/>
     </div>
   );
 

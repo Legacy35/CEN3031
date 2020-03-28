@@ -1,33 +1,45 @@
 import React from 'react';
-import axios from 'axios';
-import Cookies from 'universal-cookie';
-import Form from './generic/Form.js';
 
 import {login} from '../SessionManager.js';
 
 const SignIn = (props) => {
 
-    const onSubmit = () => {
+    const onSubmit = (evt) => {
+
+        evt.preventDefault();
+
         let form = document.getElementById("formLogin");
         login(form.email.value, form.password.value, props.views, props.setViews, props.setUserData);
         
     }
 
-    let inputs = [
-        {
-            name: "email",
-            label: "Email:",
-            placeholder: "ceo@business.net"
-        },
-        {
-            name: "password",
-            label: "Password:",
-            placeholder: "AllWorkAndNoPlayMakesJohhnyADullBoy",
-            type: "password"
-        }
-    ];
+    return (
+        <div>
+            <form id="formLogin" onSubmit={onSubmit}>
 
-    return <Form id={"formLogin"} labelColWidth={[12, 3, 3, 3, 3]} inputColWidth={[12, 9, 9, 9, 9]} onSubmit={onSubmit} inputs={inputs}/>;
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="email">Email: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="email" id="email" type="email"/>
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="password">Password: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="password" id="password" type="password"/>
+                    </div>
+                </div>
+
+                <input className="btn btn-primary" type="submit" value="Sign in"/>
+            </form>
+   
+        </div>
+    );
 
 }
 

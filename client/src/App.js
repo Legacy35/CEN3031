@@ -25,7 +25,8 @@ const App = () => {
   let [userData, setUserData] = useState({
     id: undefined,
     admin: undefined,
-    email: undefined
+    email: undefined,
+    quizScores: undefined
   });
 
   let [views, setViews] = useState({
@@ -41,13 +42,8 @@ const App = () => {
 
   /*FUNCTIONS*/
 
-
   if (!loaded){
-    if(isLoggedIn()){
-      loadProfile(setUserData, views, setViews);
-    } else {
-
-    }
+    loadProfile(setUserData, views, setViews);
     setLoaded(true);
     return(<p>Loading...</p>);
   }
