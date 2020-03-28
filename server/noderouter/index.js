@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const { authenticateProxy } = require('./middleware/users/authentication.js');
 const {accidentReportPost} = require('./middleware/accidentReports/accidentReportRoute.js');
 const cityRoute = require('./middleware/city/cityRoute.js');
+const quizRoute = require('./middleware/quiz/quizRoute.js');
 
 const start = async () => {
 
@@ -27,6 +28,7 @@ const start = async () => {
   app.all('/apis/authenticate*', authenticateProxy);
   app.post('/apis/accidents/accident', accidentReportPost);
   app.get('/apis/cities/city', cityRoute);
+  app.get('/apis/quiz/generateQuiz', quizRoute);
 
   app.listen(app.get('port'), () => {
         console.log('NodeJS router now listening on ' + app.get('port') + '. Press CTRL+C to exit.');

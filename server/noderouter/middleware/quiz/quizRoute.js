@@ -1,56 +1,50 @@
 const config = require('../../config.js');
-const CitySchema = require('../../models/city/City.js');
-
-/*const Sort = ['ranking', 'alphabetical', 'similarity'];*/
-
-const citySearch = async (req, res) => {
-
-  if(!req.query.limit || !req.query.sort){
-    res.send({error: 'All fields are required.'});
-    return;
+const QuestionSchema = require('../../models/quiz/question.js');
+let output = [];//made global because callback gets called multiple times
+//copied from City route
+const callback = (err, docs) => {
+  if(err){
+    res.send({error: 'An internal error ocurred while performing this query. :('});
+    throw err;
+  } else {
+    docs.forEach((element) => {
+      output.push({...element._doc, _id: undefined});
+    });
   }
-
-  if(req.query.limit > 50) req.query.limit = 50;
-
-  const callback = (err, docs) => {
-    if(err){
-      res.send({error: 'An internal error ocurred while performing this query. :('});
-      throw err;
-    } else {
-      let output = [];
-      docs.forEach((element) => {
-        output.push({...element._doc, _id: undefined});
-      });
-      res.send(output);
-    }
-  }
-
-  const db = DATABASES.cities;
-  const cityModel = db.model("City", CitySchema, 'cities');
-
-  if (req.query.sort.toLowerCase() == "ranking") {
-
-    cityModel.find({name: new RegExp("^" + req.query.filter.toLowerCase(), "i") }).sort({ name: 'asc'}).limit(parseInt(req.query.limit)).exec(callback);
-
-  } else if (req.query.sort.toLowerCase() == 'alphabetical') {
-if(req.query.filter!=""){
-    cityModel.find({name: new RegExp("^" + req.query.filter.toLowerCase(), "i") }).sort({ name: 'asc'}).limit(parseInt(req.query.limit)).exec(callback);
-}else{
-    cityModel.find({}).sort({ name: 'asc'}).limit(parseInt(req.query.limit)).exec(callback);
 }
-  } else if (req.query.sort.toLowerCase() == 'similarity') {
-    //TODO : Implement this for Sprint 2
-    //See: TODO
-  }
-};
+//gets 10 random unique questions from the database
+const getQuizQuestions = async (req, res) => {
+  const questionModel = db.model("Question", QuestionSchema, 'questions');
 
-module.exports = citySearch;
+  questionModel.count().exec(function(err, count) { // gets count of how many Questions in the DB
+    if(count>10){//Makes sure there is atleast 10 so there is not an infinit
+    let questions = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1];
+    for(let i=0;i<10;i++) {
+      let cont2 = true;
+      while (cont2) {
+          var random = Math.floor(Math.random() * count);
+          if(questions.indexof(random)== -1){
+            questions[i]=random;
+            cont2=false;
+          }
+      }
 
-//TODO:
-/*
-        CitySchema.collection.find({
-      name: req.filter,
-    }).sort({
-      name: asc,
-    }).limit(req.limit);
- */
+    }
+
+    // Again query all users but only fetch one offset by our random #
+    questionModel.findOne().skip(questions[0]).exec(callback);
+    questionModel.findOne().skip(questions[1]).exec(callback);
+    questionModel.findOne().skip(questions[2]).exec(callback);
+    questionModel.findOne().skip(questions[3]).exec(callback);
+    questionModel.findOne().skip(questions[4]).exec(callback);
+    questionModel.findOne().skip(questions[5]).exec(callback);
+    questionModel.findOne().skip(questions[6]).exec(callback);
+    questionModel.findOne().skip(questions[7]).exec(callback);
+    questionModel.findOne().skip(questions[8]).exec(callback);
+    questionModel.findOne().skip(questions[9]).exec(callback);
+    res.send(output);
+  });
+}
+});
+
+module.exports = quiz;
