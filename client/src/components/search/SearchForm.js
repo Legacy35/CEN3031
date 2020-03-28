@@ -32,7 +32,10 @@ const SearchForm = (props) => {
       }
     ).catch((err) => {
       console.log(err);
-    })
+    }).then( (res) => {
+      console.log(res);
+    }
+    )
   }
 
   return (
