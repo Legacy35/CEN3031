@@ -4,7 +4,7 @@ import {Line} from 'react-chartjs-2';
 const GraphTab = (props) => {
 
     let [chartData, setChartData] = useState({
-      labels: [0, 1000, 5000, 10000, 20000, 50000, 100000],
+      labels: ['Bakersfield', 'Chicago', 'Gainesville', 'Los Angeles', 'Miami'],
       datasets: [
         {
           label: 'Number of Accidents',
@@ -25,7 +25,7 @@ const GraphTab = (props) => {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: [65, 59, 80, 81, 56, 55, 40]
+          data: [3,1,1,1,0]
         }
       ]
     });
@@ -34,9 +34,9 @@ const GraphTab = (props) => {
           scales: {
               yAxes: [{
                   ticks: {
-                      max: 85,
+                      max: 5,
                       min: 0,
-                      stepSize: 5
+                      stepSize: 1,
                   }
               }]
           },
