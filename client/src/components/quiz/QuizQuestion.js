@@ -18,6 +18,7 @@ const QuizQuestion = (props) => {
         <div className="form-group">
             <div><b>{props.question}</b></div>
             {answers}
+            <hr style={{border: '1px solid gray'}}/>
         </div>
     );
 }
