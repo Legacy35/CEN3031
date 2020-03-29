@@ -1,4 +1,4 @@
-/*External middleware*/
+/*External imports*/
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -6,14 +6,14 @@ const cookieParser = require('cookie-parser');
 const databaseConnections = require('./databaseConnections.js');
 const mongoose = require('mongoose');
 
-/*Internal middleware*/
+/*Internal imports*/
 const { authenticateProxy } = require('./middleware/users/authentication.js');
-const cityRoute = require('./middleware/city/cityRoute.js');
-const quizRoute = require('./middleware/quiz/quizRoute.js');
+const cityRoute = require('./middleware/city/city.js');
 const {accidentReportPost} = require('./middleware/accidentReports/accidentReportPost.js');
 const {cityGet} = require('./middleware/city/city.js');
 const {accidentReportGet} = require('./middleware/accidentReports/accidentReportGet.js');
-const {quizGet} = require('./middleware/quiz/quiz.js');
+const {getQuizQuestions, getQuizScores} = require('./middleware/quiz/quizRoute.js');
+const {quizPost} = require('./middleware/quiz/quizPost.js');
 
 const start = async () => {
 
@@ -34,9 +34,10 @@ const start = async () => {
   app.all('/apis/authenticate*', authenticateProxy);
   app.get('/apis/accidents/accident', accidentReportGet);
   app.post('/apis/accidents/accident', accidentReportPost);
-  app.get('/apis/quiz/generateQuiz', quizRoute);
   app.get('/apis/cities/city', cityGet);
-  app.get('/apis/quizzes/quiz', quizGet)
+  app.get('/apis/quizzes/quiz/questions', getQuizQuestions);
+  app.get('/apis/quizzes/quiz/scores', getQuizScores);
+  app.post('/apis/quizzes/quiz', quizPost);
 
   /*Start app*/
   app.listen(app.get('port'), () => {

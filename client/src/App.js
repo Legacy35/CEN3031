@@ -11,10 +11,10 @@ import Search from './components/search/Search.js';
 
 import Compare from './components/compare/Compare.js';
 
-import QuizTab from './components/QuizTab.js';
+import QuizTab from './components/quiz/QuizTab.js';
 import GraphTab from './components/compare/GraphTab.js';
 
-import {isLoggedIn, loadProfile} from './SessionManager.js';
+import {loadProfile} from './SessionManager.js';
 
 /*APP - MAIN COMPONENT*/
 const App = () => {
@@ -73,7 +73,7 @@ const App = () => {
           </CSSTransition>
 
           <CSSTransition in={views.quiz} timeout={0} classNames="fade" unmountOnExit>
-            <QuizTab userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
+            <QuizTab userData={userData} setUserData={setUserData} setViews={setViews} views={views}/>
           </CSSTransition>
 
           <CSSTransition in={views.home} timeout={0} classNames="fade" unmountOnExit>

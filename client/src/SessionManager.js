@@ -84,7 +84,7 @@ export const loadProfile = async (setUserData, views, setViews) => {
             }
         );
 
-        await axios.get('/apis/quizzes/quiz/').then(
+        await axios.get('/apis/quizzes/quiz/scores').then(
             (res) => {
                 userData.quizScores = res.data;
             }

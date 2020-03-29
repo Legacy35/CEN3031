@@ -3,16 +3,6 @@ import CitySummary from './CitySummary.js';
 
 const SearchResults = (props) => {
 
-    const getCount = (city, weather) => {
-        let output = 0;
-        city.accidents.forEach((accident) => {
-            accident.weather.forEach((weatherElement) => {
-                if (weatherElement.toLowerCase() == weather) output++;
-            });
-        });
-        return output;
-    }
-
     //Value used for the key property for rendered elements
     let i = 0;
     let cities = props.cities;
