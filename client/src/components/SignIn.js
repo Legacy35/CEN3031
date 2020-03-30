@@ -9,7 +9,7 @@ const SignIn = (props) => {
         evt.preventDefault();
 
         let form = document.getElementById("formLogin");
-        login(form.email.value, form.password.value, props.views, props.setViews, props.setUserData);
+        login(form.email.value, form.password.value, props.views, props.setViews, props.userData, props.setUserData);
         
     }
 

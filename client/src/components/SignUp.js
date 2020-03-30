@@ -17,7 +17,7 @@ const SignUp = (props) => {
         }).then(
             (res) => {
                 if (res.data && res.data.token) {
-                    login(form.email.value, form.password.value, props.views, props.setViews, props.setUserData);
+                    login(form.email.value, form.password.value, props.views, props.setViews, props.userData, props.setUserData);
 
                 } else {
                     if (res.data.error) alert(res.data.error);
