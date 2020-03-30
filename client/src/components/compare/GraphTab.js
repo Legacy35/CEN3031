@@ -1,34 +1,46 @@
 import React, { useState } from 'react';
-import {Bar} from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
 
 const GraphTab = (props) => {
 
     let [chartData, setChartData] = useState({
-        labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
-        datasets:[
-            {
-              label:'Number of Crashes',
-              data:[
-                617594,
-                181045,
-                153060,
-                106519,
-                105162,
-                95072
-              ],
-              backgroundColor:[
-                'rgba(255, 99, 132, 0.6)',
-                'rgba(54, 162, 235, 0.6)',
-                'rgba(255, 206, 86, 0.6)',
-                'rgba(75, 192, 192, 0.6)',
-                'rgba(153, 102, 255, 0.6)',
-                'rgba(255, 159, 64, 0.6)',
-                'rgba(255, 99, 132, 0.6)'
-              ]
-            }
-          ]
-
+      labels: ['Bakersfield', 'Chicago', 'Gainesville', 'Los Angeles', 'Miami'],
+      datasets: [
+        {
+          label: 'Number of Accidents',
+          fill: false,
+          lineTension: 0.1,
+          backgroundColor: 'rgba(75,192,192,0.4)',
+          borderColor: 'rgba(75,192,192,1)',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: 'rgba(75,192,192,1)',
+          pointBackgroundColor: '#fff',
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: [3,1,1,1,0]
+        }
+      ]
     });
+
+        let options = {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      max: 5,
+                      min: 0,
+                      stepSize: 1,
+                  }
+              }]
+          },
+      };
 
         return (
             <div className="graph">
@@ -38,7 +50,7 @@ const GraphTab = (props) => {
                 Cities are ranked based on several factors including population, accidents per day, and climate, among others
                 that can affect safe driving in a city.
               </em>
-              <Bar data={chartData}/>
+              <Line data={chartData} options={options}/>
             </div>
         );
 }
