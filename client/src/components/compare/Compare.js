@@ -13,7 +13,7 @@ const Compare = (props) => {
   return (
       <div>
     <p>Search for a City</p>
-    <SearchForm setCities={setCities}/>
+    <CompareSearchForm setCities={setCities}/>
     <GraphTab cities={cities}/>
     <CompareSearchForm />
     </div>

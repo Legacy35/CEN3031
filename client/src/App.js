@@ -20,13 +20,13 @@ import {loadProfile} from './SessionManager.js';
 const App = () => {
 
   /*Hooks*/
-  let [loaded, setLoaded] = useState(false);
+  let [loaded, setLoaded] = useState(false); //Has the client request profile data?
 
   let [userData, setUserData] = useState({
-    id: undefined,
-    admin: undefined,
-    email: undefined,
-    quizScores: undefined
+    id: null,
+    admin: null,
+    email: null,
+    quizScores: null
   });
 
   let [views, setViews] = useState({
@@ -43,9 +43,13 @@ const App = () => {
   /*FUNCTIONS*/
 
   if (!loaded){
-    loadProfile(setUserData, views, setViews, false);
+    loadProfile(views, setViews, userData, setUserData, false);
     setLoaded(true);
     return(<p>Loading...</p>);
+  }
+
+  if(userData.quizScores === null) {
+    return (<p>Loading...</p>)
   }
 
   return (

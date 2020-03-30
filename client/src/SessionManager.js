@@ -7,7 +7,7 @@ export const isLoggedIn = () => {
     return cookies.get('token');
 }
 
-export const login = (email, password, views, setViews, setUserData) => {
+export const login = (email, password, views, setViews, userData, setUserData) => {
 
     axios.get("/apis/authenticate/authenticate.php?email=" + email + "&password=" + password).then(
         (res) => {
@@ -21,7 +21,7 @@ export const login = (email, password, views, setViews, setUserData) => {
                 axios.get('/apis/authenticate/whois.php?token=' + token).then(
                     (res) => {
                         setUserData(res.data);
-                        loadProfile(setUserData, views, setViews);
+                        loadProfile(views, setViews, userData, setUserData);
                     }
                 ).catch(
                     (err) => {
@@ -51,16 +51,25 @@ export const logout = (views, setViews, setUserData) => {
     setViews(newViews);
 }
 
-export const loadProfile = async (setUserData, views, setViews, selectTab) => {
-    if (!isLoggedIn()) return;
+export const loadProfile = async (views, setViews, userData, setUserData, selectTab) => {
 
-    let userData;
+    if (!isLoggedIn()) {
+        let newUserData = {...userData};
+        let keys = Object.keys(newUserData);
+        for(let i = 0; i < keys.length; i++){
+            newUserData[keys[i]] = undefined;
+        }
+        setUserData(newUserData);
+        return;
+    }
+
+    let newUserData;
 
     await axios.get('/apis/authenticate/whois.php?token=' + cookies.get('token')).then(
         (res) => {
             if (res.data.id) {
                 res.data.admin = (res.data.admin == 1) ? true : false; //Needed for an === check elsewhere
-                userData = res.data;
+                newUserData = res.data;
                 if (selectTab !== false) {
                     let newViews = { ...views };
                     Object.keys(newViews).forEach((element) => {
@@ -81,7 +90,7 @@ export const loadProfile = async (setUserData, views, setViews, selectTab) => {
 
     await axios.get('/apis/quizzes/quiz/scores').then(
         (res) => {
-            userData.quizScores = res.data;
+            newUserData.quizScores = res.data;
         }
     )
         .catch(
@@ -90,7 +99,7 @@ export const loadProfile = async (setUserData, views, setViews, selectTab) => {
             }
         )
 
-    setUserData(userData);
+    setUserData(newUserData);
 
 
 }

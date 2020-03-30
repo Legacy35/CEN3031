@@ -32,7 +32,7 @@ const NavBar = (props) => {
   }
 
   const userSummary = () => {
-    loadProfile(props.setUserData, props.views, props.setViews);
+    loadProfile(props.views, props.setViews, props.userData, props.setUserData);
   }
 
   const quizzes = () => {
