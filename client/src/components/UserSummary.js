@@ -1,5 +1,6 @@
 import React from 'react'
 import { logout } from '../SessionManager.js';
+import QuizChart from './quiz/QuizChart.js';
 
 const UserSummary = (props) => {
 
@@ -28,7 +29,8 @@ const UserSummary = (props) => {
                 
                 <p></p>
             }
-          
+
+            <QuizChart />
             <button className="btn btn-primary" onClick={onClick}>Log out</button>
         </div>
     );
