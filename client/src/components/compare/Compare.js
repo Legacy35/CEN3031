@@ -3,7 +3,7 @@
  */
 
 import React, { useState } from 'react';
-import SearchForm from '../../components/search/SearchForm.js';
+import CompareSearchForm from '../../components/search/CompareSearchForm.js';
 import GraphTab from './GraphTab.js';
 
 const Compare = (props) => {
@@ -13,8 +13,8 @@ const Compare = (props) => {
   return (
       <div>
     <p>asdfasdf</p>
-    <SearchForm setCities={setCities}/>
     <GraphTab cities={cities}/>
+    <CompareSearchForm />
     </div>
   );
 

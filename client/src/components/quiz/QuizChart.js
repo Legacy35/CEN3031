@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {Line} from 'react-chartjs-2';
 
-const GraphTab = (props) => {
+const QuizChart = (props) => {
 
     let [chartData, setChartData] = useState({
         labels: ['3/05/20', '3/07/20', '3/10/20', '3/13/20', '3/20/20', '3/30/20'],
@@ -39,4 +39,4 @@ const GraphTab = (props) => {
         );
 }
 
-export default GraphTab;
+export default QuizChart;
