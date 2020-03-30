@@ -31,19 +31,19 @@ const App = () => {
 
   let [views, setViews] = useState({
     userProfile: false,
-    signup: true,
+    signup: false,
     login: false,
     submitAccident: false,
     citySearch: false,
     quiz: false,
-    home: false,
+    home: true,
     compare: false
   });
 
   /*FUNCTIONS*/
 
   if (!loaded){
-    loadProfile(setUserData, views, setViews);
+    loadProfile(setUserData, views, setViews, false);
     setLoaded(true);
     return(<p>Loading...</p>);
   }

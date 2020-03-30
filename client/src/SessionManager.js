@@ -21,14 +21,7 @@ export const login = (email, password, views, setViews, setUserData) => {
                 axios.get('/apis/authenticate/whois.php?token=' + token).then(
                     (res) => {
                         setUserData(res.data);
-                        let newViews = { ...views };
-                        let keys = Object.keys(newViews);
-                        for (let i = 0; i < keys.length; i++) {
-                            newViews[keys[i]] = false;
-                        }
-                        newViews['userProfile'] = true;
-
-                        setViews(newViews);
+                        loadProfile(setUserData, views, setViews);
                     }
                 ).catch(
                     (err) => {
@@ -58,45 +51,47 @@ export const logout = (views, setViews, setUserData) => {
     setViews(newViews);
 }
 
-export const loadProfile = async (setUserData, views, setViews) => {
-    if (isLoggedIn()) {
+export const loadProfile = async (setUserData, views, setViews, selectTab) => {
+    if (!isLoggedIn()) return;
 
-        let userData;
+    let userData;
 
-        await axios.get('/apis/authenticate/whois.php?token=' + cookies.get('token')).then(
-            (res) => {
-                if (res.data.id) {
-                    res.data.admin = (res.data.admin == 1) ? true : false;
-                    userData = res.data;
+    await axios.get('/apis/authenticate/whois.php?token=' + cookies.get('token')).then(
+        (res) => {
+            if (res.data.id) {
+                res.data.admin = (res.data.admin == 1) ? true : false; //Needed for an === check elsewhere
+                userData = res.data;
+                if (selectTab !== false) {
                     let newViews = { ...views };
                     Object.keys(newViews).forEach((element) => {
                         newViews[element] = false;
                     });
                     newViews['userProfile'] = true;
                     setViews(newViews);
-                } else if (res.data.error) {
-                    logout(views, setViews, setUserData);
                 }
+            } else if (res.data.error) {
+                logout(views, setViews, setUserData);
             }
-        ).catch(
-            (err) => {
-                console.log(err);
-            }
-        );
+        }
+    ).catch(
+        (err) => {
+            console.log(err);
+        }
+    );
 
-        await axios.get('/apis/quizzes/quiz/scores').then(
-            (res) => {
-                userData.quizScores = res.data;
+    await axios.get('/apis/quizzes/quiz/scores').then(
+        (res) => {
+            userData.quizScores = res.data;
+        }
+    )
+        .catch(
+            (err) => {
+                throw err;
             }
         )
-            .catch(
-                (err) => {
-                    throw err;
-                }
-            )
 
-        setUserData(userData);
+    setUserData(userData);
 
-    }
+
 }
 
