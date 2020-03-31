@@ -57,7 +57,7 @@ const getOpenCageCity = async (req, res) => {
                     if (results[i].components.city != undefined && results[i].components.city.toLowerCase() == req.body.cityName.toLowerCase()) {
                         output = results[i];
                         return;
-                    } else if (results[i].components.city != undefined && results[i].components.city.toLowerCase() == req.body.cityName.toLowerCase()) {
+                    } else if (results[i].components.town != undefined && results[i].components.town.toLowerCase() == req.body.cityName.toLowerCase()) {
                         output = results[i];
                         return;
                     }
