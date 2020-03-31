@@ -6,16 +6,38 @@ const City = require('./../../models/city/City.js');
 const State = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Federated States of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 const config = require('../../config.js')
 
-const {whois} = require('../../whois.js')
-
 /**
  * Returns true if user is authorized, false if not.
  * @param {*} req 
  * @param {*} res 
  */
 const authorized = async (req, res) => {
-    let whoisData = await whois(req, res);
-    return(whoisData.id !== undefined);
+
+    let output = false;
+
+    await axios.get(config.authServer + 'whois.php?token=' + req.cookies.token).then(
+        (resp) => {
+
+            output = true;
+
+            if (resp.data.error) {
+                output = false;
+            } else if (resp.data.admin != 1) {
+                output = false;
+            } else {
+                output = true;
+            }
+        }
+    ).catch(
+        (err) => {
+            if (err) {
+                output = false;
+            }
+        }
+    );
+
+    return output;
+
 }
 
 /**
@@ -67,6 +89,7 @@ const getOpenCageCity = async (req, res) => {
         }
     );
 
+
     return output;
 
 }
@@ -80,47 +103,47 @@ const getAccident = async (req, res) => {
 
 const storeAccident = async (req, res, openCageCity) => {
 
-    /*Input validation*/
     let output = true;
-    if(!openCageCity || (!openCageCity.components.town && !openCageCity.components.city)) return "An error occurred while performing this query.";
+    if(!openCageCity) return "An error occurred while performing this query.";
 
     if(!openCageCity.components.city && !openCageCity.components.state){
         return "No cities meeting the specified criteria were found. :(";
     }
 
-    /*Database stuff*/
     const db = DATABASES.cities;
+
     const modelCity = db.model('City', City, 'cities');
 
-    /*Get existing cities matching the search criteria*/
+    let cities;
+
     let cityFilter = {
         name: new RegExp(openCageCity.components.city || (openCageCity.components.town), "gi"),
         state: new RegExp(openCageCity.components.state, "gi")
     };
 
-    let cities;
-
     await modelCity.find(cityFilter, (err, docs) => {
         if(err) {
+            output = "An error occurred while performing your query. :(";
             throw err;
         }
         cities = docs;
     }).catch((err) => {
         if(err) {
+            output = "An error occurred while performing your query. :(";
             throw err;
         }
     })
 
-    
-    /*One way or anoyher, get the new city into the DB*/
-    let coords = {latitude: (openCageCity.bounds.northeast.lat + openCageCity.bounds.southwest.lat) / 2, longitude: (openCageCity.bounds.northeast.lng + openCageCity.bounds.southwest.lng) / 2};
+    let city = await getOpenCageCity(req, res);
+    let coords = {latitude: (city.bounds.northeast.lat + city.bounds.southwest.lat) / 2, longitude: (city.bounds.northeast.lng + city.bounds.southwest.lng) / 2};
     let accident = await getAccident(req, res);
+
 
     if(cities.length == 0){
 
         let city = {
-            name: openCageCity.components.city || openCageCity.components.town,
-            state: openCageCity.components.state,
+            name: req.body.cityName,
+            state: req.body.state,
             coordinates: coords,
             accidents: [accident]
         };
@@ -133,13 +156,17 @@ const storeAccident = async (req, res, openCageCity) => {
 
     } else if (cities.length == 1) {
 
-        console.log(cities);
-
-        cities[0].accidents.push(accident);
-
-        await cities[0].save().catch((err) => {
-            if(err) throw err;
-        });
+        modelCity.findOneAndUpdate(cityFilter, { "$push": { accidents: accident } }, (err, docs) => {
+            if (err) {
+                output = "We were unable to save your accident report.";
+                throw err;
+            }
+        }).catch(
+            (err) => {
+                output = "We were unable to save your accident report.";
+                throw err;
+            }
+        );
 
     } else if (cities.length > 1) {
         return "More than one city met your search criteria. Please narrow your search. ";
