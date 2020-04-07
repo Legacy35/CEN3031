@@ -1,11 +1,10 @@
 <?php
 
     require_once('./include/DataManager.php');
+    require_once('./include/middleware.php');
 
-    header('Content-type: application/json');
-    
 
-    
+
     function error($reason){
         exit(json_encode(array('error' => $reason)));
     }
@@ -26,25 +25,25 @@
 
 
     function createAccount($email, $password, $passwordConfirm){
-         
+
         if($password !== $passwordConfirm) error('Passwords don\'t match.');
-    
+
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)) error('Invalid email address.');
-    
+
         /*Database initialization*/
         $dataManager = DataManager::getInstance();
         $conn = $dataManager->getAuthConnection();
 
         if(!$conn || $conn->connect_error) error('Could not connect to authentication database. :( ');
-    
+
         /*Make sure account doesn't already exist*/
         $lookupStatement = $conn->prepare("SELECT id FROM authentication WHERE email = ?");
         if(!$lookupStatement->bind_param("s", $email)) error("Query failed. ¯\_(ツ)_/¯");
         if(!$lookupStatement->execute()) error("Query failed. ¯\_(ツ)_/¯");
         $resultSet = $lookupStatement->get_result();
-    
+
         if($resultSet->num_rows != 0) error('An account with that email address already exists.');
-    
+
         /*Generate initial token*/
         $strongCrypto = false;
         $token = bin2hex(openssl_random_pseudo_bytes(128, $strongCrypto));
@@ -65,21 +64,21 @@
 
 
     function login($email, $password){
-    
+
         /*DB Setup*/
         $conn = DataManager::getInstance()->getAuthConnection();
         if(!$conn || $conn->connect_error){
            error('Could not connect to authentication database. :(');
         }
-    
+
         /*Lookup user with provided email & password*/
         $statement = $conn->prepare("SELECT id, password_hash FROM authentication WHERE email = ?");
         if(!$statement->bind_param("s", $email)) error("Query failed. ¯\_(ツ)_/¯");
         if(!$statement->execute()) error("Query failed. ¯\_(ツ)_/¯");
         $resultSet = $statement->get_result();
-    
+
         if($resultSet->num_rows != 1) error('Specified account does not exist.');
-    
+
         $row = $resultSet->fetch_assoc();
 
         if(password_verify($password, $row['password_hash'])){
@@ -94,20 +93,12 @@
 
     }
 
-    /*Convert Axios/Node POST request into PHP-readable POST request*/
-    $data = json_decode(file_get_contents("php://input"));
-    if($data){
-        foreach($data as $key => $val){
-            $_POST[$key] = $val;
-        }
-    }
-
     if(isset($_GET['email']) && isset($_GET['password'])){
         $email = $_GET['email'];
         $password = $_GET['password'];
         login($email, $password);
     }
-    
+
     if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordConfirm'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
