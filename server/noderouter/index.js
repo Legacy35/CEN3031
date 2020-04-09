@@ -29,9 +29,7 @@ const start = async () => {
   await databaseConnections.init();
 
   let proxy = (req , res , next) =>{
-    console.log("I LIVE")
     let originalUrl = req.originalUrl;
-    console.log("I LIVE")
     if(!originalUrl.includes(".php")){
       next();
     }
