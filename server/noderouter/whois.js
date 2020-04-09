@@ -7,7 +7,7 @@ whois = async (req, res) => {
 
     if(!req.cookies.token) return output;
 
-    await axios.get(config.authServer + 'whois.php?token=' + req.cookies.token)
+    await axios.get(config.authServer + '/apis/authenticate/whois.php?token=' + req.cookies.token)
     .then(
         (data) => {
             output = data;

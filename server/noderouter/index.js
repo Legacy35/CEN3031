@@ -24,7 +24,6 @@ const start = async () => {
   app.use(cookieParser());
   app.use(express.static('public'));
 
-
   /*Create mongoose connections in global scope using the DATABASES object*/
   mongoose.Promise = global.Promise;
   await databaseConnections.init();
@@ -40,8 +39,7 @@ const start = async () => {
   };
 
   /*Use middleware functions*/
-  //app.all('*',proxy);
-  app.all('/apis/authenticate*', authenticateProxy);// 1st param the rotue they are giving us, 2nd param go to where that is defined
+  app.use(authenticateProxy);
   app.get('/apis/accidents/accident', accidentReportGet);
   app.post('/apis/accidents/accident', accidentReportPost);
   app.get('/apis/cities/city', cityGet);
