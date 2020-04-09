@@ -16,7 +16,7 @@ const getQuizQuestions = async (req, res) => {
   const numberOfQuestions = quizQuestions.length >= 10 ? 10 : quizQuestions.length;
 
   const output = new Array(numberOfQuestions);
-  
+
   const shuffled = shuffle(quizQuestions);
 
   for(let i = 0; i < output.length; i++){
@@ -31,7 +31,6 @@ const getQuizScores = async (req, res) => {
 
   let userData = await whois(req, res);
 
-  console.log(userData);
   userData = userData.data;
   if(!userData.id) {
       res.send({error: 'You must be signed in to perform this operation.'});
@@ -39,13 +38,14 @@ const getQuizScores = async (req, res) => {
   }
 
   let quizData = await GETQuizScore(req, res);
+console.log(quizData.data);
   let output= [];
   for(let i=0;i<quizData.data.length;i++){
     output[i]=quizData.data[i][0];
   }
   console.log(output);
   res.send(output);
-
+//fixed
 
 
 }

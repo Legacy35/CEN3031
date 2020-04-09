@@ -6,8 +6,7 @@ GETQuizScore = async (req, res) => {
     let output = {};
 
     if(!req.cookies.token) return output;
-
-    await axios.get(config.authServer + 'GETQuizScore.php?token=' + req.cookies.token)
+    await axios.get(config.authServer + '/Requests/GETQuizScore.php?token=' + req.cookies.token)
     .then(
         (data) => {
             output = data;
@@ -15,10 +14,10 @@ GETQuizScore = async (req, res) => {
     )
     .catch(
         (err) => {
-            if(err) throw err;
+            if(err) throw error;
         }
     );
-    //console.log(output.data);
+  //  console.log(output.data);
     return output;
 
 }
