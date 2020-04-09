@@ -20,7 +20,7 @@ import {loadProfile} from './SessionManager.js';
 const App = () => {
 
   /*Hooks*/
-  let [loaded, setLoaded] = useState(false); //Has the client request profile data?
+  let [loaded, setLoaded] = useState(false); //Has the client requested profile data?
 
   let [userData, setUserData] = useState({
     id: null,

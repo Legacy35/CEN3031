@@ -25,13 +25,12 @@ const start = async () => {
   app.use(cookieParser());
   app.use(express.static('public'));
 
-
   /*Create mongoose connections in global scope using the DATABASES object*/
   mongoose.Promise = global.Promise;
   await databaseConnections.init();
 
   /*Use middleware functions*/
-  app.all('/apis/authenticate*', authenticateProxy);
+  app.use(authenticateProxy);
   app.get('/apis/accidents/accident', accidentReportGet);
   app.post('/apis/accidents/accident', accidentReportPost);
   app.get('/apis/cities/city', cityGet);

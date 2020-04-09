@@ -12,7 +12,6 @@ export const login = (email, password, views, setViews, userData, setUserData) =
     axios.get("/apis/authenticate/authenticate.php?email=" + email + "&password=" + password).then(
         (res) => {
             if (res.data.error) {
-                alert(res.data.error)
             } else if (res.data.token) {
 
                 let token = res.data.token;
@@ -25,7 +24,7 @@ export const login = (email, password, views, setViews, userData, setUserData) =
                     }
                 ).catch(
                     (err) => {
-                        alert(err);
+                        console.log(err);
                     }
                 );
 
@@ -65,7 +64,8 @@ export const loadProfile = async (views, setViews, userData, setUserData, select
 
     let newUserData;
 
-    await axios.get('/apis/authenticate/whois.php?token=' + cookies.get('token')).then(
+    await axios.get('/apis/authenticate/whois.php?token=' + cookies.get('token'))
+    .then(
         (res) => {
             if (res.data.id) {
                 res.data.admin = (res.data.admin == 1) ? true : false; //Needed for an === check elsewhere
@@ -84,23 +84,26 @@ export const loadProfile = async (views, setViews, userData, setUserData, select
         }
     ).catch(
         (err) => {
-            console.log(err);
+            if(err) throw err;
         }
     );
 
-    await axios.get('/apis/quizzes/quiz/scores').then(
+    await axios.get('/apis/quizzes/quiz/scores/')
+    .then(
         (res) => {
             newUserData.quizScores = res.data;
         }
     )
-        .catch(
-            (err) => {
-                throw err;
+    .catch(
+        (err) => {
+            if(err) {
+                console.log(err);
             }
-        )
+        }
+    );
+
 
     setUserData(newUserData);
-
 
 }
 
