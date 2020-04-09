@@ -21,11 +21,24 @@
           if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :('))); //Execute the actual SQL query. If it fails, the returuend object will evaluate to false, meaning we call the exit function.
           $resultSet = $statement->get_result(); //Extract the data results from the qery & store in the $resultSet variable
           if($resultSet->num_rows < 1) exit(json_encode(array('error' => 'Account with provided token not found.'))); //Make sure we have more than 0 results
-          $row = $resultSet->fetch_assoc(); //Convert the result set object into a PHP assoictae array (Map/HashMap)
+          $output = $resultSet->fetch_assoc(); //Convert the result set object into a PHP assoictae array (Map/HashMap)
           //In this case, since the database schema has the id, email, password_hash, token, and admin fields, then we would get an object with those values.
-          exit(json_encode($row)); //convert the PHP object into JS and send to client.
-
-
+          
+          //Lookup quiz scores
+          $id = $output['id'];
+          $statement = $conn->prepare('SELECT * FROM quizData WHERE user_id = ? ORDER BY id ASC');
+          if(!$statement) exit(json_encode(array('error' => 'An internal or external error occurred')));
+          if(!$statement->bind_param("i", $id)) exit(json_encode(array('error' => 'An internal or external error occurred')));
+          if(!$statement->execute()) exit(json_encode(array('error' => 'An internal or external error occurred')));
+          $resultSet = $statement->get_result();
+          $output['quizScores'] = array();
+          if($resultSet->num_rows > 0){
+              while($row = $resultSet->fetch_assoc()){
+                  array_push($output->quizScores, $row['score']);
+              }
+          }
+          
+          exit(json_encode($output)); //convert the PHP object into JS and send to client.
 
       } else {
           exit(json_encode(array('error' => 'Invalid request.')));

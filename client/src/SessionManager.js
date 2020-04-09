@@ -70,6 +70,7 @@ export const loadProfile = async (views, setViews, userData, setUserData, select
             if (res.data.id) {
                 res.data.admin = (res.data.admin == 1) ? true : false; //Needed for an === check elsewhere
                 newUserData = res.data;
+                console.log(res.data)
                 if (selectTab !== false) {
                     let newViews = { ...views };
                     Object.keys(newViews).forEach((element) => {
@@ -87,21 +88,6 @@ export const loadProfile = async (views, setViews, userData, setUserData, select
             if(err) throw err;
         }
     );
-
-    await axios.get('/apis/quizzes/quiz/scores/')
-    .then(
-        (res) => {
-            newUserData.quizScores = res.data;
-        }
-    )
-    .catch(
-        (err) => {
-            if(err) {
-                console.log(err);
-            }
-        }
-    );
-
 
     setUserData(newUserData);
 
