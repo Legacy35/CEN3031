@@ -15,6 +15,11 @@ CREATE TABLE account(
     admin TINYINT NOT NULL DEFAULT 0,
     super_admin TINYINT NOT NULL DEFAULT 0
 );
+CREATE TABLE quizData(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    score INT NOT NULL DEFAULT 0
+);
 
 #Quiz Database
 DROP DATABASE IF EXISTS quiz;
@@ -24,7 +29,10 @@ USE quiz;
 CREATE TABLE question(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     question VARCHAR(1024) NOT NULL,
-    answers VARCHAR(1024) NOT NULL,
+    answer1 VARCHAR(1024) NOT NULL,
+    answer2 VARCHAR(1024) NOT NULL,
+    answer3 VARCHAR(1024) NOT NULL,
+    answer4 VARCHAR(1024) NOT NULL,
     correct_answer INT NOT NULL DEFAULT 0,
     state VARCHAR(25) NOT NULL
 );
@@ -47,9 +55,10 @@ totalAccidents INT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE rivalry(
-    _city_id1 INT NOT NULL ,
-    _city_id2 INT NOT NULL,
-PRIMARY KEY(_city_id1 ,_city_id2)
+    id INT NOT NULL AUTO_INCREMENT,
+    city_id1 INT NOT NULL,
+    city_id2 INT NOT NULL,
+    PRIMARY KEY(id,_city_id1 ,_city_id2)
 );
 
 GRANT ALL PRIVILEGES ON cities.* TO 'dbuser'@'localhost';
