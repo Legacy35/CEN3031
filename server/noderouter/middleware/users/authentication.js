@@ -9,28 +9,22 @@ const sanitizer = require('sanitizer');
  * @type {VoidFunction}
  */
 
-const sanitize = (obj) => {
-  let keys = Object.keys(obj);
-  for (let i = 0; i < keys.length; i++) {
-    obj[keys[i]] = sanitizer.sanitize(obj[keys[i]]);
-  }
-  return obj;
-}
+const authenticateProxy = (req, res, next) => {
 
-const authenticateProxy = (req, res) => {
-  let originalUrl = req.originalUrl;
-  let splits = originalUrl.split("/");
-  let destinationUrl = '';
-  for (let i = 3; i < splits.length; i++) {
-    destinationUrl += splits[i];
+
+  if(!req.originalUrl.toLowerCase().includes(".php")){
+    next();
+    return;
   }
-  destinationUrl = config.authServer + destinationUrl;
+
+  let originalUrl = req.originalUrl;
+  destinationUrl = config.authServer + originalUrl;
 
   if (req.body) {
     axios.post(destinationUrl, req.body).then(
 
         (data) => {
-          res.send(sanitize(data.data));
+          res.send(data.data);
         }
       )
       .catch(
@@ -43,7 +37,7 @@ const authenticateProxy = (req, res) => {
   } else {
     axios.get(destinationUrl, req.body).then(
         (data) => {
-          res.send(sanitize(data.data));
+          res.send(data.data);
         }
       )
       .catch(

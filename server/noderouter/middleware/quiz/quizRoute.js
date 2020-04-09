@@ -2,7 +2,6 @@ const quizQuestions = require('../../data/quizQuestions.js');
 const User = require('../../models/user/User.js');
 const {whois} = require('../../whois.js');
 
-
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -29,7 +28,13 @@ const getQuizQuestions = async (req, res) => {
 
 const getQuizScores = async (req, res) => {
 
+  console.log("11111111111111111");
+
   let userData = await whois(req, res);
+
+  console.log("22222222222222222");
+
+  console.log(userData);
   userData = userData.data;
   if(!userData.id) {
       res.send({error: 'You must be signed in to perform this operation.'});

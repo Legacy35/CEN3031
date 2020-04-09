@@ -1,7 +1,7 @@
 <?php
 
-    require_once('./include/DataManager.php');
-    require_once('./include/middleware.php');
+    require_once('../.././include/DataManager.php');
+    require_once('../.././include/middleware.php');
 
 
 
