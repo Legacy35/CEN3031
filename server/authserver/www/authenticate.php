@@ -12,9 +12,9 @@
 
 
     function setSession(int $id, string $token){
-        $conn = DataManager::getInstance()->getAuthConnection();
+        $conn = DataManager::getInstance()->getConnection("account");
         if(!$conn || $conn->connect_error) return false;
-        $statement = $conn->prepare("UPDATE authentication SET token = ? WHERE id = ?");
+        $statement = $conn->prepare("UPDATE account SET token = ? WHERE id = ?");
         if(!$statement->bind_param("si", $token, $id)) error("Query failed. ¯\_(ツ)_/¯");
         if($statement->execute()){
             return true;
@@ -32,12 +32,12 @@
 
         /*Database initialization*/
         $dataManager = DataManager::getInstance();
-        $conn = $dataManager->getAuthConnection();
+        $conn = $dataManager->getConnection("account");
 
-        if(!$conn || $conn->connect_error) error('Could not connect to authentication database. :( ');
+        if(!$conn || $conn->connect_error) error('Could not connect to account database. :( ');
 
         /*Make sure account doesn't already exist*/
-        $lookupStatement = $conn->prepare("SELECT id FROM authentication WHERE email = ?");
+        $lookupStatement = $conn->prepare("SELECT id FROM account WHERE email = ?");
         if(!$lookupStatement->bind_param("s", $email)) error("Query failed. ¯\_(ツ)_/¯");
         if(!$lookupStatement->execute()) error("Query failed. ¯\_(ツ)_/¯");
         $resultSet = $lookupStatement->get_result();
@@ -53,7 +53,7 @@
 
         /*Salt and hash password, store new account*/
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-        $insertStatement = $conn->prepare("INSERT INTO authentication (email, password_hash, token) VALUES (?, ?, ?)");
+        $insertStatement = $conn->prepare("INSERT INTO account (email, password_hash, token) VALUES (?, ?, ?)");
         if(!$insertStatement->bind_param("sss", $email, $passwordHash, $token)) error("Query failed. ¯\_(ツ)_/¯");
         if(!$insertStatement->execute()) error("Query failed. ¯\_(ツ)_/¯");
 
@@ -66,13 +66,13 @@
     function login($email, $password){
 
         /*DB Setup*/
-        $conn = DataManager::getInstance()->getAuthConnection();
+        $conn = DataManager::getInstance()->getConnection("account");
         if(!$conn || $conn->connect_error){
            error('Could not connect to authentication database. :(');
         }
 
-        /*Lookup user with provided email & password*/
-        $statement = $conn->prepare("SELECT id, password_hash FROM authentication WHERE email = ?");
+        /*Lookup account with provided email & password*/
+        $statement = $conn->prepare("SELECT id, password_hash FROM account WHERE email = ?");
         if(!$statement->bind_param("s", $email)) error("Query failed. ¯\_(ツ)_/¯");
         if(!$statement->execute()) error("Query failed. ¯\_(ツ)_/¯");
         $resultSet = $statement->get_result();

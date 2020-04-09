@@ -16,7 +16,7 @@ const getQuizQuestions = async (req, res) => {
   const numberOfQuestions = quizQuestions.length >= 10 ? 10 : quizQuestions.length;
 
   const output = new Array(numberOfQuestions);
-  
+
   const shuffled = shuffle(quizQuestions);
 
   for(let i = 0; i < output.length; i++){
@@ -28,7 +28,6 @@ const getQuizQuestions = async (req, res) => {
 }
 
 const getQuizScores = async (req, res) => {
-
   let userData = await whois(req, res);
   userData = userData.data;
   if(!userData.id) {
