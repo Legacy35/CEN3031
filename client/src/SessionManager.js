@@ -11,7 +11,6 @@ export const login = (email, password, views, setViews, userData, setUserData) =
 
     axios.get("/apis/authenticate/authenticate.php?email=" + email + "&password=" + password).then(
         (res) => {
-          console.log(res.data);
             if (res.data.error) {
                 alert(res.data.error)
             } else if (res.data.token) {
@@ -81,9 +80,6 @@ export const loadProfile = async (views, setViews, userData, setUserData, select
                 }
             } else if (res.data.error) {
                 logout(views, setViews, setUserData);
-            }else{
-              console.log(res.data);
-              alert("You stupid");
             }
         }
     ).catch(
