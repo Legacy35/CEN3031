@@ -1,6 +1,7 @@
-const quizQuestions = require('../../data/quizQuestions.js');
-const User = require('../../models/user/User.js');
+//const quizQuestions = require('../../data/quizQuestions.js');
+//const User = require('../../models/user/User.js');
 const {whois} = require('../../whois.js');
+const {GETQuizScore} = require('../../GETQuizScore.js');
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -37,20 +38,15 @@ const getQuizScores = async (req, res) => {
       return;
   }
 
-  const db = DATABASES.users;
-  const userModel = db.model('User', User, 'users');
+  let quizData = await GETQuizScore(req, res);
+  let output= [];
+  for(let i=0;i<quizData.data.length;i++){
+    output[i]=quizData.data[i][0];
+  }
+  console.log(output);
+  res.send(output);
 
-  userModel.findOne({_id: userData.id})
-  .then((data) => {
-      if(data) {
-          res.send(data.quizzes);
-      } else {
-          res.send([]);
-      }
-  })
-  .catch((err) => {
-      if(err) throw err;
-  });
+
 
 }
 
