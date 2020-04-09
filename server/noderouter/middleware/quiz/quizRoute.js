@@ -36,19 +36,16 @@ const getQuizScores = async (req, res) => {
       res.send({error: 'You must be signed in to perform this operation.'});
       return;
   }
-console.log("1");
+
   let quizData = await GETQuizScore(req, res);
-  console.log("2");
-  console.log(quizData);
-  console.log("3");
+console.log(quizData.data);
   let output= [];
   for(let i=0;i<quizData.data.length;i++){
     output[i]=quizData.data[i][0];
   }
-  console.log("4");
   console.log(output);
   res.send(output);
-
+//fixed
 
 
 }
