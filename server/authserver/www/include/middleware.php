@@ -7,4 +7,9 @@ if($data){
     }
 }
 header('Content-type: application/json');// returning a JSON object
+
+function error($message = "An internal or external error occurred") { 
+    exit(json_encode(array('error' => $message)));
+}
+
 ?>

@@ -19,7 +19,7 @@ const Quiz = (props) => {
             data[[pair[0]]] = pair[1];
          }
 
-        axios.post('/apis/quizzes/quiz', data).then(
+        axios.post('/apis/quizzes/quiz.php', data).then(
             (response) => {
                 console.log(response);
                 if(response.data.error){

@@ -3,14 +3,6 @@
     require_once('../.././include/DataManager.php');
     require_once('../.././include/middleware.php');
 
-
-
-    function error($reason){
-        exit(json_encode(array('error' => $reason)));
-    }
-
-
-
     function setSession(int $id, string $token){
         $conn = DataManager::getInstance()->getConnection("account");
         if(!$conn || $conn->connect_error) return false;

@@ -1,4 +1,4 @@
-//const quizQuestions = require('../../data/quizQuestions.js');
+const quizQuestions = require('../../data/quizQuestions.js');
 //const User = require('../../models/user/User.js');
 const {whois} = require('../../whois.js');
 const {GETQuizScore} = require('../../GETQuizScore.js');

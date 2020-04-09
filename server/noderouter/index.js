@@ -28,16 +28,6 @@ const start = async () => {
   mongoose.Promise = global.Promise;
   await databaseConnections.init();
 
-  let proxy = (req , res , next) =>{
-    console.log("I LIVE")
-    let originalUrl = req.originalUrl;
-    console.log("I LIVE")
-    if(!originalUrl.includes(".php")){
-      next();
-    }
-    next();
-  };
-
   /*Use middleware functions*/
   app.use(authenticateProxy);
   app.get('/apis/accidents/accident', accidentReportGet);

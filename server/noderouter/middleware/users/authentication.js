@@ -21,7 +21,11 @@ const authenticateProxy = (req, res, next) => {
   destinationUrl = config.authServer + originalUrl;
 
   if (req.body) {
-    axios.post(destinationUrl, req.body).then(
+    axios.post(destinationUrl, req.body, {
+      headers: {
+        Cookie: "token=" + req.cookies.token + ';'
+      }
+    }).then(
 
         (data) => {
           res.send(data.data);
@@ -35,7 +39,11 @@ const authenticateProxy = (req, res, next) => {
         }
       );
   } else {
-    axios.get(destinationUrl, req.body).then(
+    axios.get(destinationUrl, {
+      headers: {
+        Cookie: "token=" + req.cookies.token + ';'
+      }
+    }).then(
         (data) => {
           res.send(data.data);
         }
