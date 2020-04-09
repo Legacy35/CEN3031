@@ -1,13 +1,13 @@
 
 #Users Database
-DROP DATABASE IF EXISTS authentication;
-DROP USER IF EXISTS 'authentication'@'localhost';
+DROP USER IF EXISTS 'dbuser'@'localhost';
+CREATE USER IF NOT EXISTS 'dbuser'@'localhost' IDENTIFIED BY 'MyPasswordIsMoreSecureThanYoursBET';
 
-CREATE USER IF NOT EXISTS 'authentication'@'localhost' IDENTIFIED BY 'password';
-CREATE DATABASE IF NOT EXISTS authentication;
-USE authentication;
+DROP DATABASE IF EXISTS account;
+CREATE DATABASE IF NOT EXISTS account;
+USE account;
 
-CREATE TABLE authentication(
+CREATE TABLE account(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -15,41 +15,52 @@ CREATE TABLE authentication(
     admin TINYINT NOT NULL DEFAULT 0,
     super_admin TINYINT NOT NULL DEFAULT 0
 );
+CREATE TABLE quizData(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    score INT NOT NULL DEFAULT 0
+);
 
 #Quiz Database
 DROP DATABASE IF EXISTS quiz;
-DROP USER IF EXISTS 'quiz'@'localhost';
-
-CREATE USER IF NOT EXISTS 'quiz'@'localhost' IDENTIFIED BY 'password';
 CREATE DATABASE IF NOT EXISTS quiz;
 USE quiz;
 
 CREATE TABLE question(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     question VARCHAR(1024) NOT NULL,
-    answers VARCHAR(1024) NOT NULL,
-    correct_answer int NOT NULL DEFAULT 0,
+    answer1 VARCHAR(1024) NOT NULL,
+    answer2 VARCHAR(1024) NOT NULL,
+    answer3 VARCHAR(1024) NOT NULL,
+    answer4 VARCHAR(1024) NOT NULL,
+    correct_answer INT NOT NULL DEFAULT 0,
     state VARCHAR(25) NOT NULL
 );
 
 #Cities Database
 DROP DATABASE IF EXISTS cities;
-DROP USER IF EXISTS 'cities'@'localhost';
-
-CREATE USER IF NOT EXISTS 'cities'@'localhost' IDENTIFIED BY 'password';
 CREATE DATABASE IF NOT EXISTS cities;
 USE cities;
 
-#CREATE TABLE cities(
-#    _city_id1 INT NOT NULL PRIMARY KEY,
-#    _city_id2 INT NOT NULL PRIMARY KEY,,
-#);
-CREATE TABLE rivalry(
-    _city_id1 INT NOT NULL PRIMARY KEY,
-    _city_id2 INT NOT NULL PRIMARY KEY,,
+CREATE TABLE cities( # Purpose means Data is here but not in use, Functionality means No Data and not in use.
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(100) NOT NULL,
+state VARCHAR(100) NOT NULL,
+country VARCHAR(100) NOT NULL, # No Purpose
+latitude INT NOT NULL , # No Purpose
+longitude  INT NOT NULL , # No Purpose
+rank INT NOT NULL DEFAULT 0, # No Functionality
+climate INT NOT NULL DEFAULT 0, # No Functionality
+totalAccidents INT NOT NULL DEFAULT 0
 );
 
-GRANT ALL PRIVILEGES ON cities.cities TO 'cities'@'localhost';
-GRANT ALL PRIVILEGES ON authentication.authentication TO 'authentication'@'localhost';
-GRANT ALL PRIVILEGES ON quiz.quiz TO 'quiz'@'localhost';
-FLUSH PRIVILEGES;
+CREATE TABLE rivalry(
+    id INT NOT NULL AUTO_INCREMENT,
+    city_id1 INT NOT NULL,
+    city_id2 INT NOT NULL,
+PRIMARY KEY(id,_city_id1 ,_city_id2)
+);
+
+GRANT ALL PRIVILEGES ON cities.* TO 'dbuser'@'localhost';
+GRANT ALL PRIVILEGES ON account.* TO 'dbuser'@'localhost';
+GRANT ALL PRIVILEGES ON quiz.* TO 'dbuser'@'localhost';
