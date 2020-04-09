@@ -28,11 +28,7 @@ const getQuizQuestions = async (req, res) => {
 
 const getQuizScores = async (req, res) => {
 
-  console.log("11111111111111111");
-
   let userData = await whois(req, res);
-
-  console.log("22222222222222222");
 
   console.log(userData);
   userData = userData.data;

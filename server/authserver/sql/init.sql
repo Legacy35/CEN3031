@@ -58,7 +58,7 @@ CREATE TABLE rivalry(
     id INT NOT NULL AUTO_INCREMENT,
     city_id1 INT NOT NULL,
     city_id2 INT NOT NULL,
-PRIMARY KEY(id,_city_id1 ,_city_id2)
+    PRIMARY KEY(id,_city_id1 ,_city_id2)
 );
 
 GRANT ALL PRIVILEGES ON cities.* TO 'dbuser'@'localhost';

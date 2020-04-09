@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 
 /*Internal imports*/
 const { authenticateProxy } = require('./middleware/users/authentication.js');
-const cityRoute = require('./middleware/city/city.js');
 const {accidentReportPost} = require('./middleware/accidentReports/accidentReportPost.js');
 const {cityGet} = require('./middleware/city/city.js');
 const {accidentReportGet} = require('./middleware/accidentReports/accidentReportGet.js');
@@ -29,6 +28,16 @@ const start = async () => {
   mongoose.Promise = global.Promise;
   await databaseConnections.init();
 
+  let proxy = (req , res , next) =>{
+    console.log("I LIVE")
+    let originalUrl = req.originalUrl;
+    console.log("I LIVE")
+    if(!originalUrl.includes(".php")){
+      next();
+    }
+    next();
+  };
+
   /*Use middleware functions*/
   app.use(authenticateProxy);
   app.get('/apis/accidents/accident', accidentReportGet);
@@ -37,6 +46,7 @@ const start = async () => {
   app.get('/apis/quizzes/quiz/questions', getQuizQuestions);
   app.get('/apis/quizzes/quiz/scores', getQuizScores);
   app.post('/apis/quizzes/quiz', quizPost);
+
 
   /*Start app*/
   app.listen(app.get('port'), () => {
