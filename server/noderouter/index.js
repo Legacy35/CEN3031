@@ -30,6 +30,7 @@ const start = async () => {
   await databaseConnections.init();
 
   let proxy = (req , res , next) =>{
+    console.log("I LIVE")
     let originalUrl = req.originalUrl;
     console.log("I LIVE")
     if(!originalUrl.includes(".php")){
@@ -39,7 +40,7 @@ const start = async () => {
   };
 
   /*Use middleware functions*/
-//  app.all('*',proxy);
+  //app.all('*',proxy);
   app.all('/apis/authenticate*', authenticateProxy);// 1st param the rotue they are giving us, 2nd param go to where that is defined
   app.get('/apis/accidents/accident', accidentReportGet);
   app.post('/apis/accidents/accident', accidentReportPost);

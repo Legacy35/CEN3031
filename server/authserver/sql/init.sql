@@ -3,11 +3,11 @@
 DROP USER IF EXISTS 'dbuser'@'localhost';
 CREATE USER IF NOT EXISTS 'dbuser'@'localhost' IDENTIFIED BY 'MyPasswordIsMoreSecureThanYoursBET';
 
-DROP DATABASE IF EXISTS user;
-CREATE DATABASE IF NOT EXISTS user;
-USE user;
+DROP DATABASE IF EXISTS account;
+CREATE DATABASE IF NOT EXISTS account;
+USE account;
 
-CREATE TABLE user(
+CREATE TABLE account(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -53,6 +53,5 @@ PRIMARY KEY(_city_id1 ,_city_id2)
 );
 
 GRANT ALL PRIVILEGES ON cities.* TO 'dbuser'@'localhost';
-GRANT ALL PRIVILEGES ON user.user TO 'dbuser'@'localhost';
-GRANT ALL PRIVILEGES ON quiz.quiz TO 'dbuser'@'localhost';
-FLUSH PRIVILEGES;
+GRANT ALL PRIVILEGES ON account.* TO 'dbuser'@'localhost';
+GRANT ALL PRIVILEGES ON quiz.* TO 'dbuser'@'localhost';
