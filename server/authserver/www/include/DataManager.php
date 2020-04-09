@@ -8,8 +8,8 @@
 
         }
 
-        public function getAuthConnection(){
-            return new mysqli("127.0.0.1", "authentication", "password", "authentication");
+        public function getConnection(string $db){
+            return new mysqli("127.0.0.1", "dbuser", "MyPasswordIsMoreSecureThanYoursBET", $db);
         }
 
         public static function getInstance(){

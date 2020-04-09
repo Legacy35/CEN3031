@@ -12,7 +12,7 @@
 
 
     function setSession(int $id, string $token){
-        $conn = DataManager::getInstance()->getAuthConnection();
+        $conn = DataManager::getInstance()->getConnection("user");
         if(!$conn || $conn->connect_error) return false;
         $statement = $conn->prepare("UPDATE authentication SET token = ? WHERE id = ?");
         if(!$statement->bind_param("si", $token, $id)) error("Query failed. ¯\_(ツ)_/¯");
@@ -32,7 +32,7 @@
 
         /*Database initialization*/
         $dataManager = DataManager::getInstance();
-        $conn = $dataManager->getAuthConnection();
+        $conn = $dataManager->getConnection("user");
 
         if(!$conn || $conn->connect_error) error('Could not connect to authentication database. :( ');
 
@@ -66,7 +66,7 @@
     function login($email, $password){
 
         /*DB Setup*/
-        $conn = DataManager::getInstance()->getAuthConnection();
+        $conn = DataManager::getInstance()->getConnection("user");
         if(!$conn || $conn->connect_error){
            error('Could not connect to authentication database. :(');
         }

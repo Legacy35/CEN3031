@@ -3,7 +3,7 @@
     require_once('./include/DataManager.php');
 
     $dataManager = DataManager::getInstance();
-    $conn = $dataManager->getQuizConnection();
+    $conn = $dataManager->getConnection("quiz");
     $A1 = serialize(array("Motor scooters with more than 150 cubic centimeter displacement","Motor-driven cycles","Bicycles","All of the above"));
     $A2 = serialize(array("Large front and side blindspots","Large front, side, and rear blindspots","Large front and rear blindspots","None of the above"));
     $A3 = serialize(array("Drive off the paved or traveled portion of the road,Look ahead for road conditions or traffic,Pass on the left if the driver is signaling a left turn,Do all of the above"));
@@ -31,7 +31,7 @@
     $A25 = serialize(array("0.08,0.2,0.5,0.05"));
 
 
-    $insertStatement = $conn->prepare("INSERT INTO authentication (question, answers, correctAnswer, state  ) VALUES
+    $insertStatement = $conn->prepare('INSERT INTO authentication (question, answers, correctAnswer, state  ) VALUES
     ("Which of the following are allowed on expressways?",?,0,"Florida"),
     ("All trucks and buses have:",?,1,"Florida"),
     ("Before passing another vehicle you should:",?,1,"Florida"),
@@ -58,7 +58,7 @@
     ("An emergency vehicle is approaching with flashing lights on. You must:",?,0,"Florida"),
     ("Any driver under 21 with a breath or blood alcohol level of __ or higher is required to attend a substance abuse course.",?,3,"Florida")
 
-    ;");
+    ;');
     if(!$statement->bindparam("ssssssssssssssssssssssss", $A1 ,$A2, $A3, $A4, $A5, $A6, $A7, $A8, $A9, $A10, $A11, $A12, $A13, $A14, $A15, $A16, $A17, $A18, $A19, $A20, $A21, $A22, $A23, $A24, $A25));
     if(!$insertStatement->execute()) error("Query failed. ¯_(ツ)/¯");
 

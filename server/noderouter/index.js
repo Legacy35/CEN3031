@@ -8,7 +8,6 @@ const mongoose = require('mongoose');
 
 /*Internal imports*/
 const { authenticateProxy } = require('./middleware/users/authentication.js');
-const cityRoute = require('./middleware/city/city.js');
 const {accidentReportPost} = require('./middleware/accidentReports/accidentReportPost.js');
 const {cityGet} = require('./middleware/city/city.js');
 const {accidentReportGet} = require('./middleware/accidentReports/accidentReportGet.js');
@@ -30,14 +29,25 @@ const start = async () => {
   mongoose.Promise = global.Promise;
   await databaseConnections.init();
 
+  let proxy = (req , res , next) =>{
+    let originalUrl = req.originalUrl;
+    console.log("I LIVE")
+    if(!originalUrl.includes(".php")){
+      next();
+    }
+    next();
+  };
+
   /*Use middleware functions*/
-  app.all('/apis/authenticate*', authenticateProxy);
+//  app.all('*',proxy);
+  app.all('/apis/authenticate*', authenticateProxy);// 1st param the rotue they are giving us, 2nd param go to where that is defined
   app.get('/apis/accidents/accident', accidentReportGet);
   app.post('/apis/accidents/accident', accidentReportPost);
   app.get('/apis/cities/city', cityGet);
   app.get('/apis/quizzes/quiz/questions', getQuizQuestions);
   app.get('/apis/quizzes/quiz/scores', getQuizScores);
   app.post('/apis/quizzes/quiz', quizPost);
+
 
   /*Start app*/
   app.listen(app.get('port'), () => {

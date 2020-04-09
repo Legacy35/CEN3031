@@ -57,5 +57,4 @@ const cityGet = async (req, res) => {
 
 };
 
-
 exports.cityGet = cityGet;

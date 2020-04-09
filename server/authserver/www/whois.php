@@ -10,7 +10,7 @@
           $token = $_GET['token']; //$token is now equal to the GET paramater named 'token';
 
           /*DB setup*/
-          $conn = DataManager::getInstance()->getAuthConnection(); //External code
+          $conn = DataManager::getInstance()->getConnection("user"); //External code
           if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :('))); //Converts PHP associative array into JS object & sends to client
           //The exit function is basically the same as res.send() in Node. ALl code after calling exit will not execute.
 
