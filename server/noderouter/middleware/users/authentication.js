@@ -19,8 +19,7 @@ const authenticateProxy = (req, res, next) => {
 
   let originalUrl = req.originalUrl;
   destinationUrl = config.authServer + originalUrl;
-
-  if (req.body) {
+  if (req.method=="POST") {
     axios.post(destinationUrl, req.body, {
       headers: {
         Cookie: "token=" + req.cookies.token + ';'
