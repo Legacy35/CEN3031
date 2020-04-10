@@ -54,6 +54,18 @@ climate INT NOT NULL DEFAULT 0, # No Functionality
 totalAccidents INT NOT NULL DEFAULT 0
 );
 
+CREATE TABLE accidentReport( # Purpose means Data is here but not in use, Functionality means No Data and not in use.
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+city_id INT NOT NULL,
+accident_date INT NOT NULL,
+clear TINYINT NOT NULL DEFAULT 0
+rain TINYINT NOT NULL DEFAULT 0
+snow TINYINT NOT NULL DEFAULT 0
+hail TINYINT NOT NULL DEFAULT 0
+fog TINYINT NOT NULL DEFAULT 0
+high_winds TINYINT NOT NULL DEFAULT 0
+);
+
 CREATE TABLE rivalry(
     id INT NOT NULL AUTO_INCREMENT,
     city_id1 INT NOT NULL,

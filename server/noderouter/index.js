@@ -11,11 +11,11 @@ const { authenticateProxy } = require('./middleware/users/authentication.js');
 const {accidentReportPost} = require('./middleware/accidentReports/accidentReportPost.js');
 const {cityGet} = require('./middleware/city/city.js');
 const {accidentReportGet} = require('./middleware/accidentReports/accidentReportGet.js');
-const {getQuizQuestions, getQuizScores} = require('./middleware/quiz/quizRoute.js');
+const {getQuizQuestions} = require('./middleware/quiz/quizRoute.js');
 const {quizPost} = require('./middleware/quiz/quizPost.js');
 
 const start = async () => {
-
+//
   /*Express boilerplate*/
   app.set('port', 2046);
   app.disable('x-powered-by');
@@ -34,9 +34,9 @@ const start = async () => {
   app.post('/apis/accidents/accident', accidentReportPost);
   app.get('/apis/cities/city', cityGet);
   app.get('/apis/quizzes/quiz/questions', getQuizQuestions);
-  app.get('/apis/quizzes/quiz/scores', getQuizScores);
+//app.get('/apis/quizzes/quiz/scores', getQuizScores);
   app.post('/apis/quizzes/quiz', quizPost);
-
+//
 
   /*Start app*/
   app.listen(app.get('port'), () => {
