@@ -11,3 +11,4 @@
       } else {
           exit(json_encode(array('error' => 'Invalid request.')));
       }
+      ?>

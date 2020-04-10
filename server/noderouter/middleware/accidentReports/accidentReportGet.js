@@ -25,6 +25,6 @@ const accidentReportGet = (req, res) => {
         }
     );
 
-} 
+}
 
 exports.accidentReportGet = accidentReportGet;
