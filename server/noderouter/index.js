@@ -32,7 +32,7 @@ const start = async () => {
   app.use(authenticateProxy);
   app.get('/apis/accidents/accident', accidentReportGet);
   app.post('/apis/accidents/accident', accidentReportPost);
-  app.get('/apis/cities/city', cityGet);
+//app.get('/apis/cities/city', cityGet);
   app.get('/apis/quizzes/quiz/questions', getQuizQuestions);
 //app.get('/apis/quizzes/quiz/scores', getQuizScores);
   app.post('/apis/quizzes/quiz', quizPost);
