@@ -48,17 +48,15 @@ const SearchResults = (props) => {
                     </thead>
                     {
                         cities.map((element => (
-
                             <tbody key={i++}> {/*Increment at the start of the login to avoid duplicate keys*/}
-
                                 <tr key={i} data-toggle="collapse" data-target={".order" + i}>
                                     <th scope="row" >{i}</th>
                                     <td>{element.name}</td>
                                     <td>{element.state}</td>
-                                    <td>{element.coordinates.latitude}</td>
-                                    <td>{element.coordinates.longitude}</td>
+                                    <td>{element.latitude}</td>
+                                    <td>{element.longitude}</td>
                                     <td>{element.climate ? element.climate : "N/A"}</td>
-                                    <td>{element.accidents.length}</td>
+                                    <td>{element.totalAccidents}</td>
                                 </tr>
 
                             </tbody>
@@ -66,7 +64,7 @@ const SearchResults = (props) => {
 
                     }
 
-                    
+
                 </table>
             </div>
         );

@@ -7,7 +7,6 @@
       $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 25;
       $conn = DataManager::getInstance()->getConnection('cities'); 
       if(!$conn || $conn->connect_error) error(); 
-
       $statement = $conn->prepare("SELECT * FROM cities WHERE name LIKE CONCAT('%', ?, '%') ORDER BY name ASC LIMIT ?"); 
       if(!$statement) error();
       if(!$statement->bind_param("si", $_GET['filter'], $limit));

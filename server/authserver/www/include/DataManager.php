@@ -19,7 +19,7 @@
           /*Find the right account and return it*/
           $statement = $conn->prepare("SELECT id, email, admin, super_admin FROM account WHERE token = ?"); //Creates the fill in the blank SQL statement, but variables are not yet decided. Does not execute the statement until we call the execute function.
           if(!$statement) exit(json_encode(array('error' => 'An internal or external error occurred.')));
-          if(!$statement->bind_param("s", $token)); //Puts the string "$token" in the blank. 10 strings would use "ssssssssss" followed by 10 string variables for subsequent values.
+          if(!$statement->bind_param("s", $token)) error(); //Puts the string "$token" in the blank. 10 strings would use "ssssssssss" followed by 10 string variables for subsequent values.
           if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :('))); //Execute the actual SQL query. If it fails, the returuend object will evaluate to false, meaning we call the exit function.
           $resultSet = $statement->get_result(); //Extract the data results from the qery & store in the $resultSet variable
           if($resultSet->num_rows < 1) exit(json_encode(array('error' => 'Account with provided token not found.'))); //Make sure we have more than 0 results
