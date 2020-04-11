@@ -42,9 +42,9 @@ const Quiz = (props) => {
     return (
         <form id="formQuiz">
             {
-                props.questions.map((_question) => <QuizQuestion key={_question._id} id={_question._id} question={_question.question} answers={_question.answers}/>)
+                props.questions.map((_question) => <QuizQuestion key={_question.id} id={_question.id} question={_question.question} answers={_question.answers}/>)
             }
-            <input type="hidden" value={props.questions.length} name="questionCount"/>
+            <input type="hidden" value={props.questions.length} name="numQuestions"/>
             <input type="submit" value="Submit quiz" className="btn btn-primary" onClick={onClick}/>
 
         </form>
