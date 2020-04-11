@@ -24,7 +24,7 @@ const SearchForm = (props) => {
       }
     }
 
-    axios.get('/apis/cities/city?' + queryString.encode(params)).then(
+    axios.get('/apis/cities/city.php?' + queryString.encode(params)).then(
       (res) => {
         if(res.data.error){
           alert(res.data.error);

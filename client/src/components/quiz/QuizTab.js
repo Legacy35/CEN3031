@@ -10,7 +10,7 @@ const QuizTab = (props) => {
     let [questions, setQuestions] = useState([]);
 
     const loadQuiz = () => {
-        axios.get('/apis/quizzes/quiz/questions')
+        axios.get('/apis/quizzes/quiz/questions.php')
         .then(
             (res) => {
     

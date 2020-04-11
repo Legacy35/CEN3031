@@ -61,21 +61,6 @@ const SearchResults = (props) => {
                                     <td>{element.accidents.length}</td>
                                 </tr>
 
-                                {/*Summary*/}
-                                <span className={"collapse w-100 row order" + i} style={{ padding: '15px'}}>
-                                    {
-                                        element.accidents.map((accident) => (
-                                            <div className="col col-12">
-                                                <p>Date: {new Date(accident.date).toString().substr(0, 15)}</p>
-                                        <span>Weather: {accident.weather.toString().replace(',', ', ')}</span>
-                                                <hr style={{border: '1px solid white'}}/>
-                                            </div>
-
-                                        ))
-                                    }
-                                </span>
-
-
                             </tbody>
                         )))
 

@@ -46,11 +46,11 @@ const SubmitAccident = (props) => {
             date: unixDate.getTime()
         };
 
-        axios.post('/apis/accidents/accident', params).then(
+        axios.post('/apis/accidents/accident.php', params).then(
             (res) => {
+                console.log(res);
                 if(res.data.error){
                     alert(res.data.error);
-                    return;
                 } else {
                     alert('Entry recorded in database. :)');
                 }
