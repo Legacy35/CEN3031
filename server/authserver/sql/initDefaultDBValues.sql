@@ -10,23 +10,23 @@ INSERT INTO quizData(user_id, score) VALUES
 (1, 50), (1, 80), (2, 30), (2, 20), (2, 20), (3, 40), (3,100), (4, 100);
 
 USE cities;
-INSERT INTO cities(name, state, country, latitude, longitude, rank, climate, totalAccidents) VALUES
-("Miami", "Florida", "United States", 10, 50, 0, 0, 2),
-("Gainesville", "Florida", "United States", 10, 50, 0, 0, 2),
-("Orlando", "Florida", "United States", 10, 50, 0, 0, 1),
-("Tampa", "Florida", "United States", 10, 50, 0, 0, 1),
-("Tallahassee", "Florida", "United States", 10, 50, 0, 0, 1),
-("Atlanta", "Georgia", "United States", 10, 50, 0, 0, 1),
-("Athens", "Georgia", "United States", 10, 50, 0, 0, 2),
-("Macon", "Georgia", "United States", 10, 50, 0, 0, 2),
-("Savannah", "Georgia", "United States", 10, 50, 0, 0, 1),
-("Augusta", "Georgia", "United States", 10, 50, 0, 0, 1),
-("Houston", "Texas", "United States", 10, 50, 0, 0, 2),
-("Austin", "Texas", "United States", 10, 50, 0, 0, 2),
-("Dallas", "Texas", "United States", 10, 50, 0, 0, 2);
+INSERT INTO cities(name, state, country, latitude, longitude,  climate) VALUES
+("Miami", "Florida", "United States", 10, 50,  0),
+("Gainesville", "Florida", "United States", 10, 50,  0),
+("Orlando", "Florida", "United States", 10, 50,  0),
+("Tampa", "Florida", "United States", 10, 50,  0),
+("Tallahassee", "Florida", "United States", 10, 50,  0),
+("Atlanta", "Georgia", "United States", 10, 50,  0),
+("Athens", "Georgia", "United States", 10, 50, 0),
+("Macon", "Georgia", "United States", 10, 50, 0),
+("Savannah", "Georgia", "United States", 10, 50, 0),
+("Augusta", "Georgia", "United States", 10, 50, 0),
+("Houston", "Texas", "United States", 10, 50, 0),
+("Austin", "Texas", "United States", 10, 50, 0),
+("Dallas", "Texas", "United States", 10, 50, 0);
 /*add atleast 13 samples and some in diffrent states. Places Should actually exist*/
 
-INSERT INTO accidentReport(city_id, accident_date, clear, rain, snow, hail, fog, high_winds) VALUES
+INSERT INTO accidentReport(city_id, date, clear, rain, snow, hail, fog, high_winds) VALUES
 (1, 1586527168, 1, 0, 0, 0, 0, 0),
 (1, 1586427168, 1, 0, 0, 0, 0, 1),
 (2, 1586227168, 1, 0, 0, 0, 1, 1),
