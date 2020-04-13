@@ -65,6 +65,7 @@ const App = () => {
         <div className="col col-12 col-sm-10 col-md-8 col-xl-6">
           <h1>Insurance Driver App</h1>
           <hr style={{ borderTop: '1px solid #8c8b8b' }}></hr>
+          <QuizManager/>
           <CSSTransition in={views.signup} timeout={0} classNames="fade" unmountOnExit>
             <SignUp userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>

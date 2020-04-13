@@ -7,6 +7,30 @@ const QuizManager = (props) => {
             Add functionality for removing a question
     */
 
+    let [questionList, setQuestionList] = useState([]);
+
+    axios.get('/apis/quizzes/quiz/questions').then(
+        (res) => {
+            if(res.data.error){
+              alert(res.data.error);
+            } else {
+              setQuestionList(res.data);
+            }
+          }
+    ).catch((err) => {
+        if(err) console.log(err);
+    });
+
+    questionList = questionList.map(directory => {
+        return(
+            <tr key={directory.id}>
+                <td>{directory.question}</td>
+            </tr>
+        );
+    });
+
+    
+
     const onSubmit = (e) => {
         let form = document.getElementById("formAddQuestion");
 
@@ -138,6 +162,9 @@ const QuizManager = (props) => {
             <div>
                 <strong>Remove a Quiz Question</strong>
                 <p><input placeholder="Search for a question"></input></p>
+                <div>
+                    {questionList.length}
+                </div>
                 
             </div>
         </div>
