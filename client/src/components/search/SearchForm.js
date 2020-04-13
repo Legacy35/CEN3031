@@ -11,9 +11,9 @@ const SearchForm = (props) => {
     evt.preventDefault();
 
     const params = {
-      limit: form.limit.value,
+      limit: 50,
       filter: form.filter.value,
-      sort: form.sort.value
+      sort: "alphabetical"
     };
 
     let keys = Object.keys(params);
@@ -37,6 +37,23 @@ const SearchForm = (props) => {
     })
   }
 
+
+  /*           
+  <div className="col col-12 col-sm-9">
+    <select id="limit" name="limit" className="form-control" placeholder="Spokane">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+      <option value="25">25</option>
+      <option value="30">30</option>
+      <option value="35">35</option>
+      <option value="40">40</option>
+      <option value="45">45</option>
+      <option value="50">50</option>
+    </select>
+  </div>
+  */
   return (
     <div>
       <form id="formCitySearch" onSubmit={onSubmit}>
@@ -52,25 +69,9 @@ const SearchForm = (props) => {
           <div className="col col-12 col-sm-3">
             <label htmlFor="limit">Limit:</label>
           </div>
-          <div className="col col-12 col-sm-9">
-            <select id="limit" name="limit" className="form-control" placeholder="Spokane">
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-              <option value="25">25</option>
-              <option value="30">30</option>
-              <option value="35">35</option>
-              <option value="40">40</option>
-              <option value="45">45</option>
-              <option value="50">50</option>
-            </select>
-          </div>
+
         </div>
         <div className="row form-group">
-          <div className="col col-12 col-sm-3">
-            <label htmlFor="sort">Sort by:</label>
-          </div>
           <div className="col col-12 col-sm-9">
             <select id="sort" name="sort" type="text" className="form-control" placeholder="Spokane">
               <option value="alphabetical">Alphabetical</option>
