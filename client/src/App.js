@@ -14,6 +14,7 @@ import Compare from './components/compare/Compare.js';
 
 import QuizTab from './components/quiz/QuizTab.js';
 import GraphTab from './components/compare/GraphTab.js';
+import QuizManager from './components/QuizManager.js';
 
 import {loadProfile} from './SessionManager.js';
 
@@ -69,6 +70,7 @@ const App = () => {
         <div className="col col-12 col-sm-10 col-md-8 col-xl-6">
           <h1>Insurance Driver App</h1>
           <hr style={{ borderTop: '1px solid #8c8b8b' }}></hr>
+          <QuizManager/>
           <CSSTransition in={views.signup} timeout={0} classNames="fade" unmountOnExit>
             <SignUp userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>
