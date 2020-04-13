@@ -47,6 +47,7 @@ const Quiz = (props) => {
             <input type="hidden" value={props.questions.length} name="numQuestions"/>
             <input type="submit" value="Submit quiz" className="btn btn-primary" onClick={onClick}/>
 
+
         </form>
     );
 

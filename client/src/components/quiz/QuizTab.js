@@ -1,9 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios';
 
-import QuizQuestion from './QuizQuestion.js';
 import Quiz from './Quiz.js';
-import { isLoggedIn } from '../../SessionManager.js';
 
 const QuizTab = (props) => {
 

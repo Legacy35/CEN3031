@@ -8,6 +8,7 @@ import UserSummary from './components/UserSummary.js';
 import NavBar from './components/NavBar.js';
 import SubmitAccident from './components/SubmitAccident.js';
 import Search from './components/search/Search.js';
+import ControlPanel from './components/superAdmin/ControlPanel.js';
 
 import Compare from './components/compare/Compare.js';
 
@@ -37,7 +38,11 @@ const App = () => {
     citySearch: false,
     quiz: false,
     home: true,
-    compare: false
+    compare: false,
+    superAdmin: false,
+    manageRivalries: false,
+    manageQuizzes: false,
+    manageUsers: false
   });
 
   /*FUNCTIONS*/
@@ -94,6 +99,10 @@ const App = () => {
 
           <CSSTransition in={views.compare} timeout={0} classNames="fade" unmountOnExit>
             <Compare />
+          </CSSTransition>
+
+          <CSSTransition in={views.superAdmin} timeout={0} classNames="fade" unmountOnExit>
+            <ControlPanel userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>
 
         </div>
