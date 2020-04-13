@@ -9,26 +9,30 @@ const QuizManager = (props) => {
 
     let [questionList, setQuestionList] = useState([]);
 
-    axios.get('/apis/quizzes/quiz/questions').then(
+    axios.get('/apis/quizzes/quiz/questions.php').then(
         (res) => {
             if(res.data.error){
               alert(res.data.error);
             } else {
               setQuestionList(res.data);
+              console.log(res.data);
             }
           }
     ).catch((err) => {
         if(err) console.log(err);
     });
 
-    questionList = questionList.map(directory => {
-        return(
-            <tr key={directory.id}>
-                <td>{directory.question}</td>
-            </tr>
-        );
-    });
-
+    const onChange = (e) => {
+        
+    
+        questionList = questionList.map(directory => {
+            return(
+                <tr key={directory.id}>
+                    <td>{directory.question}</td>
+                </tr>
+            );
+        });
+    };
     
 
     const onSubmit = (e) => {
@@ -161,7 +165,7 @@ const QuizManager = (props) => {
             </div>
             <div>
                 <strong>Remove a Quiz Question</strong>
-                <p><input placeholder="Search for a question"></input></p>
+                <p><input placeholder="Search for a question" onChange={onChange}></input></p>
                 <div>
                     {questionList.length}
                 </div>
