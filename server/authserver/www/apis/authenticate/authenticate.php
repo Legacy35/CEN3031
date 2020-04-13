@@ -69,7 +69,9 @@
         if(!$statement->execute()) error("Query failed. ¯\_(ツ)_/¯");
         $resultSet = $statement->get_result();
 
-        if($resultSet->num_rows != 1) error('Specified account does not exist.');
+        if($resultSet->num_rows != 1) {
+            error('Invalid email account or password');
+        }
 
         $row = $resultSet->fetch_assoc();
 
@@ -80,7 +82,7 @@
             }
             exit(json_encode(array('token' => $token)));
         } else {
-            error('Invalid email address or password.');
+            error('Invalid email account or password');
         }
 
     }

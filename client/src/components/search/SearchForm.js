@@ -38,7 +38,10 @@ const SearchForm = (props) => {
   }
 
 
-  /*           
+  /*          
+<div className="col col-12 col-sm-3">
+  <label htmlFor="limit">Limit:</label>
+</div> 
   <div className="col col-12 col-sm-9">
     <select id="limit" name="limit" className="form-control" placeholder="Spokane">
       <option value="5">5</option>
@@ -63,21 +66,6 @@ const SearchForm = (props) => {
           </div>
           <div className="col col-12 col-sm-9">
             <input id="filter" name="filter" type="text" className="form-control" placeholder="Spokane"></input>
-          </div>
-        </div>
-        <div className="row form-group">
-          <div className="col col-12 col-sm-3">
-            <label htmlFor="limit">Limit:</label>
-          </div>
-
-        </div>
-        <div className="row form-group">
-          <div className="col col-12 col-sm-9">
-            <select id="sort" name="sort" type="text" className="form-control" placeholder="Spokane">
-              <option value="alphabetical">Alphabetical</option>
-              <option value="rank">Rank</option>
-              <option value="similarity">Similarity</option>
-            </select>
           </div>
         </div>
       </form>
