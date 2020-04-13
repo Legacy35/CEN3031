@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios';
 
 const QuizManager = (props) => {
-    /*TODO: Send question to database on submit
+    /*TODO: 
             Display current questions
             Add functionality for removing a question
     */
@@ -10,16 +10,37 @@ const QuizManager = (props) => {
     const onSubmit = (e) => {
         let form = document.getElementById("formAddQuestion");
 
-        const newQuestion = {
-            /*id: ???,*/
+        if(!form.question.value || !form.answer.value || !form.wc1.value || !form.wc2.value || !form.wc3.value || !form.state.value)
+        {
+            alert("All fields are required");
+            return;
+        }
+
+        const params = {
             question: form.question.value,
             answer1: form.answer.value,
             answer2: form.wc1.value,
             answer3: form.wc2.value,
             answer4: form.wc3.value,
             correct_answer: 0,
-
+            State: form.state.value
         };
+
+        axios.post('/apis/quizzes/quiz', params).then(
+            (res) => {
+                if(res.data.error){
+                    alert(res.data.error);
+                } else {
+                   // If it succeeds Do what? information is stored in res object
+                   //an array of question Objects as defined in the API Guide
+                   
+                }
+            }
+        ).catch(
+            (err) => {
+                console.log(err);
+            }
+        );
 
     };
 
@@ -31,29 +52,85 @@ const QuizManager = (props) => {
                 <form id="formAddQuestion" onSubmit={onSubmit}>
                     <p>
                         <label for="state">State:  </label>
-                        <select id="state">
-                            <option value="all">All</option>
+                        <select id="state" name="state">
+                            <option value="All">All</option>
+                            <option value="Alabama">Alabama</option>
+                            <option value="Alaska">Alaska</option>
+                            <option value="American Samoa">American Samoa</option>
+                            <option value="Arizona">Arizona</option>
+                            <option value="Arkansas">Arkansas</option>
+                            <option value="California">California</option>
+                            <option value="Colorado">Colorado</option>
+                            <option value="Connecticut">Connecticut</option>
+                            <option value="Delaware">Delaware</option>
+                            <option value="District of Columbia">District of Columbia</option>
+                            <option value="Florida">Florida</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Guam">Guam</option>
+                            <option value="Hawaii">Hawaii</option>
+                            <option value="Idaho">Idaho</option>
+                            <option value="Illinois">Illinois</option>
+                            <option value="Indiana">Indiana</option>
+                            <option value="Iowa">Iowa</option>
+                            <option value="Kansas">Kansas</option>
+                            <option value="Kentucky">Kentucky</option>
+                            <option value="Louisiana">Louisiana</option>
+                            <option value="Maine">Maine</option>
+                            <option value="Marshall Islands">Marshall Islands</option>
+                            <option value="Maryland">Maryland</option>
+                            <option value="Massachusetts">Massachusetts</option>
+                            <option value="Michigan">Michigan</option>
+                            <option value="Minnesota">Minnesota</option>
+                            <option value="Mississippi">Mississippi</option>
+                            <option value="Missouri">Missouri</option>
+                            <option value="Montana">Montana</option>
+                            <option value="Nebraska">Nebraska</option>
+                            <option value="Nevada">Nevada</option>
+                            <option value="New Hampshire">New Hampshire</option>
+                            <option value="New Jersey">New Jersey</option>
+                            <option value="New Mexico">New Mexico</option>
+                            <option value="New York">New York</option>
+                            <option value="North Carolina">North Carolina</option>
+                            <option value="North Dakota">North Dakota</option>
+                            <option value="Ohio">Ohio</option>
+                            <option value="Oklahoma">Oklahoma</option>
+                            <option value="Oregon">Oregon</option>
+                            <option value="Pennsylvania">Pennsylvania</option>
+                            <option value="Puerto Rico">Puerto Rico</option>
+                            <option value="Rhode Island">Rhode Island</option>
+                            <option value="South Carolina">South Carolina</option>
+                            <option value="South Dakota">South Dakota</option>
+                            <option value="Tennessee">Tennessee</option>
+                            <option value="Texas">Texas</option>
+                            <option value="Utah">Utah</option>
+                            <option value="Vermont">Vermont</option>
+                            <option value="Virgin Island">Virgin Island</option>
+                            <option value="Virginia">Virginia</option>
+                            <option value="Washington">Washington</option>
+                            <option value="West Virginia">West Virginia</option>
+                            <option value="Wisconsin">Wisconsin</option>
+                            <option value="Wyoming">Wyoming</option>
                         </select>
                     </p>
                     <p>
                         <label for="question">Question:  </label>
-                        <input id="question"></input>
+                        <input id="question" name="question"></input>
                     </p>
                     <p>
                         <label for="answer">Answer:  </label>
-                        <input id="answer"></input>
+                        <input id="answer" name="answer"></input>
                     </p>
                     <p>
                         <label for="wc1">Wrong Choice 1:  </label>
-                        <input id="wc1"></input>
+                        <input id="wc1" name="wc1"></input>
                     </p>
                     <p>
                         <label for="wc2">Wrong Choice 2:  </label>
-                        <input id="wc2"></input>
+                        <input id="wc2" name="wc2"></input>
                     </p>
                     <p>
                         <label for="wc3">Wrong Choice 3:  </label>
-                        <input id="wc3"></input>
+                        <input id="wc3" name="wc3"></input>
                     </p>
                     <input type='submit' value='Add Question'/>
                 </form>
