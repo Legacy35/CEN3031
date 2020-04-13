@@ -3,20 +3,6 @@
     require_once('../../include/DataManager.php');
     require_once('../../include/middleware.php');
 
-    /*Authentication*/
-    if(!isset($_COOKIE['token'])) error("You must be signed in to perform this operation");
-    $user = DataManager::getInstance()->getUser($_COOKIE['token']);
-    if($user['super_admin'] !== 1) error("You are not authorized to perform this action.");
-
-    /*Input validation*/
-    if(!isset($_POST['cityName']) || !isset($_POST['state']) || !isset($_POST['date']) || !isset($_POST['weather'])){
-        error("Malformed request.");
-    } else if($_POST['date'] < 0) {
-        error("Malformed request. Invalid date.");
-    } else if (strlen($_POST['cityName']) < 2 || strlen($_POST['cityName']) > 46){
-        error("Malformed request, city name invalid.");
-    }
-
     function getOpenCageCity(){
         $cityName = $_POST['cityName'];
         $state = $_POST['state'];
@@ -77,7 +63,6 @@
         $row = $resultSet->fetch_assoc();
 
         $city_id = $row['id'];
-        
 
         $statement = $conn->prepare("INSERT INTO accidentReport (`city_id`, `date`, `clear`, `rain`, `snow`, `hail`, `fog`, `high_winds`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         if(!$statement) error();
@@ -92,27 +77,26 @@
         
         if(!$statement->execute()) error();
 
-
-
-        /*CREATE TABLE accidentReport( # Purpose means Data is here but not in use, Functionality means No Data and not in use.
-        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-        city_id INT NOT NULL,
-        date INT NOT NULL,
-        clear TINYINT NOT NULL DEFAULT 0,
-        rain TINYINT NOT NULL DEFAULT 0,
-        snow TINYINT NOT NULL DEFAULT 0,
-        hail TINYINT NOT NULL DEFAULT 0,
-        fog TINYINT NOT NULL DEFAULT 0,
-        high_winds TINYINT NOT NULL DEFAULT 0
-        );*/
-
     }
+    
+    /*Input validation*/
+    if(isset($_POST['cityName']) && isset($_POST['state']) && isset($_POST['date']) && isset($_POST['weather'])){
+        if(!isset($_COOKIE['token'])) error("You must be signed in to perform this operation");
+        $user = DataManager::getInstance()->getUser($_COOKIE['token']);
+        if($user['super_admin'] !== 1) error("You are not authorized to perform this action.");
+        if($_POST['date'] < 0) error("Malformed request. Invalid date.");
+        if (strlen($_POST['cityName']) < 2 || strlen($_POST['cityName']) > 46)  error("Malformed request, city name invalid.");
+        $openCageCity = getOpenCageCity();
+        if($openCageCity->components->_type != 'city') error("City not found.");
+        storeAccident($openCageCity);
+    } else if(isset($_GET['filter'])) {
+        $conn = DataManager::getInstance()->getConnection('cities');
+        if(!$conn || $conn->connect_error) error();
+        $statement = $conn->prepare();
 
-
-    $openCageCity = getOpenCageCity();
-    if($openCageCity->components->_type != 'city') error("City not found.");
-    storeAccident($openCageCity);
-
+    } else {
+        error("Malformed request");
+    }
 
 
 ?>

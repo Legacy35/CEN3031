@@ -42,7 +42,6 @@ const SearchResults = (props) => {
                             <th scope="col">State</th>
                             <th scope="col">Latitude</th>
                             <th scope="col">Longitude</th>
-                            <th scope="col">Climate</th>
                             <th scope="col">Number of Accidents</th>
                         </tr>
                     </thead>
@@ -53,10 +52,9 @@ const SearchResults = (props) => {
                                     <th scope="row" >{i}</th>
                                     <td>{element.name}</td>
                                     <td>{element.state}</td>
-                                    <td>{element.latitude}</td>
-                                    <td>{element.longitude}</td>
-                                    <td>{element.climate ? element.climate : "N/A"}</td>
-                                    <td>{element.totalAccidents}</td>
+                                    <td>{element.coordinates.latitude}</td>
+                                    <td>{element.coordinates.longitude}</td>
+                                    <td>{element.accidents.length}</td>
                                 </tr>
 
                             </tbody>

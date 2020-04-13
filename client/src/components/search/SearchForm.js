@@ -29,6 +29,7 @@ const SearchForm = (props) => {
         if(res.data.error){
           alert(res.data.error);
         } else {
+          console.log(res.data);
           props.setCities(res.data);
         }
       }

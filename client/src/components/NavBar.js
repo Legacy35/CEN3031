@@ -54,6 +54,10 @@ const NavBar = (props) => {
   const compare = () => {
     props.setViews({...hideAll(), compare: true});
   }
+
+  const superAdmin = () => {
+    props.setViews({...hideAll(), superAdmin: true});
+  }
   
 
   const selectedStyle={
@@ -80,7 +84,10 @@ const NavBar = (props) => {
           <button type="button" className="navbar" style={props.views.citySearch ? selectedStyle : {}} onClick={citySearch}>City Search</button>
           {isLoggedIn() && <button type="button" className="navbar" style={props.views.quiz ? selectedStyle : {}} onClick={quizzes}>Quizzes</button>}
           <button type="button" className="navbar" style={props.views.compare ? selectedStyle : {}} onClick={compare}>Compare</button>
-          <button id="profileIcon" type="button" className="navbar float-right" onClick={cookies.get('token') ? userSummary : signin} style={{ paddingRight: '10px' }}>
+
+          {props.userData.super_admin == true && <button type="button" className="navbar" style={props.views.superAdmin ? selectedStyle : {}} onClick={superAdmin}>Control Panel</button>}
+          
+          <button id="profileIcon" type="button" className="navbar float-right" onClick={isLoggedIn() ? userSummary : signin} style={{ paddingRight: '10px' }}>
             <i className={(isLoggedIn() ? "fas" : "far") + " fa-user"}></i>
           </button>
 
