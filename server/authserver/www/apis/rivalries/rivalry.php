@@ -20,10 +20,20 @@ ON Table4.id=Table3.city_id2 WHERE name1 LIKE  CONCAT('%',?,'%') OR name2 LIKE  
     if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :(')));
     $resultSet = $statement->get_result();
     $output = array();
+    $output2 = array();
     while($row = $resultSet->fetch_assoc()){
-      array_push($output, $row);
+      $output["id"]= $row["Rivalryid"];
+      $output["city1"]['id'] = $row["city_id1"];
+      $output["city1"]['name'] = $row["name1"];
+      $output["city1"]['state'] = $row["state1"];
+      $output["city1"]['country'] = $row["country1"];
+      $output["city2"]['id'] = $row["city_id2"];
+      $output["city2"]['name'] = $row["name2"];
+      $output["city2"]['state'] = $row["state2"];
+      $output["city2"]['country'] = $row["country2"];
+      array_push($output2,$output);
     }
-    exit(json_encode($output));
+    exit(json_encode($output2));
   }
   else if(isset($_POST['id']) &&(isset($_POST['delete']) && $_POST['delete']) ){ // POST Request to delete Rivalries
     $conn = DataManager::getInstance()->getConnection("cities");
