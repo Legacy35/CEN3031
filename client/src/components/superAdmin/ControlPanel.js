@@ -35,17 +35,17 @@ const ControlPanel = (props) => {
             <br />
             <div className="row">
                 <div className="col">
-                    <button className="btn btn-primary" onClick={showQuizQuestions}>
+                    <button className="btn btn-primary w-100" onClick={showQuizQuestions}>
                         Manage quiz questions
                     </button>
                 </div>
                 <div className="col">
-                    <button className="btn btn-primary" onClick={showUsers}>
+                    <button className="btn btn-primary w-100" onClick={showUsers}>
                         Manage users
                     </button>
                 </div>
                 <div className="col">
-                    <button className="btn btn-primary" onClick={showRivalries}>
+                    <button className="btn btn-primary w-100" onClick={showRivalries}>
                         Manage rivalries
                     </button>
                 </div>
