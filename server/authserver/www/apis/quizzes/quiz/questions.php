@@ -6,25 +6,33 @@
     $conn = DataManager::getInstance()->getConnection('quiz');
     if(!$conn || $conn->connect_error) error();
 
-    if(isset($_POST['question']) && isset($_POST['answer1'])&& isset($_POST['answer2'])&& isset($_POST['answer3'])&& isset($_POST['answer4']) && isset($_POST['correct'])){
+    function createQuestion(){
+        global $conn;
         if(!isset($_COOKIE['token'])) error("You must be signed in to perform this operation.");
         $user = DataManager::getInstance()->getUser($_COOKIE['token']);
         if(!$user['super_admin']) error("You must be a super user to perform this operation");
-        $statement = $conn->prepare("INSERT INTO question WHERE `state` = ? AND `question` LIKE CONCAT('%', ?, '%') LIMIT ?");
-    } else if(isset($_POST['id']) &&(isset($_POST['delete']) && $_POST['delete']) ){
-      if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :(')));
-      $statement = $conn->prepare("DELETE FROM question WHERE id = ?");
-      if(!$statement) error();
-      if(!$statement->bind_param("i", intval($_POST["id"]))) error();
-      if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :(')));
-  }  else {
+        $statement = $conn->prepare("INSERT INTO question (`question`, `answer1`, `answer2`, `answer3`, `answer4`, `correct_answer`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        if(!$statement) error();
+        if(!$statement->bind_param("sssssis", $_POST['question'], $_POST['answer1'], $_POST['answer2'], $_POST['answer3'], $_POST['answer4'], $_POST['correct'], $_POST['state'])) error();
+        if(!$statement->execute()) error();
+    }
 
+    function deleteQuestion(){
+        global $conn;
+        $statement = $conn->prepare("DELETE FROM question WHERE id = ?");
+        if(!$statement) error();
+        if(!$statement->bind_param("i", intval($_POST["id"]))) error();
+        if(!$statement->execute()) error();
+    }
+
+    function getRandomQuestions(){
+        global $conn;
         $state = isset($_GET['state']) ? $_GET['state'] : 'all';
         $limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
         if($limit > 100) $limit = 100;
         $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
         $randomize = isset($_GET['randomize']) ? $_GET['randomize'] : true;
-
+        global $conn;
         $statement = $conn->prepare("SELECT * FROM question WHERE `state` = ? AND `question` LIKE CONCAT('%', ?, '%') LIMIT ?");
         if(!$statement) error();
         if(!$statement->bind_param("ssi", $state, $filter, $limit)) error();
@@ -42,7 +50,16 @@
         }
         if($randomize) shuffle($output);
         exit(json_encode($output));
+    }
 
+    if(isset($_POST['question']) && isset($_POST['answer1'])&& isset($_POST['answer2'])&& isset($_POST['answer3'])&& isset($_POST['answer4']) && isset($_POST['correct']) && isset($_POST['state'])){
+        createQuestion();
+    } else if(isset($_POST['id']) &&(isset($_POST['delete']) && $_POST['delete']) ){
+        deleteQuestion();
+   }  else if (empty($_GET) && empty($_POST)) {
+        getRandomQuestions();
+    } else {
+        error("Invalid request");
     }
 
 ?>

@@ -74,6 +74,8 @@ fog TINYINT NOT NULL DEFAULT 0,
 high_winds TINYINT NOT NULL DEFAULT 0
 );
 
+SELECT * FROM accidentReport WHERE rain = ?
+
 CREATE TABLE rivalry(
     id INT NOT NULL AUTO_INCREMENT,
     city_id1 INT NOT NULL,

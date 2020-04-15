@@ -37,7 +37,7 @@ const UserSummary = (props) => {
     let i = 1;
     let admin_string = "";
     let dash_string = "You do not currently have a dashcam installed in your vehicle";
-    
+
     if(props.userData.super_admin == 1){
       admin_string = "You are logged in with an admin account";
     }
@@ -66,6 +66,7 @@ const UserSummary = (props) => {
             {(!props.userData.super_admin && !props.userData.admin) && (<p>Insurance Company: <b>{props.userData.insurance_company}</b></p>)}
             <p><b>{dash_string}</b></p>
             <p><b>{admin_string}</b></p>
+
 
 
             <div className="graph">

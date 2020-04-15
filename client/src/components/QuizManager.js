@@ -11,7 +11,7 @@ const QuizManager = (props) => {
     const onChange = (e) => {
 
         let searchText = document.getElementById("questionSearch").value;
-        
+
         axios.get('/apis/quizzes/quiz/questions.php?filter=' + searchText + '&limit=50').then(
             (res) => {
                 if(res.data.error){
@@ -24,6 +24,7 @@ const QuizManager = (props) => {
             if(err) console.log(err);
         });
     };
+
 
     const onSubmit = (e) => {
         let form = document.getElementById("formAddQuestion");
@@ -68,8 +69,8 @@ const QuizManager = (props) => {
             id: qid,
             delete: true
         };
-        
-        axios.post('/apis/quizzes/quiz/questions.php', params).then(
+
+/*        axios.post('/apis/quizzes/quiz/questions.php', params).then(
             (res) => {
                 if(res.data.error){
                     alert(res.data.error);
@@ -84,16 +85,41 @@ const QuizManager = (props) => {
             (err) => {
                 console.log(err);
             }
-        );
-        
+        );*/
 
+    const loadQuestions = () => {
+        axios.get('/apis/quizzes/quiz/questions.php').then(
+            (res) => {
+                if(res.data.error){
+                  alert(res.data.error);
+                } else {
+                  setQuestionList(res.data);
+                }
+              }
+        ).catch((err) => {
+            if(err) console.log(err);
+        });
+        setLoaded(true);
+    }
+
+    if(!loaded) loadQuestions();
+
+    const onChange = (e) => {
+
+        questionList = questionList.map(directory => {
+            return(
+                <tr key={directory.id}>
+                    <td>{directory.question}</td>
+                </tr>
+            );
+        });
     };
 
     return(
         <div>
             <div>
                 <p><strong>Add a Quiz Question</strong></p>
-                
+
                 <form id="formAddQuestion">
                     <div className="form-group row">
                         <div className="col col-12 col-sm-3">
@@ -208,21 +234,12 @@ const QuizManager = (props) => {
                 <strong>Remove a Quiz Question</strong>
                 <p><input className="form-control" id="questionSearch" placeholder="Search for a question" onChange={onChange}/></p>
                 <div>
-                    <table className="table table-striped table-dark table-hover table-sm">
-                        {
-                            questionList.map(directory => {
-                                return(
-                                    <tbody key={directory.id++}>
-                                        <tr key={directory.id}>
-                                            <td onClick={((e) => removeQuestion(directory.id))}>{directory.question}</td>
-                                        </tr>
-                                    </tbody>
-                                );
-                            })
-                        }
-                    </table>
+                    {questionList.map((element) => (
+                        <div key={element.id}>
+                        </div>
+                    ))}
                 </div>
-                
+
             </div>
         </div>
     );
