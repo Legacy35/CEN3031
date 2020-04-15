@@ -16,7 +16,7 @@
 
 
 
-    function createAccount($email, $password, $passwordConfirm){
+    function createAccount($email, $password, $passwordConfirm, $firstName, $lastName, $address, $phoneNumber, $insuranceCompany, $dashCam){
 
         if($password !== $passwordConfirm) error('Passwords don\'t match.');
 
@@ -45,9 +45,10 @@
 
         /*Salt and hash password, store new account*/
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-        $insertStatement = $conn->prepare("INSERT INTO account (email, password_hash, token) VALUES (?, ?, ?)");
-        if(!$insertStatement->bind_param("sss", $email, $passwordHash, $token)) error("Query failed. ¯\_(ツ)_/¯");
-        if(!$insertStatement->execute()) error("Query failed. ¯\_(ツ)_/¯");
+        $insertStatement = $conn->prepare("INSERT INTO account (email, password_hash, token, first_name, last_name, address, phone_number, insurance_company, dashcam) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        if(!$insertStatement) error();
+        if(!$insertStatement->bind_param("ssssssssi", $email, $passwordHash, $token, $firstName, $lastName, $address, $phoneNumber, $insuranceCompany, $dashCam)) error();
+        if(!$insertStatement->execute()) error();
 
 
        exit(json_encode(array('token' => $token)));
@@ -93,13 +94,19 @@
         login($email, $password);
     }
 
-    if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordConfirm'])) {
+    if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordConfirm']) && isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['address']) && isset($_POST['phoneNumber']) && isset($_POST['insuranceCompany']) && isset($_POST['dashCam']) ) {
         $email = $_POST['email'];
         $password = $_POST['password'];
         $passwordConfirm = $_POST['passwordConfirm'];
-        createAccount($email, $password, $passwordConfirm);
+        $firstName = $_POST['firstName'];
+        $lastName = $_POST['lastName'];
+        $address = $_POST['address'];
+        $phoneNumber = $_POST['phoneNumber'];
+        $insuranceCompany = $_POST['insuranceCompany'];
+        $dashCam = $_POST['dashCam'];
+        createAccount($email, $password, $passwordConfirm, $firstName, $lastName, $address, $phoneNumber, $insuranceCompany, $dashCam);
     }
-
-    error('Invalid request');
+    
+    error('Invalid request' . json_encode($_POST));
 
 ?>

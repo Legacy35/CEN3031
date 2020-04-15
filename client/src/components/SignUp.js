@@ -13,7 +13,13 @@ const SignUp = (props) => {
         axios.post('/apis/authenticate/authenticate.php', {
             email: form.email.value,
             password: form.password.value,
-            passwordConfirm: form.passwordConfirm.value
+            passwordConfirm: form.passwordConfirm.value,
+            firstName: form.firstName.value,
+            lastName: form.lastName.value,
+            address: form.address.value,
+            phoneNumber: form.phoneNumber.value,
+            insuranceCompany: form.insuranceCompany.value,
+            dashCam: form.dashCam.value 
         }).then(
             (res) => {
                 if (res.data && res.data.token) {
@@ -30,6 +36,10 @@ const SignUp = (props) => {
         );
 
     }
+
+/**
+ * insurance company, boolean hasDashCam
+ */
 
     return (
         <div>
@@ -61,6 +71,64 @@ const SignUp = (props) => {
                         <input className="form-control" name="passwordConfirm" id="passwordConfirm" type="password" />
                     </div>
                 </div>
+
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="firstName">First name: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="firstName" id="firstName" type="text" />
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="lastName">Last name: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="lastName" id="lastName" type="text" />
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="address">Address: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="address" id="address" type="text" />
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="phoneNumber">Phone number: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="phoneNumber" id="phoneNumber" type="text" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="insuranceCompany">Name of your insurance company: </label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <input className="form-control" name="insuranceCompany" id="insuranceCompany" type="text"/>
+                    </div>
+                </div>
+
+                <div className="form-group row">
+                    <div className="col col-12 col-sm-3">
+                        <label htmlFor="dashCam">Do you have a dash cam in your car?</label>
+                    </div>
+                    <div className="col col-12 col-sm-9">
+                        <select className="form-control" name="dashCam" id="dashCam">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </div>
+
 
                 <input type="submit" value="Sign up" className="btn btn-primary"/>
             </form>

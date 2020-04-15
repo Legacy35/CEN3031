@@ -2,37 +2,9 @@ import React, {useState} from 'react'
 import axios from 'axios';
 
 const QuizManager = (props) => {
-    /*TODO: 
-            Display current questions
-            Add functionality for removing a question
-    */
 
     let [questionList, setQuestionList] = useState([]);
-
-    axios.get('/apis/quizzes/quiz/questions.php').then(
-        (res) => {
-            if(res.data.error){
-              alert(res.data.error);
-            } else {
-              setQuestionList(res.data);
-              console.log(res.data);
-            }
-          }
-    ).catch((err) => {
-        if(err) console.log(err);
-    });
-
-    const onChange = (e) => {
-        
-    
-        questionList = questionList.map(directory => {
-            return(
-                <tr key={directory.id}>
-                    <td>{directory.question}</td>
-                </tr>
-            );
-        });
-    };
+    let [loaded, setLoaded] = useState(false);
 
     const onSubmit = (e) => {
         let form = document.getElementById("formAddQuestion");
@@ -69,6 +41,34 @@ const QuizManager = (props) => {
             }
         );
 
+    };
+
+    const loadQuestions = () => {
+        axios.get('/apis/quizzes/quiz/questions.php').then(
+            (res) => {
+                if(res.data.error){
+                  alert(res.data.error);
+                } else {
+                  setQuestionList(res.data);
+                }
+              }
+        ).catch((err) => {
+            if(err) console.log(err);
+        });
+        setLoaded(true);
+    }
+
+    if(!loaded) loadQuestions();
+
+    const onChange = (e) => {
+        
+        questionList = questionList.map(directory => {
+            return(
+                <tr key={directory.id}>
+                    <td>{directory.question}</td>
+                </tr>
+            );
+        });
     };
 
     return(
@@ -190,7 +190,10 @@ const QuizManager = (props) => {
                 <strong>Remove a Quiz Question</strong>
                 <p><input className="form-control" placeholder="Search for a question" onChange={onChange}></input></p>
                 <div>
-                    {questionList}
+                    {questionList.map((element) => (
+                        <div key={element.id}>
+                        </div>
+                    ))}
                 </div>
                 
             </div>

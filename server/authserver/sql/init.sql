@@ -13,7 +13,13 @@ CREATE TABLE account(
     password_hash VARCHAR(255) NOT NULL,
     token VARCHAR(1024) NOT NULL,
     admin TINYINT NOT NULL DEFAULT 0,
-    super_admin TINYINT NOT NULL DEFAULT 0
+    super_admin TINYINT NOT NULL DEFAULT 0,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(255) NOT NULL,
+    insurance_company VARCHAR(255) NOT NULL,
+    dashcam TINYINT NOT NULL
 );
 CREATE TABLE quizData(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -90,6 +96,8 @@ hail TINYINT NOT NULL DEFAULT 0,
 fog TINYINT NOT NULL DEFAULT 0,
 high_winds TINYINT NOT NULL DEFAULT 0
 );
+
+SELECT * FROM accidentReport WHERE rain = ?
 
 CREATE TABLE rivalry(
     id INT NOT NULL AUTO_INCREMENT,

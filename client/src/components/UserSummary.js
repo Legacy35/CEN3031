@@ -38,6 +38,14 @@ const UserSummary = (props) => {
 
     return (
         <div>
+
+          <form id="formUserData">
+            <div className="form-group">
+              
+            </div>
+          </form>
+
+
             <h2>Welcome, <em>{props.userData.email}</em></h2>
             <p>Your unique user ID is <b>{props.userData.id}</b></p>
             <p>You <b>{(props.userData.admin ? "are" : "are not")}</b> an admin.</p>
