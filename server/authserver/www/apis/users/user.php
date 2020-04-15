@@ -19,7 +19,10 @@
     $dashcam = isset($_POST['dashcam']) ? $_POST['dashcam'] : $user['dashcam'];
 
     $statement = $conn->prepare('UPDATE account SET first_name = ?, last_name = ?, phone_number = ?, address = ?, insurance_company = ?, dashcam = ? WHERE token = ?');
-    if(!$statement) error("sssssis");
-    if(!$statement->bind_param());
- 
+    if(!$statement) error();
+    if(!$statement->bind_param("sssssis", $firstName, $lastName, $phoneNumber, $address, $insuranceCompany, $dashcam, $_COOKIE['token']));
+    if(!$statement->execute()) error();
+    
+
+
 ?>
