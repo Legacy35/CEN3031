@@ -8,15 +8,16 @@ const RivalrySearchBar = (props) => {
         
         event.preventDefault();
 
-        let usertext = document.getElementById("citynameinput").value;
+        let nameinput = document.getElementById("citynameinput").value;
 
         axios.get('/apis/rivalries/rivalry.php').then(
             (res) => {
               if(res.data.error){
-                alert(res.data.error);
+                console.log(res.data.error);
+                alert(nameinput + " was not found");
               } else {
                 console.log(res.data);
-                //do some stuff here
+                props.rivalries = res.data;
               }
             }
           ).catch((err) => {

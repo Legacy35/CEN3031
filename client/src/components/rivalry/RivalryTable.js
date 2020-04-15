@@ -4,10 +4,10 @@ const RivalryTable = (props) => {
 
     //Value used for the key property for rendered elements
     let i = 0;
-    let cities = props.cities;
-    console.log(cities);
+    let rivalries = props.rivalries;
+    console.log(rivalries);
 
-    if (cities == undefined) {
+    if (rivalries == undefined) {
         return (
             <div className="table-responsive nopadding nomargin">
                 <table className="table table-striped table-dark table-hover table-sm">
@@ -24,8 +24,7 @@ const RivalryTable = (props) => {
         );
     }
 
-    if (cities.length) {
-
+    if (rivalries.length) {
         return (
 
             <div className="table-responsive nopadding nomargin">
@@ -39,41 +38,18 @@ const RivalryTable = (props) => {
                         </tr>
                     </thead>
                     {
-                        cities.map((element => (
+                        rivalries.map((element => (
 
                             <tbody key={i++}> {/*Increment at the start of the login to avoid duplicate keys*/}
 
                                 <tr key={i} data-toggle="collapse" data-target={".order" + i}>
                                     <th scope="row" >{i}</th>
-                                    <td>{element.name}</td>
-                                    <td>{element.state}</td>
-                                    <td>{element.coordinates.latitude}</td>
-                                    <td>{element.coordinates.longitude}</td>
-                                    <td>{element.climate ? element.climate : "N/A"}</td>
-                                    <td>{element.accidents.length}</td>
+                                    <td>{element.city1.name}</td> 
+                                    <td>{element.city2.name}</td>
                                 </tr>
-
-                                {/*Summary*/}
-                                <span className={"collapse w-100 row order" + i} style={{ padding: '15px'}}>
-                                    {
-                                        element.accidents.map((accident) => (
-                                            <div className="col col-12">
-                                                <p>Date: {new Date(accident.date).toString().substr(0, 15)}</p>
-                                        <span>Weather: {accident.weather.toString().replace(',', ', ')}</span>
-                                                <hr style={{border: '1px solid white'}}/>
-                                            </div>
-
-                                        ))
-                                    }
-                                </span>
-
-
                             </tbody>
-                        )))
-
-                    }
-
-                    
+                        ))) //FIX LATER element.##?##.name
+                    }   
                 </table>
             </div>
         );

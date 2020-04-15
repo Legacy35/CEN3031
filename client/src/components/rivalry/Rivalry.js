@@ -6,11 +6,13 @@ import WeatherGraph from './WeatherGraph.js';
 
 const Rivalry = (props) => {
 
+  const [rivalries, setRivalries] = useState(undefined);
+
   return (
     <div>
-      <RivalrySearchBar/>
+      <RivalrySearchBar setRivalries={setRivalries}/>
       <br />
-      <RivalryTable/>
+      <RivalryTable rivalries={rivalries}/>
       <br />
       <GraphTab/>
       <br />
