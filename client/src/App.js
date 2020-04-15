@@ -14,6 +14,7 @@ import Rivalry from './components/rivalry/Rivalry.js';
 
 import QuizTab from './components/quiz/QuizTab.js';
 import GraphTab from './components/rivalry/GraphTab.js';
+import HomeTab from './components/Home/HomeTab.js';
 import QuizManager from './components/QuizManager.js';
 
 import {loadProfile} from './SessionManager.js';
@@ -88,7 +89,7 @@ const App = () => {
           </CSSTransition>
 
           <CSSTransition in={views.home} timeout={0} classNames="fade" unmountOnExit>
-            <GraphTab userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
+            <HomeTab userData={userData} setUserData={setUserData} setViews={setViews} views={views} />
           </CSSTransition>
 
           <CSSTransition in={views.submitAccident} timeout={0} classNames="fade" unmountOnExit>

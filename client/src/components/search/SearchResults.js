@@ -6,36 +6,7 @@ const SearchResults = (props) => {
     //Value used for the key property for rendered elements
     let i = 0;
     let cities = props.cities;
-    let snow = 0;
-    let fog = 0;
-    let rain = 0;
-    let wind = 0;
 
-    function myFunction(item)
-    {
-        if(item.localeCompare("snow"))
-            snow++;
-         
-    }
-
-    function handleClickEvent(event) 
-    {
-        let start = "";
-        
-       let count = 0;
-       if(event)
-       {
-        event.map((accident) => (
-                 start += accident.weather.toString(),                   
-                 start += ",",
-                 count++
-                 ))
-       
-       var nameArr = event.split(',');
-       nameArr.forEach(myFunction);
-        }
-       return count;
-    }
     if (cities == undefined) {
         return (
             <div className="table-responsive nopadding nomargin">
@@ -49,7 +20,6 @@ const SearchResults = (props) => {
                             <th scope="col">Longitude</th>
                             <th scope="col">Climate</th>
                             <th scope="col">Number of Accidents</th>
-                            <th scope = "col">{handleClickEvent()}</th>
                         </tr>
                     </thead>
                 </table>
@@ -73,7 +43,6 @@ const SearchResults = (props) => {
                             <th scope="col">Latitude</th>
                             <th scope="col">Longitude</th>
                             <th scope="col">Number of Accidents</th>
-                       
                         </tr>
                     </thead>
                     {
@@ -87,16 +56,7 @@ const SearchResults = (props) => {
                                     <td>{element.coordinates.longitude}</td>
                                     <td>{element.accidents.length}</td>
                                 </tr>
-                                <span className={"collapse col-md-100 w-100 row order" + i} style={{ padding: '15px'}} colspan = "10">
-                                    {
-                                    
 
-                                        <div>{handleClickEvent(element)}</div>
-                                      
-                                     
-                                    }
-
-                                </span>
                             </tbody>
                         )))
 
