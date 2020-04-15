@@ -77,8 +77,6 @@ const NavBar = (props) => {
 
         <div className={wrapperClass}>
           <button type="button" className="navbar" style={props.views.home ? selectedStyle : {}} onClick={home}>Home</button>
-          {!isLoggedIn() && <button type="button" className="navbar" style={props.views.signup ? selectedStyle : {}} onClick={signup}>Sign up</button>}
-          {!isLoggedIn() && <button type="button" className="navbar" style={props.views.login ? selectedStyle : {}} onClick={signin}>Sign in</button>}
           {isLoggedIn() && <button type="button" className="navbar" style={props.views.userProfile ? selectedStyle : {}} onClick={userSummary}>User Profile</button>}
           {props.userData.admin == true && <button type="button" className="navbar" style={props.views.submitAccident ? selectedStyle : {}} onClick={submitAccident}>Submit Accident Report</button>}
           <button type="button" className="navbar" style={props.views.citySearch ? selectedStyle : {}} onClick={citySearch}>City Search</button>
@@ -87,9 +85,23 @@ const NavBar = (props) => {
 
           {props.userData.super_admin == true && <button type="button" className="navbar" style={props.views.superAdmin ? selectedStyle : {}} onClick={superAdmin}>Control Panel</button>}
           
-          <button id="profileIcon" type="button" className="navbar float-right" onClick={isLoggedIn() ? userSummary : signin} style={{ paddingRight: '10px' }}>
+          {isLoggedIn() &&<button id="profileIcon" type="button" className="navbar float-right" onClick={isLoggedIn() ? userSummary : signin} style={{ paddingRight: '10px' }}>
             <i className={(isLoggedIn() ? "fas" : "far") + " fa-user"}></i>
-          </button>
+          </button>}
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          {!isLoggedIn() &&<button type="button" className="navbar float-right" onClick={isLoggedIn() ? userSummary : signin} style={{ paddingRight: '10px' }}>Sign In</button>}
+          
 
         </div>
 

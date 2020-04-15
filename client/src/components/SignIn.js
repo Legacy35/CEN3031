@@ -13,6 +13,12 @@ const SignIn = (props) => {
         
     }
 
+    const onClick = (evt) => {
+
+        props.setViews({signup: true});
+        
+    }
+
     return (
         <div>
             <form id="formLogin" onSubmit={onSubmit}>
@@ -37,6 +43,9 @@ const SignIn = (props) => {
 
                 <input className="btn btn-primary" type="submit" value="Sign in"/>
             </form>
+            <div>
+                <br/><p>Don't have an account?&nbsp;<button className="btn btn-primary" onClick = {onClick} >Sign up</button></p>
+            </div>
    
         </div>
     );
