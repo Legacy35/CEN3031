@@ -10,13 +10,14 @@ import SubmitAccident from './components/SubmitAccident.js';
 import Search from './components/search/Search.js';
 import ControlPanel from './components/superAdmin/ControlPanel.js';
 
-import Compare from './components/compare/Compare.js';
+import Rivalry from './components/rivalry/Rivalry.js';
 
 import QuizTab from './components/quiz/QuizTab.js';
-import GraphTab from './components/compare/GraphTab.js';
+import GraphTab from './components/rivalry/GraphTab.js';
 import QuizManager from './components/QuizManager.js';
 
 import {loadProfile} from './SessionManager.js';
+import RivalrySearchBar from './components/rivalry/RivalrySearchBar.js';
 
 /*APP - MAIN COMPONENT*/
 const App = () => {
@@ -39,7 +40,7 @@ const App = () => {
     citySearch: false,
     quiz: false,
     home: true,
-    compare: false,
+    rivalry: false,
     superAdmin: false,
     manageRivalries: false,
     manageQuizzes: false,
@@ -99,8 +100,8 @@ const App = () => {
             <Search />
           </CSSTransition>
 
-          <CSSTransition in={views.compare} timeout={0} classNames="fade" unmountOnExit>
-            <Compare />
+          <CSSTransition in={views.rivalry} timeout={0} classNames="fade" unmountOnExit>
+            <Rivalry />
           </CSSTransition>
 
           <CSSTransition in={views.superAdmin} timeout={0} classNames="fade" unmountOnExit>
