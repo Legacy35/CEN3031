@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import './style2.css';
 import {Line} from 'react-chartjs-2';
 
 const GraphTab = (props) => {
 
     let [chartData, setChartData] = useState({
       labels: ['Bakersfield', 'Chicago', 'Gainesville', 'Los Angeles', 'Miami'],
-      body: "000000",
       datasets: [
         {
           label: 'Number of Accidents',
