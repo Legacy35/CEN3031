@@ -13,6 +13,8 @@
         }
 
         public function getQuizScoresById($id) {
+            $conn = DataManager::getInstance()->getConnection("account"); //External code
+            if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :('))); 
             $statement = $conn->prepare('SELECT * FROM quizData WHERE user_id = ? ORDER BY id ASC');
             if(!$statement) exit(json_encode(array('error' => 'An internal or external error occurred')));
             if(!$statement->bind_param("i", $id)) exit(json_encode(array('error' => 'An internal or external error occurred')));
@@ -21,7 +23,7 @@
             $output = array();
             if($resultSet->num_rows > 0){
                 while($row = $resultSet->fetch_assoc()){
-                    array_push($output["quizScores"], $row['score']);
+                    array_push($output, $row['score']);
                 }
           }
           return $output;
@@ -31,7 +33,6 @@
           $conn = DataManager::getInstance()->getConnection("account"); //External code
           if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :('))); 
 
-
           /*Find the right account and return it*/
           $statement = $conn->prepare("SELECT id, email, admin, super_admin, first_name, last_name, address, phone_number, insurance_company, dashcam FROM account WHERE token = ?");
           if(!$statement) exit(json_encode(array('error' => 'An internal or external error occurred.')));
@@ -40,7 +41,7 @@
           $resultSet = $statement->get_result();
           if($resultSet->num_rows < 1) exit(json_encode(array('error' => 'Account not found'))); 
           $output = $resultSet->fetch_assoc(); 
-          $output['quizScores'] = getQuizScoresById($output['id']);
+          $output['quizScores'] = $this->getQuizScoresById($output['id']);
           return $output;
 
         }
@@ -79,6 +80,7 @@
             $output = $resultSet->fetch_assoc(); 
             $output['quizScores'] = getQuizScoresById($output['id']);
             return $output;
+
         }
 
         public static function getInstance(){
