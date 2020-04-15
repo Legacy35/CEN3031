@@ -19,7 +19,7 @@ CREATE TABLE account(
     address VARCHAR(255) NOT NULL,
     phone_number VARCHAR(255) NOT NULL,
     insurance_company VARCHAR(255) NOT NULL,
-    dashcam TINYINT NOT NULL
+    dashcam TINYINT NOT NULL,
     hasValidatedEmail TINYINT NOT NULL DEFAULT 0,
     emailValidation VARCHAR(1024) NOT NULL
 
@@ -73,8 +73,6 @@ hail TINYINT NOT NULL DEFAULT 0,
 fog TINYINT NOT NULL DEFAULT 0,
 high_winds TINYINT NOT NULL DEFAULT 0
 );
-
-SELECT * FROM accidentReport WHERE rain = ?
 
 CREATE TABLE rivalry(
     id INT NOT NULL AUTO_INCREMENT,

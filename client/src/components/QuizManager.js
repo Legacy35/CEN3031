@@ -7,6 +7,7 @@ const QuizManager = (props) => {
     */
 
     let [questionList, setQuestionList] = useState([]);
+    let [loaded, setLoaded] = useState(false);
 
     const onChange = (e) => {
 
@@ -69,6 +70,7 @@ const QuizManager = (props) => {
             id: qid,
             delete: true
         };
+      }
 
 /*        axios.post('/apis/quizzes/quiz/questions.php', params).then(
             (res) => {
@@ -103,17 +105,6 @@ const QuizManager = (props) => {
     }
 
     if(!loaded) loadQuestions();
-
-    const onChange = (e) => {
-
-        questionList = questionList.map(directory => {
-            return(
-                <tr key={directory.id}>
-                    <td>{directory.question}</td>
-                </tr>
-            );
-        });
-    };
 
     return(
         <div>
