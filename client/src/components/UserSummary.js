@@ -35,12 +35,37 @@ const UserSummary = (props) => {
     };
 
     let i = 1;
-
+    let admin_string = "";
+    let dash_string = "You do not currently have a dashcam installed in your vehicle";
+    
+    if(props.userData.super_admin == 1){
+      admin_string = "You are logged in with an admin account";
+    }
+    else if (props.userData.admin == 1){
+      admin_string = "You are logged in with an insurance company account";;
+    }
+    if(props.userData.dashcam == 1){
+      dash_string = "You have a dashcam installed in your vehicle";
+    }
     return (
-        <div>
-            <h2>Welcome, <em>{props.userData.email}</em></h2>
-            <p>Your unique user ID is <b>{props.userData.id}</b></p>
-            <p>You <b>{(props.userData.admin ? "are" : "are not")}</b> an admin.</p>
+      <div>
+        <h2>Welcome, <em>{props.userData.first_name}</em></h2>
+        {
+          !props.userData.validated_email &&
+          <div className="alert alert-danger row" role="alert">
+            <div className="col col-6 col-md-7 col-lg-8 col-xl-9">
+              Account not validated, check email spam to validate account
+            </div>
+            <div className="col col-6 col-md-5 col-lg-4 col-xl-3">
+              <button className="btn btn-danger float-right">Resend email</button>
+            </div>
+          </div>
+        }
+            {(!props.userData.super_admin && !props.userData.admin) && (<p>Address: <b>{props.userData.address}</b></p>)}
+            {(!props.userData.super_admin && !props.userData.admin) && (<p>Phone Number: <b>{props.userData.phone_number}</b></p>)}
+            {(!props.userData.super_admin && !props.userData.admin) && (<p>Insurance Company: <b>{props.userData.insurance_company}</b></p>)}
+            <p><b>{dash_string}</b></p>
+            <p><b>{admin_string}</b></p>
 
 
             <div className="graph">

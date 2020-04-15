@@ -45,10 +45,7 @@ const GraphTab = (props) => {
         return (
             <div className="graph">
               <em>
-                Our goal is to recognize and commend the safest cities across the United States.
-                By comparing the number of accidents in each city, we can determine which cities have the safest drivers.
-                Cities are ranked based on several factors including population, accidents per day, and climate, among others
-                that can affect safe driving in a city.
+                Our goal is to foster a competitive spirit for safe driving practices between individuals and cities. Watch as cities compete against each other in rivalries to determine who has the safest drivers, or practice your own driver saftey skills by taking a customized driving quiz for your state! Keep driving safe!
               </em>
               <Line data={chartData} options={options}/>
             </div>

@@ -68,7 +68,7 @@ const App = () => {
       <div className="row nopadding nomargin">
         <div className="col col-12 col-sm-1 col-md-2 col-xl-3"></div>
         <div className="col col-12 col-sm-10 col-md-8 col-xl-6">
-          <h1>Insurance Driver App</h1>
+          <h1>Safe Driving Challenge</h1>
           <hr style={{ borderTop: '1px solid #8c8b8b' }}></hr>
 
           <CSSTransition in={views.signup} timeout={0} classNames="fade" unmountOnExit>
