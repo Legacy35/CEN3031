@@ -2,35 +2,26 @@ import React, {useState} from 'react'
 import axios from 'axios';
 
 const QuizManager = (props) => {
-    /*TODO: 
-            Display current questions
-            Add functionality for removing a question
+    /*
+        Currently set up to remove question on click, idk if that is how we want it
     */
 
     let [questionList, setQuestionList] = useState([]);
 
-    axios.get('/apis/quizzes/quiz/questions.php').then(
-        (res) => {
-            if(res.data.error){
-              alert(res.data.error);
-            } else {
-              setQuestionList(res.data);
-              console.log(res.data);
-            }
-          }
-    ).catch((err) => {
-        if(err) console.log(err);
-    });
-
     const onChange = (e) => {
+
+        let searchText = document.getElementById("questionSearch").value;
         
-    
-        questionList = questionList.map(directory => {
-            return(
-                <tr key={directory.id}>
-                    <td>{directory.question}</td>
-                </tr>
-            );
+        axios.get('/apis/quizzes/quiz/questions.php?filter=' + searchText + '&limit=50').then(
+            (res) => {
+                if(res.data.error){
+                  alert(res.data.error);
+                } else {
+                  setQuestionList(res.data);
+                }
+              }
+        ).catch((err) => {
+            if(err) console.log(err);
         });
     };
 
@@ -53,14 +44,15 @@ const QuizManager = (props) => {
             State: form.state.value
         };
 
-        axios.post('/apis/quizzes/quiz.php', params).then(
+        axios.post('/apis/quizzes/quiz/questions.php', params).then(
             (res) => {
                 if(res.data.error){
                     alert(res.data.error);
                 } else {
                    // If it succeeds Do what? information is stored in res object
                    //an array of question Objects as defined in the API Guide
-                   
+                   alert("Question added");
+                   console.log("added");
                 }
             }
         ).catch(
@@ -71,12 +63,38 @@ const QuizManager = (props) => {
 
     };
 
+    const removeQuestion = (qid, e) => {
+        const params = {
+            id: qid,
+            delete: true
+        };
+        
+        axios.post('/apis/quizzes/quiz/questions.php', params).then(
+            (res) => {
+                if(res.data.error){
+                    alert(res.data.error);
+                    console.log(res.data.error);
+                } else {
+                   // If it succeeds Do what? information is stored in res object
+                   //an array of question Objects as defined in the API Guide
+                   alert("Question removed");
+                }
+            }
+        ).catch(
+            (err) => {
+                console.log(err);
+            }
+        );
+        
+
+    };
+
     return(
         <div>
             <div>
                 <p><strong>Add a Quiz Question</strong></p>
                 
-                <form id="formAddQuestion" onSubmit={onSubmit}>
+                <form id="formAddQuestion">
                     <div className="form-group row">
                         <div className="col col-12 col-sm-3">
                             <label htmlFor="state">State:</label>
@@ -183,14 +201,26 @@ const QuizManager = (props) => {
                             <input className="form-control" id="wc3" name="wc3"></input>
                         </div>
                     </div>
-                    <input className="btn btn-primary" type='submit' value='Add Question'/>
+                    <input className="btn btn-primary" type='submit' value='Add Question' onClick={onSubmit}/>
                 </form>
             </div>
             <div>
                 <strong>Remove a Quiz Question</strong>
-                <p><input className="form-control" placeholder="Search for a question" onChange={onChange}></input></p>
+                <p><input className="form-control" id="questionSearch" placeholder="Search for a question" onChange={onChange}/></p>
                 <div>
-                    {questionList}
+                    <table className="table table-striped table-dark table-hover table-sm">
+                        {
+                            questionList.map(directory => {
+                                return(
+                                    <tbody key={directory.id++}>
+                                        <tr key={directory.id}>
+                                            <td onClick={((e) => removeQuestion(directory.id))}>{directory.question}</td>
+                                        </tr>
+                                    </tbody>
+                                );
+                            })
+                        }
+                    </table>
                 </div>
                 
             </div>
