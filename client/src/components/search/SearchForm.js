@@ -62,15 +62,17 @@ const SearchForm = (props) => {
     <div>
       <form id="formCitySearch" onSubmit={onSubmit}>
         <div className="row form-group">
-          <div className="col col-12 col-sm-3">
+          <div className="col col-12 col-sm-2">
             <label htmlFor="filter">City name:</label>
           </div>
-          <div className="col col-12 col-sm-9">
+          <div className="col col-12 col-sm-8">
             <input id="filter" name="filter" type="text" className="form-control" placeholder="Spokane"></input>
+          </div>
+          <div>
+            <button className="btn btn-primary" onClick={onSubmit}>Search</button>
           </div>
         </div>
       </form>
-      <button className="btn btn-primary" onClick={onSubmit}>Search</button>
     </div>
   );
 
