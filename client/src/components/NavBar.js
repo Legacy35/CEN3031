@@ -51,8 +51,8 @@ const NavBar = (props) => {
     props.setViews({...hideAll(), citySearch: true});
   }
 
-  const compare = () => {
-    props.setViews({...hideAll(), compare: true});
+  const rivalry = () => {
+    props.setViews({...hideAll(), rivalry: true});
   }
 
   const superAdmin = () => {
@@ -83,7 +83,7 @@ const NavBar = (props) => {
           {props.userData.admin == true && <button type="button" className="navbar" style={props.views.submitAccident ? selectedStyle : {}} onClick={submitAccident}>Submit Accident Report</button>}
           <button type="button" className="navbar" style={props.views.citySearch ? selectedStyle : {}} onClick={citySearch}>City Search</button>
           {isLoggedIn() && <button type="button" className="navbar" style={props.views.quiz ? selectedStyle : {}} onClick={quizzes}>Quizzes</button>}
-          <button type="button" className="navbar" style={props.views.compare ? selectedStyle : {}} onClick={compare}>Compare</button>
+          <button type="button" className="navbar" style={props.views.rivalry ? selectedStyle : {}} onClick={rivalry}>Rivalries</button>
 
           {props.userData.super_admin == true && <button type="button" className="navbar" style={props.views.superAdmin ? selectedStyle : {}} onClick={superAdmin}>Control Panel</button>}
           
