@@ -6,6 +6,7 @@ html {
 body {
     padding: 0;
     margin: 0;
+    height: 100%;
 }
 #root {
     padding: 0;
@@ -36,3 +37,9 @@ label {
 tr.collapse.in {
     display:table-row;
   }
+body {
+  height:100%;
+  background: #f2f2f2 !important; /* fallback for old browsers */
+/*  background: -webkit-linear-gradient(to Right , #87638f,#cc899c) !important; /* Chrome 10-25, Safari 5.1-6 */
+/*  background: linear-gradient(to Right, #87638f, #cc899c) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
