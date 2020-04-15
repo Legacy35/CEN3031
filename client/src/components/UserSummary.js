@@ -39,7 +39,7 @@ const UserSummary = (props) => {
 
   return (
     <div>
-      <h2>Welcome, <em>{props.userData.email}</em></h2>
+      <h2>Welcome, <em>{props.userData.first_name}</em></h2>
       <hr/>
     
       <UpdateAccountInfo userData={props.userData} setUserData={props.setUserData} views={props.views} setViews={props.setViews}/>
