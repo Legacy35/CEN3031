@@ -50,6 +50,7 @@ const HomeTab = (props) => {
             newChartData.datasets.push(datapoint);
           });
         setChartData(newChartData);
+        console.log(newChartData);
 
         }
       }
@@ -82,19 +83,11 @@ const HomeTab = (props) => {
     }
   };
 
-  return ( <
-    div className = "graph" >
-    <em >
-    Our goal is to foster a competitive spirit for safe driving practices between individuals and cities. Watch as cities compete against each other in rivalries to determine who has the safest drivers, or practice your own driver saftey skills by taking a customized driving quiz for your state! Keep driving safe!
-    </em> <
-    Bar data = {
-      chartData
-    }
-    options = {
-      options
-    }
-    /> <
-    /div>
+  return (
+  <div className="graph" >
+    <em >Our goal is to foster a competitive spirit for safe driving practices between individuals and cities. Watch as cities compete against each other in rivalries to determine who has the safest drivers, or practice your own driver saftey skills by taking a customized driving quiz for your state! Keep driving safe!</em>
+    <Bar data = { chartData } options = {options}/>
+  </div>
   );
 }
 

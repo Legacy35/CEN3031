@@ -4,20 +4,23 @@ import queryString from 'querystring'
 
 const RivalrySearchBar = (props) => {
 
-    const onSubmit = (event) => {
+    const onClick = (event) => {
         
         event.preventDefault();
 
-        let nameinput = document.getElementById("citynameinput").value;
+        let form = document.getElementById("formSearchRivalries");
+        let cityName = form.cityName.value;
 
-        axios.get('/apis/rivalries/rivalry.php').then(
+        axios.get('/apis/rivalries/rivalry.php?limit=5&filter=' + cityName).then(
             (res) => {
               if(res.data.error){
-                console.log(res.data.error);
-                alert(nameinput + " was not found");
+                alert(res.data.error);
               } else {
                 console.log(res.data);
-                props.rivalries = res.data;
+                props.setRivalries(res.data);
+                res.data.forEach((rivalry) => {
+                  
+                });
               }
             }
           ).catch((err) => {
@@ -27,11 +30,16 @@ const RivalrySearchBar = (props) => {
     
     return (
         <div>
-            <form>
-            <label for="citynameinput">
-                Enter a City Name: <input type="text" className="form-control" id="citynameinput" />
-            </label>
-            <button className="btn btn-primary" onClick={onSubmit}>Search</button>
+            <form id="formSearchRivalries">
+              <div className="form-group row">
+                <div className="col col-3">
+                  <label htmlFor="cityName">City name:</label>
+                </div>
+                <div className="col col-9">
+                  <input name="cityName" type="text" className="form-control" placeholder="Enter city name here"/>
+                </div>
+              </div>
+              <button className="btn btn-primary" onClick={onClick}>Search</button>
             </form>
         </div>
     );
