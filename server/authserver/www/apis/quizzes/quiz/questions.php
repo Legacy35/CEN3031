@@ -32,13 +32,12 @@
         if($limit > 100) $limit = 100;
         $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
         $randomize = isset($_GET['randomize']) ? $_GET['randomize'] : true;
-        global $conn;
-        $statement = $conn->prepare("SELECT * FROM question WHERE `state` = ? AND `question` LIKE CONCAT('%', ?, '%') LIMIT ?");
+        $statement = $conn->prepare("SELECT * FROM question WHERE (state LIKE CONCAT('%', ?, '%') or state = 'all') AND question LIKE CONCAT('%', ?, '%')");
         if(!$statement) error();
-        if(!$statement->bind_param("ssi", $state, $filter, $limit)) error();
+        if(!$statement->bind_param("ss", $state, $filter)) error();
         if(!$statement->execute()) error();
         $resultSet = $statement->get_result();
-        $output = array();
+        $questions = array();
         while($row = $resultSet->fetch_assoc()){
             $question = $row;
             $question['answers'] = array($question['answer1'], $question['answer2'], $question['answer3'], $question['answer4']);
@@ -46,9 +45,13 @@
             unset($question['answer2']);
             unset($question['answer3']);
             unset($question['answer4']);
-            array_push($output, $question);
+            array_push($questions, $question);
         }
-        if($randomize) shuffle($output);
+        if($randomize) shuffle($questions);
+        $output=array();
+        for($i=0;$i<$_GET['limit'];$i++){
+          array_push($output,$questions[$i]);
+        }
         exit(json_encode($output));
     }
 
@@ -56,10 +59,8 @@
         createQuestion();
     } else if(isset($_POST['id']) &&(isset($_POST['delete']) && $_POST['delete']) ){
         deleteQuestion();
-   }  else if (empty($_GET) && empty($_POST)) {
+   }  else {
         getRandomQuestions();
-    } else {
-        error("Invalid request");
     }
 
 ?>

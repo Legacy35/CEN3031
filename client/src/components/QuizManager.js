@@ -14,7 +14,7 @@ const QuizManager = (props) => {
 
         let searchText = document.getElementById("questionSearch").value;
 
-        axios.get('/apis/quizzes/quiz/questions.php?filter=' + searchText + '&limit=50').then(
+        axios.get('/apis/quizzes/quiz/questions.php?state=all&filter=' + searchText + '&limit=50').then(
             (res) => {
                 if(res.data.error){
                   alert(res.data.error);
@@ -27,6 +27,11 @@ const QuizManager = (props) => {
         });
     };
 
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
     const onSubmit = (e) => {
         if(e) e.preventDefault();
@@ -37,14 +42,18 @@ const QuizManager = (props) => {
             alert("All fields are required");
             return;
         }
-
+        let i = getRandomInt(0, 3);
+        let answers=[form.answer.value,form.wc1.value,form.wc2.value,form.wc3.value];
+        let temp = answers[0];
+        answers[0]=answers[i];
+        answers[i]= temp;
         const params = {
             question: form.question.value,
-            answer1: form.answer.value,
-            answer2: form.wc1.value,
-            answer3: form.wc2.value,
-            answer4: form.wc3.value,
-            correct: 0,
+            answer1: answers[0],
+            answer2: answers[1],
+            answer3: answers[2],
+            answer4: answers[3],
+            correct: i,
             state: form.state.value
         };
 
@@ -240,7 +249,7 @@ const QuizManager = (props) => {
                 </table>
                 </div>
                 <button className="btn btn-primary" onClick={onSubmit}>Ouchie My Question is Trash</button>
-                
+
 
             </div>
         </div>
