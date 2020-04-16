@@ -1,19 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import queryString from 'querystring'
 
 const SearchForm = (props) => {
+  let [loaded, setLoaded] = useState(false);
 
-  let form = document.getElementById('formCitySearch');
+  if(!loaded){
+    setLoaded(true);
+    axios.get('/apis/cities/city.php?filter=&limit=50')
+    .then(
+        (res) => {
+            if(res.data.error){
+                alert('error');
+            } else {
+                props.setCities(res.data)
+            }
+        }
+    )
+  }
 
   const onSubmit = (evt) => {
+    let form = document.getElementById('formCitySearch');
+    if(evt) evt.preventDefault();
 
-    evt.preventDefault();
 
     const params = {
       limit: 50,
       filter: form.filter.value,
-      sort: "alphabetical"
     };
 
     let keys = Object.keys(params);
@@ -36,7 +49,7 @@ const SearchForm = (props) => {
     ).catch((err) => {
       if(err) console.log(err);
     })
-  }
+  } 
 
 
   /*          

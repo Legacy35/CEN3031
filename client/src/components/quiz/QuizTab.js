@@ -10,11 +10,17 @@ const QuizTab = (props) => {
     let [questions, setQuestions] = useState([]);
 
     const loadQuiz = () => {
-        axios.get('/apis/quizzes/quiz/questions.php')
+        let form = document.getElementById("formGetQuestions");
+        axios.get('/apis/quizzes/quiz/questions.php?state=' + form.state.value)
         .then(
             (res) => {
     
-                setQuestions(res.data);
+                if (res.data.error){
+                    alert(res.data.error);
+                }
+                else {
+                    setQuestions(res.data);
+                }
     
             }
         )
@@ -29,8 +35,8 @@ const QuizTab = (props) => {
         return (
             <div>
                 <p>Select which questions you would like to recieve. Select "All" for questions applicable to all states.</p>
-                <div className="col col-12 col-sm-9">
-                  <select id="filter" name="filter" className="form-control" placeholder="All">
+                <form id = "formGetQuestions">
+                  <select id="state" name="state" className="form-control" placeholder="All">
                     <option value="All">All</option>
                     <option value="Alabama">Alabama</option>
                     <option value="Alaska">Alaska</option>
@@ -83,7 +89,7 @@ const QuizTab = (props) => {
                     <option value="Wisconsin">Wisconsin</option>
                     <option value="Wyoming">Wyoming</option>
                   </select>
-              </div>
+              </form>
                 <br/><button className="btn btn-primary" onClick={loadQuiz}>Start quiz</button>
             </div>
         )
