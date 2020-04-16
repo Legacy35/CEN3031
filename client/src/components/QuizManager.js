@@ -8,6 +8,7 @@ const QuizManager = (props) => {
 
     let [questionList, setQuestionList] = useState([]);
     let [loaded, setLoaded] = useState(false);
+    let i = 0;
 
     const onChange = (e) => {
 
@@ -28,6 +29,7 @@ const QuizManager = (props) => {
 
 
     const onSubmit = (e) => {
+        if(e) e.preventDefault();
         let form = document.getElementById("formAddQuestion");
 
         if(!form.question.value || !form.answer.value || !form.wc1.value || !form.wc2.value || !form.wc3.value || !form.state.value)
@@ -42,8 +44,8 @@ const QuizManager = (props) => {
             answer2: form.wc1.value,
             answer3: form.wc2.value,
             answer4: form.wc3.value,
-            correct_answer: 0,
-            State: form.state.value
+            correct: 0,
+            state: form.state.value
         };
 
         axios.post('/apis/quizzes/quiz/questions.php', params).then(
@@ -54,7 +56,8 @@ const QuizManager = (props) => {
                    // If it succeeds Do what? information is stored in res object
                    //an array of question Objects as defined in the API Guide
                    alert("Question added");
-                   console.log("added");
+                   console.log(res.data);
+                   //return;
                 }
             }
         ).catch(
@@ -121,17 +124,14 @@ const QuizManager = (props) => {
                                 <option value="All">All</option>
                                 <option value="Alabama">Alabama</option>
                                 <option value="Alaska">Alaska</option>
-                                <option value="American Samoa">American Samoa</option>
                                 <option value="Arizona">Arizona</option>
                                 <option value="Arkansas">Arkansas</option>
                                 <option value="California">California</option>
                                 <option value="Colorado">Colorado</option>
                                 <option value="Connecticut">Connecticut</option>
                                 <option value="Delaware">Delaware</option>
-                                <option value="District of Columbia">District of Columbia</option>
                                 <option value="Florida">Florida</option>
                                 <option value="Georgia">Georgia</option>
-                                <option value="Guam">Guam</option>
                                 <option value="Hawaii">Hawaii</option>
                                 <option value="Idaho">Idaho</option>
                                 <option value="Illinois">Illinois</option>
@@ -141,7 +141,6 @@ const QuizManager = (props) => {
                                 <option value="Kentucky">Kentucky</option>
                                 <option value="Louisiana">Louisiana</option>
                                 <option value="Maine">Maine</option>
-                                <option value="Marshall Islands">Marshall Islands</option>
                                 <option value="Maryland">Maryland</option>
                                 <option value="Massachusetts">Massachusetts</option>
                                 <option value="Michigan">Michigan</option>
@@ -161,7 +160,6 @@ const QuizManager = (props) => {
                                 <option value="Oklahoma">Oklahoma</option>
                                 <option value="Oregon">Oregon</option>
                                 <option value="Pennsylvania">Pennsylvania</option>
-                                <option value="Puerto Rico">Puerto Rico</option>
                                 <option value="Rhode Island">Rhode Island</option>
                                 <option value="South Carolina">South Carolina</option>
                                 <option value="South Dakota">South Dakota</option>
@@ -169,7 +167,6 @@ const QuizManager = (props) => {
                                 <option value="Texas">Texas</option>
                                 <option value="Utah">Utah</option>
                                 <option value="Vermont">Vermont</option>
-                                <option value="Virgin Island">Virgin Island</option>
                                 <option value="Virginia">Virginia</option>
                                 <option value="Washington">Washington</option>
                                 <option value="West Virginia">West Virginia</option>
@@ -230,6 +227,20 @@ const QuizManager = (props) => {
                         </div>
                     ))}
                 </div>
+                <div className="table-responsive nopadding nomargin">
+
+                <table className="table table-striped table-dark table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Question</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                </table>
+                </div>
+                <button className="btn btn-primary" onClick={onSubmit}>Ouchie My Question is Trash</button>
+                
 
             </div>
         </div>
@@ -237,3 +248,16 @@ const QuizManager = (props) => {
 }
 
 export default QuizManager;
+/*
+{
+                questions.map((element => (
+                    <tbody key={i++}> {}
+                    <tr key={i} data-toggle="collapse" data-target={".order" + i}>
+                    <th scope="row" >{i}</th>
+                    <td>{element.id}</td>
+                    <td>{element.question}</td>
+                </tr>
+            </tbody>
+        )))
+        }
+*/

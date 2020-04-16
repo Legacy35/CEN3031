@@ -7,6 +7,8 @@ const SearchResults = (props) => {
     let i = 0;
     let cities = props.cities;
 
+    console.log(props);
+
     if (cities == undefined) {
         return (
             <div className="table-responsive nopadding nomargin">
@@ -23,7 +25,7 @@ const SearchResults = (props) => {
                         </tr>
                     </thead>
                 </table>
-                <p>Making a Search Using the above filters</p>
+                <p>Make a Search Using the above filters</p>
             </div>
         );
     }
