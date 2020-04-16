@@ -16,7 +16,21 @@ const UserSummary = (props) => {
     let quizNum = i + 1;
     labels[i] = ("Quiz " + (quizNum));
   }
-
+  let options = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          max: 100,
+          min: 0,
+          stepSize: 1,
+        },
+        scaleLabel: {
+          display: true,
+          labelString: '% Correct'
+        },
+      }]
+    }
+  };
   let chartData = {
     labels: labels,
     datasets: [
@@ -38,29 +52,29 @@ const UserSummary = (props) => {
   let i = 1;
   /*
 <div>
-  <h2>Welcome, <em>{props.userData.first_name}</em></h2>{!props.userData.validated_email && 
+  <h2>Welcome, <em>{props.userData.first_name}</em></h2>{!props.userData.validated_email &&
   <div className="alert alert-danger row" role="alert">
     <div className="col col-6 col-md-7 col-lg-8 col-xl-9">Account not validated, check email spam to validate account
-    </div>            
-    <div className="col col-6 col-md-5 col-lg-4 col-xl-3">               
-    <button className="btn btn-danger float-right">Resend email</button>             
-  </div>           
+    </div>
+    <div className="col col-6 col-md-5 col-lg-4 col-xl-3">
+    <button className="btn btn-danger float-right">Resend email</button>
+  </div>
 </div>
 */
   return (
-    <div>         
-      <h2>Welcome, <em>{props.userData.first_name}</em></h2>         
-      {           
-      !props.userData.validated_email &&           
-      <div className="alert alert-danger row" role="alert">             
-        <div className="col col-6 col-md-7 col-lg-8 col-xl-9">               
-          Account not validated. Check your email spam to validate account.             
-        </div>             
-        <div className="col col-6 col-md-5 col-lg-4 col-xl-3">               
-          <button className="btn btn-danger float-right">Resend email</button>             
+    <div>
+      <h2>Welcome, <em>{props.userData.first_name}</em></h2>
+      {
+      !props.userData.validated_email &&
+      <div className="alert alert-danger row" role="alert">
+        <div className="col col-6 col-md-7 col-lg-8 col-xl-9">
+          Account not validated. Check your email spam to validate account.
         </div>
-      </div>  
-      }         
+        <div className="col col-6 col-md-5 col-lg-4 col-xl-3">
+          <button className="btn btn-danger float-right">Resend email</button>
+        </div>
+      </div>
+      }
 
       <hr/>
 
@@ -72,7 +86,7 @@ const UserSummary = (props) => {
         <h3>
           Previous Quiz Scores
               </h3>
-        <Line data={chartData} />
+        <Line data={chartData} options = {options}/>
       </div>
 
 
