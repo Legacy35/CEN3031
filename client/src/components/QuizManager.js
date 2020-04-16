@@ -65,7 +65,6 @@ const QuizManager = (props) => {
                    // If it succeeds Do what? information is stored in res object
                    //an array of question Objects as defined in the API Guide
                    alert("Question added");
-                   console.log(res.data);
                    //return;
                 }
             }
@@ -102,7 +101,8 @@ const QuizManager = (props) => {
         );*/
 
     const loadQuestions = () => {
-        axios.get('/apis/quizzes/quiz/questions.php').then(
+      let searchText = document.getElementById("questionSearch").value;
+        axios.get('/apis/quizzes/quiz/questions.php?state=all&filter=' + searchText + '&limit=50').then(
             (res) => {
                 if(res.data.error){
                   alert(res.data.error);

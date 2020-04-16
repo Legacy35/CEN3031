@@ -27,9 +27,11 @@
 
     function getRandomQuestions(){
         global $conn;
+        var_dump($_GET);
+        $limit=10;
         $state = isset($_GET['state']) ? $_GET['state'] : 'all';
-        $limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
-        if($limit > 100) $limit = 100;
+        if(isset($_GET['limit']) && $_GET['limit']!=""&& $_GET['limit']!=NULL) $limit = $_GET['limit'] ;
+        if($limit > 100) $_GET['limit'] = 100;
         $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
         $randomize = isset($_GET['randomize']) ? $_GET['randomize'] : true;
         $statement = $conn->prepare("SELECT * FROM question WHERE (state LIKE CONCAT('%', ?, '%') or state = 'all') AND question LIKE CONCAT('%', ?, '%')");
@@ -49,7 +51,7 @@
         }
         if($randomize) shuffle($questions);
         $output=array();
-        for($i=0;$i<$_GET['limit'];$i++){
+        for($i=0;$i<$limit;$i++){
           array_push($output,$questions[$i]);
         }
         exit(json_encode($output));

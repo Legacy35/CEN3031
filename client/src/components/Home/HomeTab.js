@@ -16,7 +16,7 @@ const HomeTab = (props) => {
 
   const loadData = () => {
     let newChartData = {};
-    newChartData["labels"] = ["Total", "Clear", "Rain", "Snow","Hail","Fog","High Winds"];
+    newChartData["labels"] = ["Total", "No Percipitation", "Rain", "Snow","Hail","Fog","High Winds"];
     newChartData["datasets"] = [];
     axios.get('/apis/cities/city.php?limit=100&filter=').then(
       (res) => {
