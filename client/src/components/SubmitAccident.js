@@ -4,19 +4,19 @@ import axios from 'axios';
 const SubmitAccident = (props) => {
 
     /**
-     * Returns false if it fails, returns seconds since Unix Epoch if succeeds. 
+     * Returns false if it fails, returns seconds since Unix Epoch if succeeds.
      * @param {*} input String in the format of MM/DD/YYYY HH:MM that describes a date object.
      */
-     
+
     /**
      * Converts comma-seperated list into into array of Strings as defined in weather constant
-     * @param {*} input 
+     * @param {*} input
      */
 
     const onSubmit = () => {
 
         let form = document.getElementById('formSubmitAccident');
-
+        alert(form.precipitation.value);
         if(!form.cityName.value || !form.state.value || !form.date.value || !form.precipitation.value || !form.fog.value || !form.wind.value) {
             alert('All fields are required');
             return;

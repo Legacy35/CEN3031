@@ -22,19 +22,49 @@
     $output2 = array();
     while($row = $resultSet->fetch_assoc()){
       $output["id"]= $row["Rivalryid"];
-      $output["city1"]['id'] = $row["city_id1"];
-      $output["city1"]['name'] = $row["name1"];
-      $output["city1"]['state'] = $row["state1"];
-      $output["city1"]['country'] = $row["country1"];
-      $output["city2"]['id'] = $row["city_id2"];
-      $output["city2"]['name'] = $row["name2"];
-      $output["city2"]['state'] = $row["state2"];
-      $output["city2"]['country'] = $row["country2"];
+      $output["city1"]=findCityById($row["city_id1"]);
+      $output["city2"]=findCityById($row["city_id2"]);
       array_push($output2,$output);
     }
     exit(json_encode($output2));
   }
-
+function findCityById($id){
+    $conn = DataManager::getInstance()->getConnection('cities');
+    if(!$conn || $conn->connect_error) error();
+    $statement = $conn->prepare("SELECT * FROM cities WHERE id = ?");
+    if(!$statement) error();
+    if(!$statement->bind_param("i", $id));
+    if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :(')));
+    $resultSet = $statement->get_result();
+    $city = $resultSet->fetch_assoc();
+    $city['coordinates'] = array('latitude' => $city['latitude'], 'longitude' => $city['longitude']);
+    unset($city['latitude']);
+    unset($city['longitude']);
+    $statement = $conn->prepare('SELECT * FROM accidentReport WHERE city_id = ?');
+    $city['accidents'] = array();
+    if(!$statement) error();
+    if(!$statement->bind_param("i", $city['id'])) error();
+    if(!$statement->execute()) error();
+    $accidents = $statement->get_result();
+    while($accident = $accidents->fetch_assoc()){
+          $accident['weather'] = array();
+          if($accident['clear']) array_push($accident['weather'], 'Clear');
+          if($accident['rain']) array_push($accident['weather'], 'Rainy');
+          if($accident['snow']) array_push($accident['weather'], 'Snowy');
+          if($accident['hail']) array_push($accident['weather'], 'Hail');
+          if($accident['fog']) array_push($accident['weather'], 'Foggy');
+          if($accident['high_winds']) array_push($accident['weather'], 'Windy');
+          unset($accident['clear']);
+          unset($accident['rain']);
+          unset($accident['snow']);
+          unset($accident['hail']);
+          unset($accident['fog']);
+          unset($accident['high_winds']);
+          unset($accident['city_id']);
+          array_push($city['accidents'], $accident);
+        }
+  return $city;
+}
   function deleteRivalry(){
     if(!isset($_COOKIE['token'])) error('You must be signed in to perform this operation');
     $conn = DataManager::getInstance()->getConnection("cities");
