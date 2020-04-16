@@ -11,24 +11,24 @@ const QuizTab = (props) => {
 
     const loadQuiz = () => {
         let form = document.getElementById("formGetQuestions");
-        axios.get('/apis/quizzes/quiz/questions.php?state=' + form.state.value)
+        axios.get('/apis/quizzes/quiz/questions.php?limit=10&state=' + form.state.value)
         .then(
             (res) => {
-    
+
                 if (res.data.error){
                     alert(res.data.error);
                 }
                 else {
                     setQuestions(res.data);
                 }
-    
+
             }
         )
         .catch(
             (err) => {
                 if(err) throw err;
             }
-        );  
+        );
     }
 
     if(questions.length == 0){
