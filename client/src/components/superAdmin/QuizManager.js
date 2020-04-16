@@ -33,7 +33,29 @@ const QuizManager = (props) => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    const onSubmit = (e) => {
+    const onSubmitSearch = (e) => {
+        if(e) e.preventDefault();
+        let filter = document.getElementById("questionSearch").value;
+        axios.get('/apis/quizzes/quiz/questions.php?limit=50&randomize=false&state=&filter='+filter).then(
+            (res) => {
+                if(res.data.error){
+                    alert(res.data.error);
+                } else {
+                   // If it succeeds Do what? information is stored in res object
+                   //an array of question Objects as defined in the API Guide
+                   alert("Wow you did it");
+                   //return;
+                }
+            }
+        ).catch(
+            (err) => {
+                console.log(err);
+            }
+        );
+
+    };
+
+    const onSubmitAdd = (e) => {
         if(e) e.preventDefault();
         let form = document.getElementById("formAddQuestion");
 
@@ -101,8 +123,7 @@ const QuizManager = (props) => {
         );*/
 
     const loadQuestions = () => {
-      let searchText = document.getElementById("questionSearch").value;
-        axios.get('/apis/quizzes/quiz/questions.php?state=all&filter=' + searchText + '&limit=50').then(
+        axios.get('/apis/quizzes/quiz/questions.php?state=all&filter=&limit=50').then(
             (res) => {
                 if(res.data.error){
                   alert(res.data.error);
@@ -111,7 +132,7 @@ const QuizManager = (props) => {
                 }
               }
         ).catch((err) => {
-            if(err) console.log(err);
+            console.log(err);
         });
         setLoaded(true);
     }
@@ -224,14 +245,16 @@ const QuizManager = (props) => {
                             <input className="form-control" id="wc3" name="wc3"></input>
                         </div>
                     </div>
-                    <input className="btn btn-primary" type='submit' value='Add Question' onClick={onSubmit}/>
+                    <input className="btn btn-primary" type='submit' value='Add Question' onClick={onSubmitAdd}/>
                 </form>
             </div>
             <div>
                 <strong>Remove a Quiz Question</strong>
                 <p><input className="form-control" id="questionSearch" placeholder="Search for a question" onChange={onChange}/></p>
+                <button className="btn btn-primary" onClick={onSubmitSearch}>Search</button>
                 <div>
-                    {questionList.map((element) => (
+                    {questionList&&
+                      questionList.map((element) => (
                         <div key={element.id}>
                         </div>
                     ))}
@@ -243,12 +266,11 @@ const QuizManager = (props) => {
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Question</th>
-                            <th scope="col">Delete</th>
+                            <th scope="col"><button className="btn btn-primary">Delete</button></th>
                         </tr>
                     </thead>
                 </table>
                 </div>
-                <button className="btn btn-primary" onClick={onSubmit}>Ouchie My Question is Trash</button>
 
 
             </div>
