@@ -13,7 +13,6 @@ import ControlPanel from './components/superAdmin/ControlPanel.js';
 import Rivalry from './components/rivalry/Rivalry.js';
 
 import QuizTab from './components/quiz/QuizTab.js';
-import GraphTab from './components/rivalry/GraphTab.js';
 import HomeTab from './components/Home/HomeTab.js';
 import QuizManager from './components/QuizManager.js';
 

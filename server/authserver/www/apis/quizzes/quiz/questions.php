@@ -32,8 +32,7 @@
         if($limit > 100) $limit = 100;
         $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
         $randomize = isset($_GET['randomize']) ? $_GET['randomize'] : true;
-        global $conn;
-        $statement = $conn->prepare("SELECT * FROM question WHERE `state` = ? AND `question` LIKE CONCAT('%', ?, '%') LIMIT ?");
+        $statement = $conn->prepare("SELECT * FROM question WHERE (`state` LIKE CONCAT('%', ?, '%') or `state` = 'all') AND `question` LIKE CONCAT('%', ?, '%') LIMIT ?");
         if(!$statement) error();
         if(!$statement->bind_param("ssi", $state, $filter, $limit)) error();
         if(!$statement->execute()) error();
@@ -56,10 +55,8 @@
         createQuestion();
     } else if(isset($_POST['id']) &&(isset($_POST['delete']) && $_POST['delete']) ){
         deleteQuestion();
-   }  else if (empty($_GET) && empty($_POST)) {
-        getRandomQuestions();
-    } else {
-        error("Invalid request");
+   }  else {
+       getRandomQuestions();
     }
 
 ?>

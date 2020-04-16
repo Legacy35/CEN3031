@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import RivalrySearchBar from './RivalrySearchBar.js'
 import RivalryTable from './RivalryTable.js';
-import GraphTab from './GraphTab.js';
-import WeatherGraph from './WeatherGraph.js';
+import RivalryGraph from './RivalryGraph.js';
 
 const Rivalry = (props) => {
 
-  const [rivalries, setRivalries] = useState(undefined);
+  const [rivalries, setRivalries] = useState(null);
+  const [cities, setCities] = useState(null);
 
   return (
     <div>
-      <RivalrySearchBar setRivalries={setRivalries}/>
+      <RivalrySearchBar cities={cities} setCities={setCities} rivalries={rivalries} setRivalries={setRivalries}/>
       <br />
-      <RivalryTable rivalries={rivalries}/>
-      <br />
-      <GraphTab/>
-      <br />
-      <WeatherGraph/>
+      <RivalryTable cities={cities} setCities={setCities} rivalries={rivalries} setRivalries={setRivalries}/>
+      <RivalryGraph cities={cities} setCities={setCities} rivalries={rivalries} setRivalries={setRivalries}/>
     </div>
   );
 
