@@ -33,7 +33,7 @@ const HomeTab = (props) => {
             datapoint["label"] = city.name;
             datapoint["backgroundColor"] = colors[count++];
             datapoint["data"] = [city.accidents.length, 0, 0, 0, 0, 0 ,0];
-            if(max<city.accidents.length)setMax(city.accidents.length+3);
+            if(max <= city.accidents.length)setMax(city.accidents.length+3);
             city.accidents.forEach((accident) => {
 
               accident.weather.forEach((weather) => {

@@ -39,7 +39,7 @@
         if(!$statement->execute()) error();
         $resultSet = $statement->get_result();
         if($resultSet->num_rows > 1) error("More than one city with the provided criteria was found. Please narrow your search.");
-        
+
         //Insert city if it doesn't exist
         if($resultSet->num_rows == 0){
             $statement = $conn->prepare("INSERT INTO cities (`name`, `state`, `country`, `latitude`, `longitude`) VALUES (?, ?, ?, ?, ?)");
@@ -67,18 +67,27 @@
         $statement = $conn->prepare("INSERT INTO accidentReport (`city_id`, `date`, `clear`, `rain`, `snow`, `hail`, `fog`, `high_winds`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         if(!$statement) error();
         $date = $_POST['date'];
-        $clear = isset($_POST['weather']['clear']) && $_POST['weather']['clear'];
-        $rain = isset($_POST['weather']['rain']) && $_POST['weather']['rain'];
-        $snow = isset($_POST['weather']['snow']) && $_POST['weather']['snow'];
-        $hail = isset($_POST['weather']['hail']) && $_POST['weather']['hail'];
-        $fog = isset($_POST['weather']['fog']) && $_POST['weather']['fog'];
-        $wind = isset($_POST['weather']['wind']) && $_POST['weather']['wind'];
+        $clear = 0;
+        $rain = 0;
+        $snow = 0;
+        $hail = 0;
+        $fog = 0;
+        $wind = 0;
+        foreach($_POST['weather'] as $weather){
+          if($weather=="Clear")$clear = 1;
+            if($weather=="Rain")$rain = 1;
+              if($weather=="Snow")$snow = 1;
+                if($weather=="Hail")$hail = 1;
+                  if($weather=="Fog")$fog = 1;
+                    if($weather=="Wind")$wind = 1;
+        }
+
         if(!$statement->bind_param("iiiiiiii", $city_id, $date, $clear, $rain, $snow, $hail, $fog, $wind)) error();
-        
+
         if(!$statement->execute()) error();
 
     }
-    
+
     /*Input validation*/
     if(isset($_POST['cityName']) && isset($_POST['state']) && isset($_POST['date']) && isset($_POST['weather'])){
         if(!isset($_COOKIE['token'])) error("You must be signed in to perform this operation");
