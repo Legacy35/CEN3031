@@ -14,7 +14,7 @@ import Rivalry from './components/rivalry/Rivalry.js';
 
 import QuizTab from './components/quiz/QuizTab.js';
 import HomeTab from './components/Home/HomeTab.js';
-import QuizManager from './components/QuizManager.js';
+import QuizManager from './components/superAdmin/QuizManager.js';
 
 import {loadProfile} from './SessionManager.js';
 import RivalrySearchBar from './components/rivalry/RivalrySearchBar.js';

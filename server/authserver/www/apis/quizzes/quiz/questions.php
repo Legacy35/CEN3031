@@ -25,12 +25,11 @@
         if(!$statement->execute()) error();
     }
 
-    function getRandomQuestions(){
+    function getQuestions(){
         global $conn;
-        var_dump($_GET);
         $limit=10;
         $state = isset($_GET['state']) ? $_GET['state'] : 'all';
-        if(isset($_GET['limit']) && $_GET['limit']!=""&& $_GET['limit']!=NULL) $limit = $_GET['limit'] ;
+        if(isset($_GET['limit']) ) $limit = $_GET['limit'] ;
         if($limit > 100) $_GET['limit'] = 100;
         $filter = isset($_GET['filter']) ? $_GET['filter'] : "";
         $randomize = isset($_GET['randomize']) ? $_GET['randomize'] : true;
@@ -53,7 +52,7 @@
         }
         if($randomize) shuffle($questions);
         $output=array();
-        for($i=0;$i<$limit;$i++){
+        for($i=0;$i<$limit&&$i<sizeof($questions);$i++){
           array_push($output,$questions[$i]);
         }
         exit(json_encode($output));
@@ -64,7 +63,7 @@
     } else if(isset($_POST['id']) &&(isset($_POST['delete']) && $_POST['delete']) ){
         deleteQuestion();
    }  else {
-       getRandomQuestions();
+       getQuestions();
     }
 
 ?>

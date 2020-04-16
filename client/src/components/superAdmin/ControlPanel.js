@@ -21,7 +21,7 @@ const ControlPanel = (props) => {
 
     const showQuizQuestions = () => {
         show('manageQuizzes');
-    }  
+    }
     const showUsers = () => {
         show('manageUsers');
     }
