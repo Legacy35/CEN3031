@@ -14,7 +14,7 @@
 
         public function getQuizScoresById($id) {
             $conn = DataManager::getInstance()->getConnection("account"); //External code
-            if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :('))); 
+            if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :(')));
             $statement = $conn->prepare('SELECT * FROM quizData WHERE user_id = ? ORDER BY id ASC');
             if(!$statement) exit(json_encode(array('error' => 'An internal or external error occurred')));
             if(!$statement->bind_param("i", $id)) exit(json_encode(array('error' => 'An internal or external error occurred')));
@@ -31,16 +31,16 @@
 
         public function getUser(string $token){
           $conn = DataManager::getInstance()->getConnection("account"); //External code
-          if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :('))); 
+          if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :(')));
 
           /*Find the right account and return it*/
           $statement = $conn->prepare("SELECT id, email, admin, super_admin, first_name, last_name, address, phone_number, insurance_company, dashcam FROM account WHERE token = ?");
           if(!$statement) exit(json_encode(array('error' => 'An internal or external error occurred.')));
-          if(!$statement->bind_param("s", $token)) error(); 
-          if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :('))); 
+          if(!$statement->bind_param("s", $token)) error();
+          if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :(')));
           $resultSet = $statement->get_result();
-          if($resultSet->num_rows < 1) exit(json_encode(array('error' => 'Account not found'))); 
-          $output = $resultSet->fetch_assoc(); 
+          if($resultSet->num_rows < 1) exit(json_encode(array('error' => 'Account not found')));
+          $output = $resultSet->fetch_assoc();
           $output['quizScores'] = $this->getQuizScoresById($output['id']);
           return $output;
 
@@ -50,34 +50,35 @@
 
             $conn = DataManager::getInstance()->getConnection("account"); //External code
             if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :('))); 
-  
-  
+
+
             /*Find the right account and return it*/
             $statement = $conn->prepare("SELECT id, email, admin, super_admin, first_name, last_name, address, phone_number, insurance_company, dashcam FROM account WHERE email = ?");
             if(!$statement) exit(json_encode(array('error' => 'An internal or external error occurred.')));
-            if(!$statement->bind_param("s", $email)) error(); 
-            if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :('))); 
+            if(!$statement->bind_param("s", $email)) error();
+            if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :(')));
             $resultSet = $statement->get_result();
-            if($resultSet->num_rows < 1) exit(json_encode(array('error' => 'Account not found'))); 
-            $output = $resultSet->fetch_assoc(); 
+            if($resultSet->num_rows < 1) exit(json_encode(array('error' => 'Account not found')));
+            $output = $resultSet->fetch_assoc();
             $output['quizScores'] = getQuizScoresById($output['id']);
             return $output;
-    
+
         }
-    
+
+
         public function getUserById(mixed $id){
 
             $conn = DataManager::getInstance()->getConnection("account"); //External code
-            if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :('))); 
-  
+            if(!$conn || $conn->connect_error) exit(json_encode(array('error' => 'Could not connect to database. :(')));
+
             /*Find the right account and return it*/
             $statement = $conn->prepare("SELECT id, email, admin, super_admin, first_name, last_name, address, phone_number, insurance_company, dashcam FROM account WHERE id = ?");
             if(!$statement) exit(json_encode(array('error' => 'An internal or external error occurred.')));
-            if(!$statement->bind_param("i", $id)) error(); 
-            if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :('))); 
+            if(!$statement->bind_param("i", $id)) error();
+            if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :(')));
             $resultSet = $statement->get_result();
-            if($resultSet->num_rows < 1) exit(json_encode(array('error' => 'Account not found'))); 
-            $output = $resultSet->fetch_assoc(); 
+            if($resultSet->num_rows < 1) exit(json_encode(array('error' => 'Account not found')));
+            $output = $resultSet->fetch_assoc();
             $output['quizScores'] = getQuizScoresById($output['id']);
             return $output;
 
