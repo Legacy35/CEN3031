@@ -16,6 +16,7 @@ const RivalryGraph = (props) => {
     newChartData["labels"] = ["Total", "No Percipitation", "Rain", "Snow", "Hail", "Fog", "High Winds"];
     newChartData["datasets"] = [];
     let maximum = props.selectedRivalry.city1.accidents.length > props.selectedRivalry.city2.accidents.length ? props.selectedRivalry.city1.accidents.length : props.selectedRivalry.city2.accidents.length;
+    setMax(maximum);
     let datapoint = {};
     datapoint["label"] = props.selectedRivalry.city1.name;
     datapoint["backgroundColor"] = "orange"; //"blue"

@@ -40,7 +40,7 @@ const RivalryManager = (props) => {
                     alert(res.data.error);
                 } else {
                     loadRivalries();
-                    alert('s u c c e s s');
+                    alert('Rivalry successfully added.');
                 }
             })
             .catch((err) => {
