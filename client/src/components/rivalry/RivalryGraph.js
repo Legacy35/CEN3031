@@ -40,7 +40,7 @@ const RivalryGraph = (props) => {
       }
 
       if(!props.rivalries || !props.cities){
-          return <p>After searching for a city, its rivals and their stats will be displayed here.</p>
+          return <p>After searching for a city, its rivals and their stats will be displayed here as a graph.</p>
       } else {
         
       }

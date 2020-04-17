@@ -1,74 +1,36 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 
+import QuizQuestionDelete from './QuizQuestionDelete.js';
+
 const QuizManager = (props) => {
-    /*
-        Currently set up to remove question on click, idk if that is how we want it
-    */
 
-    let [questionList, setQuestionList] = useState([]);
+    /*Hooks*/
+    let [questions, setQuestions] = useState([]);
     let [loaded, setLoaded] = useState(false);
-    let i = 0;
+    let i = 1;
 
-    const onChange = (e) => {
-
-        let searchText = document.getElementById("questionSearch").value;
-
-        axios.get('/apis/quizzes/quiz/questions.php?state=all&filter=' + searchText + '&limit=50').then(
-            (res) => {
-                if(res.data.error){
-                  alert(res.data.error);
-                } else {
-                  setQuestionList(res.data);
-                }
-              }
-        ).catch((err) => {
-            if(err) console.log(err);
-        });
-    };
-
+    /*Utility functions*/
     function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    const onSubmitSearch = (e) => {
-        if(e) e.preventDefault();
-        let filter = document.getElementById("questionSearch").value;
-        axios.get('/apis/quizzes/quiz/questions.php?limit=50&randomize=false&state=&filter='+filter).then(
-            (res) => {
-                if(res.data.error){
-                    alert(res.data.error);
-                } else {
-                   // If it succeeds Do what? information is stored in res object
-                   //an array of question Objects as defined in the API Guide
-                   alert("Wow you did it");
-                   //return;
-                }
-            }
-        ).catch(
-            (err) => {
-                console.log(err);
-            }
-        );
-
-    };
-
+    /*Events*/
     const onSubmitAdd = (e) => {
-        if(e) e.preventDefault();
+        if (e) e.preventDefault();
         let form = document.getElementById("formAddQuestion");
 
-        if(!form.question.value || !form.answer.value || !form.wc1.value || !form.wc2.value || !form.wc3.value || !form.state.value)
-        {
+        if (!form.question.value || !form.answer.value || !form.wc1.value || !form.wc2.value || !form.wc3.value || !form.state.value) {
             alert("All fields are required");
             return;
         }
         let i = getRandomInt(0, 3);
-        let answers=[form.answer.value,form.wc1.value,form.wc2.value,form.wc3.value];
+        let answers = [form.answer.value, form.wc1.value, form.wc2.value, form.wc3.value];
         let temp = answers[0];
-        answers[0]=answers[i];
-        answers[i]= temp;
+        answers[0] = answers[i];
+        answers[i] = temp;
         const params = {
             question: form.question.value,
             answer1: answers[0],
@@ -81,13 +43,16 @@ const QuizManager = (props) => {
 
         axios.post('/apis/quizzes/quiz/questions.php', params).then(
             (res) => {
-                if(res.data.error){
+                if (res.data.error) {
                     alert(res.data.error);
                 } else {
-                   // If it succeeds Do what? information is stored in res object
-                   //an array of question Objects as defined in the API Guide
-                   alert("Question added");
-                   //return;
+                    alert("Question added");
+                    loadQuestions();
+                    form.question.value = "";
+                    form.answer.value = "";
+                    form.wc1.value = "";
+                    form.wc2.value = "";
+                    form.wc3.value = "";
                 }
             }
         ).catch(
@@ -98,51 +63,31 @@ const QuizManager = (props) => {
 
     };
 
-    const removeQuestion = (qid, e) => {
-        const params = {
-            id: qid,
-            delete: true
-        };
-      }
-
-/*        axios.post('/apis/quizzes/quiz/questions.php', params).then(
+    /*Initialization*/
+    const loadQuestions = (evt) => {
+        if (evt) evt.preventDefault();
+        let textField = document.getElementById("questionSearch");
+        let filter = textField ? textField.value : "";
+        axios.get('/apis/quizzes/quiz/questions.php?state=&filter=' + filter + '&limit=50').then(
             (res) => {
-                if(res.data.error){
+                if (res.data.error) {
                     alert(res.data.error);
-                    console.log(res.data.error);
                 } else {
-                   // If it succeeds Do what? information is stored in res object
-                   //an array of question Objects as defined in the API Guide
-                   alert("Question removed");
+                    setQuestions(res.data);
                 }
             }
-        ).catch(
-            (err) => {
-                console.log(err);
-            }
-        );*/
-
-    const loadQuestions = () => {
-        axios.get('/apis/quizzes/quiz/questions.php?state=all&filter=&limit=50').then(
-            (res) => {
-                if(res.data.error){
-                  alert(res.data.error);
-                } else {
-                  setQuestionList(res.data);
-                }
-              }
         ).catch((err) => {
             console.log(err);
         });
         setLoaded(true);
     }
 
-    if(!loaded) loadQuestions();
+    if (!loaded) loadQuestions();
 
-    return(
+    return (
         <div>
             <div>
-                <p><strong>Add a Quiz Question</strong></p>
+                <h2>Add a quiz question</h2>
 
                 <form id="formAddQuestion">
                     <div className="form-group row">
@@ -245,31 +190,47 @@ const QuizManager = (props) => {
                             <input className="form-control" id="wc3" name="wc3"></input>
                         </div>
                     </div>
-                    <input className="btn btn-primary" type='submit' value='Add Question' onClick={onSubmitAdd}/>
+                    <input className="btn btn-primary" type='submit' value='Add Question' onClick={onSubmitAdd} />
+                    <hr />
                 </form>
             </div>
             <div>
-                <strong>Remove a Quiz Question</strong>
-                <p><input className="form-control" id="questionSearch" placeholder="Search for a question" onChange={onChange}/></p>
-                <button className="btn btn-primary" onClick={onSubmitSearch}>Search</button>
-                <div>
-                    {questionList&&
-                      questionList.map((element) => (
-                        <div key={element.id}>
+                <h2>Remove a Quiz Question</h2>
+                <form onSubmit={loadQuestions}>
+                    <div className="row form-group">
+                        <div className="col col-12 col-md-9">
+                            <input className="form-control" id="questionSearch" placeholder="Narrow your search here using a question's text" />
                         </div>
-                    ))}
+                        <div className="col col-12 col-md-3">
+                            <button className="btn btn-primary w-100" onClick={loadQuestions}>Search</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div>
+                    {questions &&
+                        questions.map((element) => (
+                            <div key={element.id}>
+                            </div>
+                        ))}
                 </div>
                 <div className="table-responsive nopadding nomargin">
 
-                <table className="table table-striped table-dark table-hover table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Question</th>
-                            <th scope="col"><button className="btn btn-primary">Delete</button></th>
-                        </tr>
-                    </thead>
-                </table>
+                    <table className="table table-striped table-dark table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Question</th>
+                                <th scope="col">State</th>
+                                <th scope="col"></th>
+                            </tr>
+                            {
+                                questions.map((question) => (
+                                    <QuizQuestionDelete question={question} i={i++} loadQuestions={loadQuestions} />
+                                ))
+                            }
+                        </thead>
+                    </table>
                 </div>
 
 
@@ -279,16 +240,3 @@ const QuizManager = (props) => {
 }
 
 export default QuizManager;
-/*
-{
-                questions.map((element => (
-                    <tbody key={i++}> {}
-                    <tr key={i} data-toggle="collapse" data-target={".order" + i}>
-                    <th scope="row" >{i}</th>
-                    <td>{element.id}</td>
-                    <td>{element.question}</td>
-                </tr>
-            </tbody>
-        )))
-        }
-*/

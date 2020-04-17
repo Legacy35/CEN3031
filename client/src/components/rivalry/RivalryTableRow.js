@@ -3,7 +3,7 @@ import React from 'react';
 const RivalryTableRow = (props) => {
 
     const onClick = () => {
-        alert();
+        
     }
     console.log(props.rivalry.city1);
     return (

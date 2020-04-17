@@ -15,9 +15,10 @@ import Rivalry from './components/rivalry/Rivalry.js';
 import QuizTab from './components/quiz/QuizTab.js';
 import HomeTab from './components/Home/HomeTab.js';
 import QuizManager from './components/superAdmin/QuizManager.js';
+import AccountManager from './components/superAdmin/AccountManager.js';
+
 
 import {loadProfile} from './SessionManager.js';
-import RivalrySearchBar from './components/rivalry/RivalrySearchBar.js';
 
 /*APP - MAIN COMPONENT*/
 const App = () => {
@@ -110,6 +111,11 @@ const App = () => {
           <CSSTransition in={views.manageQuizzes} timeout={0} classNames="fade" unmountOnExit>
             <QuizManager />
           </CSSTransition>
+
+          <CSSTransition in={views.manageUsers} timeout={0} classNames="fade" unmountOnExit>
+            <AccountManager/>
+          </CSSTransition>
+          
 
         </div>
         <div className="col col-12 col-sm-1 col-md-2 col-xl-3"></div>
