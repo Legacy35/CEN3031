@@ -4,7 +4,7 @@ import RivalryTableRow from './RivalryTableRow.js';
 const RivalryTable = (props) => {
 
     //Value used for the key property for rendered elements
-    let i = 0;
+    let i = 1;
     let rivalries = props.rivalries;
     console.log(rivalries);
 
@@ -27,7 +27,6 @@ const RivalryTable = (props) => {
                         ))) 
                     }   
                 </table>
-                {props.rivalries == undefined && <p>Search for a city to find its rivals.</p>}
                 {props.rivalries && props.rivalries.length == 0 && <p>No results found.</p>}
             </div>
         );

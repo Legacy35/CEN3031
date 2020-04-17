@@ -4,7 +4,7 @@ import CitySummary from './CitySummary.js';
 const SearchResults = (props) => {
 
     //Value used for the key property for rendered elements
-    let i = 0;
+    let i = 1;
     let cities = props.cities;
 
     console.log(props);
