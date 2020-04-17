@@ -16,7 +16,7 @@ import QuizTab from './components/quiz/QuizTab.js';
 import HomeTab from './components/Home/HomeTab.js';
 import QuizManager from './components/superAdmin/QuizManager.js';
 import AccountManager from './components/superAdmin/AccountManager.js';
-
+import RivalryManager from './components/superAdmin/RivalryManager.js';
 
 import {loadProfile} from './SessionManager.js';
 
@@ -114,6 +114,10 @@ const App = () => {
 
           <CSSTransition in={views.manageUsers} timeout={0} classNames="fade" unmountOnExit>
             <AccountManager/>
+          </CSSTransition>
+
+          <CSSTransition in={views.manageRivalries} timeout={0} classNames="fade" unmountOnExit>
+            <RivalryManager/>
           </CSSTransition>
           
 
