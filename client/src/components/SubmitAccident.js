@@ -47,7 +47,6 @@ const SubmitAccident = (props) => {
 
         axios.post('/apis/accidents/accident.php', params).then(
             (res) => {
-                console.log(res);
                 if(res.data.error){
                     alert(res.data.error);
                 } else {
@@ -56,7 +55,7 @@ const SubmitAccident = (props) => {
             }
         ).catch(
             (err) => {
-                console.log(err);
+                throw err;
             }
         );
 

@@ -6,8 +6,14 @@
     function getOpenCageCity(){
         $cityName = $_POST['cityName'];
         $state = $_POST['state'];
-        $openCageKey = 'f2e278c415b74f7db345af774a40e473';
-        $results =  json_decode(file_get_contents("https://api.opencagedata.com/geocode/v1/json?q=$cityName,$state&key=$openCageKey"));
+        $fileKey = file_get_contents('../../data/opencage.key');
+        $openCageKey = "";
+        for($i = 0; $i < strlen($fileKey) - 1; $i++){
+            $openCageKey[$i] = $fileKey[$i];
+        }
+        $url = "https://api.opencagedata.com/geocode/v1/json?q=$cityName,$state&key=$openCageKey";
+        $url = str_replace(' ', '+', $url);
+        $results =  json_decode(file_get_contents($url));
         if(!isset($results->results)) error("No matching cities found.");
         $results = $results->results;
         $output;
@@ -24,7 +30,7 @@
             }
         }
 
-        if(!isset($output)) error("No matching cities were found.");
+        if(!($output)) error("No matching cities were found.");
         return $output;
     }
 
@@ -92,11 +98,10 @@
     if(isset($_POST['cityName']) && isset($_POST['state']) && isset($_POST['date']) && isset($_POST['weather'])){
         if(!isset($_COOKIE['token'])) error("You must be signed in to perform this operation");
         $user = DataManager::getInstance()->getUser($_COOKIE['token']);
-        if($user['super_admin'] !== 1) error("You are not authorized to perform this action.");
+        if($user['admin'] !== 1 && $user['super_admin'] !== 1) error("You are not authorized to perform this action.");
         if($_POST['date'] < 0) error("Malformed request. Invalid date.");
         if (strlen($_POST['cityName']) < 2 || strlen($_POST['cityName']) > 46)  error("Malformed request, city name invalid.");
         $openCageCity = getOpenCageCity();
-        if($openCageCity->components->_type != 'city') error("City not found.");
         storeAccident($openCageCity);
     } else if(isset($_GET['filter'])) {
         $conn = DataManager::getInstance()->getConnection('cities');
