@@ -5,7 +5,7 @@ import queryString from 'querystring'
 const RivalrySearchBar = (props) => {
 
     const onClick = (event) => {
-        
+
         event.preventDefault();
 
         let form = document.getElementById("formSearchRivalries");
@@ -16,10 +16,9 @@ const RivalrySearchBar = (props) => {
               if(res.data.error){
                 alert(res.data.error);
               } else {
-                console.log(res.data);
                 props.setRivalries(res.data);
                 res.data.forEach((rivalry) => {
-                  
+
                 });
               }
             }
@@ -27,7 +26,7 @@ const RivalrySearchBar = (props) => {
             if(err) console.log(err);
           })
     };
-    
+
     return (
         <div>
             <form id="formSearchRivalries">

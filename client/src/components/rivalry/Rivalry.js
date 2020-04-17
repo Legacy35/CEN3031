@@ -5,15 +5,16 @@ import RivalryGraph from './RivalryGraph.js';
 
 const Rivalry = (props) => {
 
-  const [rivalries, setRivalries] = useState(null);
-  const [selectedRivalry, setSelectedRivalry] = useState(null);
+  let [rivalries, setRivalries] = useState(null);
+  let [selectedRivalry, setSelectedRivalry] = useState(null);
+  let [chartData, setChartData] = useState([]);
 
   return (
     <div>
       <RivalrySearchBar selectedRivalry={selectedRivalry} setSelectedRivalry={setSelectedRivalry} rivalries={rivalries} setRivalries={setRivalries}/>
       <br />
       <RivalryTable selectedRivalry={selectedRivalry} setSelectedRivalry={setSelectedRivalry} rivalries={rivalries} setRivalries={setRivalries}/>
-      <RivalryGraph selectedRivalry={selectedRivalry} setSelectedRivalry={setSelectedRivalry} rivalries={rivalries} setRivalries={setRivalries}/>
+      <RivalryGraph chartData={chartData} setChartData={setChartData} selectedRivalry={selectedRivalry} setSelectedRivalry={setSelectedRivalry} rivalries={rivalries} setRivalries={setRivalries}/>
     </div>
   );
 

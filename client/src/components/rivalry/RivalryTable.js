@@ -6,10 +6,6 @@ const RivalryTable = (props) => {
     //Value used for the key property for rendered elements
     let i = 0;
     let rivalries = props.rivalries;
-    console.log(rivalries);
-
-
-
         return (
             <div className="table-responsive nopadding nomargin">
                 <table className="table table-striped table-dark table-hover table-sm">
@@ -26,7 +22,7 @@ const RivalryTable = (props) => {
                                 <RivalryTableRow rivalries={props.rivalries} setRivalries={props.setRivalries} setSelectedRivalry={props.setSelectedRivalry} key={i} rivalry={element}/>
                             </tbody>
                         )))
-                    }   
+                    }
                 </table>
                 {props.rivalries == undefined && <p>Search for a city to find its rivals.</p>}
                 {props.rivalries && props.rivalries.length == 0 && <p>No results found.</p>}
