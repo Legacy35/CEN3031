@@ -19,10 +19,7 @@ CREATE TABLE account(
     address VARCHAR(255) NOT NULL,
     phone_number VARCHAR(255) NOT NULL,
     insurance_company VARCHAR(255) NOT NULL,
-    dashcam TINYINT NOT NULL,
-    hasValidatedEmail TINYINT NOT NULL DEFAULT 0,
-    emailValidation VARCHAR(1024) NOT NULL
-
+    dashcam TINYINT NOT NULL
 );
 CREATE TABLE quizData(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
