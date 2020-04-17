@@ -6,14 +6,14 @@ import RivalryGraph from './RivalryGraph.js';
 const Rivalry = (props) => {
 
   const [rivalries, setRivalries] = useState(null);
-  const [cities, setCities] = useState(null);
+  const [selectedRivalry, setSelectedRivalry] = useState(null);
 
   return (
     <div>
-      <RivalrySearchBar cities={cities} setCities={setCities} rivalries={rivalries} setRivalries={setRivalries}/>
+      <RivalrySearchBar selectedRivalry={selectedRivalry} setSelectedRivalry={setSelectedRivalry} rivalries={rivalries} setRivalries={setRivalries}/>
       <br />
-      <RivalryTable cities={cities} setCities={setCities} rivalries={rivalries} setRivalries={setRivalries}/>
-      <RivalryGraph cities={cities} setCities={setCities} rivalries={rivalries} setRivalries={setRivalries}/>
+      <RivalryTable selectedRivalry={selectedRivalry} setSelectedRivalry={setSelectedRivalry} rivalries={rivalries} setRivalries={setRivalries}/>
+      <RivalryGraph selectedRivalry={selectedRivalry} setSelectedRivalry={setSelectedRivalry} rivalries={rivalries} setRivalries={setRivalries}/>
     </div>
   );
 

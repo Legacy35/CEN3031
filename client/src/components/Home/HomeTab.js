@@ -52,13 +52,11 @@ const HomeTab = (props) => {
           });
         setChartData(newChartData);
         setMax(maximum);
-        console.log(newChartData);
 
         }
       }
     ).catch(
       (err) => {
-        console.log(err);
       }
     );
   }
