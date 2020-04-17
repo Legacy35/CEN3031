@@ -54,7 +54,7 @@ const SearchResults = (props) => {
         return (
 
             <div className="table-responsive nopadding nomargin">
-
+                <p>You can click on one of the city results for a breakdown on the kinds of accidents that occurred in the city. The total number of accidents reported may be less than the total of the different kinds of accidents reported. This is because multiple weather conditions can be reported for a single accident. </p>
                 <table className="table table-striped table-dark table-hover table-sm">
                     <thead>
                         <tr>

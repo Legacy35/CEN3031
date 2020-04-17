@@ -1,3 +1,9 @@
+/**
+ * Hey, if you're reading this code, we're sorry.  It's a mess. Good luck
+ * 
+ * - Team Double Name, CEN3031 Spring 2020 @ UFL
+ * */
+
 /*IMPORTS*/
 import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';

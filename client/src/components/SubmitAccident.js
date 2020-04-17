@@ -16,7 +16,6 @@ const SubmitAccident = (props) => {
     const onSubmit = () => {
 
         let form = document.getElementById('formSubmitAccident');
-        alert(form.precipitation.value);
         if(!form.cityName.value || !form.state.value || !form.date.value || !form.precipitation.value || !form.fog.value || !form.wind.value) {
             alert('All fields are required');
             return;
@@ -52,7 +51,7 @@ const SubmitAccident = (props) => {
                 if(res.data.error){
                     alert(res.data.error);
                 } else {
-                    alert('Entry recorded in database. :)');
+                    alert('Entry recorded in database.');
                 }
             }
         ).catch(

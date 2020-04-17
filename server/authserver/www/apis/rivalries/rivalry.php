@@ -97,6 +97,55 @@ function findCityById($id){
     if(!$statement->execute()) exit(json_encode(array('error' => 'Query failed. :(')));
   }
 
+  function createRivalryFromNames(){
+   // if(!isset($_COOKIE['token'])) error('You must be signed in to perform this operation');
+   // $user = DataManager::getInstance()->getUser($_COOKIE['token']);
+   // if(!$user['super_admin']) error('You do not have permission to perform this operation.');
+    $conn = DataManager::getInstance()->getConnection('cities');
+    if(!$conn || $conn->connect_error) error();
+
+    $cityId1;
+    $city1 = strtolower($_POST['city1']);
+    $state1 = strtolower($_POST['state1']);
+    $cityId2;
+    $city2 = strtolower($_POST['city2']);
+    $state2 = strtolower($_POST['state2']);
+
+
+
+    $statement = $conn->prepare('SELECT * FROM cities WHERE LOWER(name) = ? AND LOWER(state) = ?');
+    if(!$statement) error();
+    if(!$statement->bind_param("ss", $city1, $state1)) error();
+    if(!$statement->execute()) error();
+    $resultSet = $statement->get_result();
+    if($resultSet->num_rows != 1) error('Either the provided city does not exist, or it is not present in the database.');
+    $row = $resultSet->fetch_assoc();
+    $cityId1 = $row['id'];
+
+
+    $statement = $conn->prepare('SELECT * FROM cities WHERE LOWER(name) = ? AND LOWER(state) = ?');
+    if(!$statement) error();
+    if(!$statement->bind_param("ss", $city2, $state2)) error();
+    if(!$statement->execute()) error();
+    $resultSet = $statement->get_result();
+    if($resultSet->num_rows != 1) error('Either the provided city does not exist, or it is not present in the database.');
+    $row = $resultSet->fetch_assoc();
+    $cityId2 = $row['id'];
+
+    $statement = $conn->prepare('SELECT * FROM rivalry WHERE (city_id1 = ? AND city_id2 = ?) OR (city_id1 = ? AND city_id2 = ?)');
+    if(!$statement) error();
+    if(!$statement->bind_param("iiii", $cityId1, $cityId2, $cityId2, $cityId1));
+    if(!$statement->execute()) error();
+    $resultSet = $statement->get_result();
+    if($resultSet->num_rows > 0) error('Those two cities are already rivals.');
+
+    $statement = $conn->prepare('INSERT INTO rivalry (city_id1, city_id2) VALUES (?, ?)');
+    if(!$statement) error();
+    if(!$statement->bind_param("ii", $cityId1, $cityId2)) error();
+    if(!$statement->execute()) error();
+
+  }
+
   if(isset($_GET['limit']) && isset($_GET['filter'])){ //GET request it gets the list of rivalries
     getRivalries();
   }
@@ -105,7 +154,9 @@ function findCityById($id){
   }
   else if(isset($_POST['city_id1']) && isset($_POST['city_id2'])){ //POST REQUEST TO SAVE RIVALRIES
     createRivalry();
-  } else{
-      error('Invalid request');
+  } else if(isset($_POST['city2']) && isset($_POST['state1']) && isset($_POST['city2']) && isset($_POST['state2'])) {
+    createRivalryFromNames();
+  } else {
+    error('Invalid request');
   }
 ?>

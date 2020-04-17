@@ -79,7 +79,7 @@ const RivalryGraph = (props) => {
     return (<div className="graph">
       <Bar data={props.chartData} options={options}/> </div>)
   } else {
-    return (<em > Sumting wong, we - to lo, holy fuke, Bang - ding owe </em>);
+    return (<p></p>);
   }
 
 }

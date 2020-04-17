@@ -44,7 +44,8 @@ const SignIn = (props) => {
                 <input className="btn btn-primary" type="submit" value="Sign in"/>
             </form>
             <div>
-                <br/><p>Don't have an account?&nbsp;<button className="btn btn-primary" onClick = {onClick} >Sign up</button></p>
+                <br/>
+                <p>Don't have an account?&nbsp;<a href="#" onClick = {onClick}>Sign up</a></p>
             </div>
    
         </div>
