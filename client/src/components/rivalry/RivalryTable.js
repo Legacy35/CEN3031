@@ -19,12 +19,12 @@ const RivalryTable = (props) => {
                             <th scope="col">City 2</th>
                         </tr>
                     </thead>
-                    { props.rivalries && 
+                    { props.rivalries &&
                         rivalries.map((element => (
                             <tbody key={i++}>
-                                <RivalryTableRow rivalries={props.rivalries} setRivalries={props.setRivalries} key={i} rivalry={element}/>
+                                <RivalryTableRow rivalries={props.rivalries} setRivalries={props.setRivalries} setSelectedRivalry={props.setSelectedRivalry} key={i} rivalry={element}/>
                             </tbody>
-                        ))) 
+                        )))
                     }   
                 </table>
                 {props.rivalries && props.rivalries.length == 0 && <p>No results found.</p>}
