@@ -87,7 +87,7 @@ const QuizManager = (props) => {
     return (
         <div>
             <div>
-                <h2>Add a quiz question</h2>
+                <h2>Add a Quiz Question</h2>
 
                 <form id="formAddQuestion">
                     <div className="form-group row">
