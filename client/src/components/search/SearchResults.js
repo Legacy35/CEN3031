@@ -10,13 +10,6 @@ const SearchResults = (props) => {
 
     const [selectedCity, setSelectedCity] = useState('');
 
-
-    const show = () =>
-    {
-            alert(this.selectedCity);
-    };
-
-
     let  cities=props.cities ?[...props.cities] : []
     cities.forEach((city) => {
     let  datapoint = [city.accidents.length, 0, 0, 0, 0, 0 ,0];
