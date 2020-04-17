@@ -16,7 +16,21 @@ const UserSummary = (props) => {
     let quizNum = i + 1;
     labels[i] = ("Quiz " + (quizNum));
   }
-
+  let options = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          max: 100,
+          min: 0,
+          stepSize: 1,
+        },
+        scaleLabel: {
+          display: true,
+          labelString: '% Correct'
+        },
+      }]
+    }
+  };
   let chartData = {
     labels: labels,
     datasets: [
@@ -37,9 +51,11 @@ const UserSummary = (props) => {
 
   let i = 1;
 
+
   return (
     <div>         
       <h2>Welcome, <em>{props.userData.first_name}</em></h2>             
+
 
       <hr/>
 
@@ -51,7 +67,7 @@ const UserSummary = (props) => {
         <h3>
           Previous Quiz Scores
               </h3>
-        <Line data={chartData} />
+        <Line data={chartData} options = {options}/>
       </div>
 
 

@@ -20,6 +20,7 @@ const HomeTab = (props) => {
     newChartData["datasets"] = [];
     axios.get('/apis/cities/city.php?limit=100&filter=').then(
       (res) => {
+        let maximum=1;
         if (res.data.error) {
           alert(res.data.error);
         } else {
@@ -33,7 +34,7 @@ const HomeTab = (props) => {
             datapoint["label"] = city.name;
             datapoint["backgroundColor"] = colors[count++];
             datapoint["data"] = [city.accidents.length, 0, 0, 0, 0, 0 ,0];
-            if(max<city.accidents.length)setMax(city.accidents.length+3);
+            if(maximum <= city.accidents.length)maximum=city.accidents.length+3;
             city.accidents.forEach((accident) => {
 
               accident.weather.forEach((weather) => {
@@ -50,6 +51,7 @@ const HomeTab = (props) => {
             newChartData.datasets.push(datapoint);
           });
         setChartData(newChartData);
+        setMax(maximum);
         console.log(newChartData);
 
         }
