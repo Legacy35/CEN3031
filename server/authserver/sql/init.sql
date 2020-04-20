@@ -26,6 +26,9 @@ CREATE TABLE quizData(
     user_id INT NOT NULL,
     score INT NOT NULL DEFAULT 0
 );
+INSERT INTO account(email, password_hash, token, admin, super_admin, first_name, last_name, address, phone_number, insurance_company, dashcam) VALUES
+("admin@gmail.com", "$2y$10$sCvkhqiP2fgIS9GzOCWeQOGaQjh7d0fB/GgT8iVrc/r/uqDmlfc4G", "d81030a9efc69236e2fab1cf26a8c902ec88d3e73f1bb671432a9d7a9f8d8793b48bf5d8434f2394cb092ef06c6dda958427efc7d3aa356f0df376954118e772a04a3f29f0645f0cd84d76c1ae02470d94f826223897d4bcc1d45ffc4ded74d95e58cb4d25d818df1bcaa1b9a638aa005088b2c46cc2204ebd7239385f3aa3f0", 1, 1, "Root", "localhost", "127.0.0.1", "555-555-5555", "Geico", 0);
+
 
 #Quiz Database
 DROP DATABASE IF EXISTS quiz;
